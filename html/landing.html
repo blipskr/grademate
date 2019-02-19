@@ -1,13 +1,17 @@
 <html dir="[direction]" lang="[language]" class="[class names]">
 	<head>
+    /* Import all the necessary bits */
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.light_blue-deep_purple.min.css" />
      <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
        <link rel="stylesheet" type="text/css" href="../css/dialog-polyfill.css" />
+       <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 
 		<title>Grademate</title>
 	</head>
     <!-- Always shows a header, even in smaller screens. -->
+<!--____________________________Navigation Bar______________________________ -->
+
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
@@ -72,9 +76,6 @@
     });
   </script>
 
-<!--_________________show the dialog for the clicks_____________________________ -->
-
-
       </nav>
     </div>
   </header>
@@ -86,8 +87,10 @@
     <div class="page-content"><!-- Your content goes here --></div>
   </main>
 </div>
-<!--_________________  how does it work section  _____________________________ -->
-
+<!--_____________________________ banner section   _________________________ -->
+    <!--
+    Styling for the banner
+  -->
     <style type="text/css">
 #banner {
     background-image: url('../images/background.jpg');
@@ -105,10 +108,6 @@
     bagfilter: blur(5px);
 }
 </style>
-
-...
-
-
     <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--1-col" id="banner">
 <div class="bgimg">
@@ -201,6 +200,6 @@ align-items: center; /* align vertical */
     </div>
   </div></div>
 </div>
-
+<!-- _________________________________ footer section________________________-->
 	</body>
 </html>
