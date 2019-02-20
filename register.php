@@ -116,7 +116,6 @@
 </div>
   </div>
 </div>
-<div class="mdl-grid">
 <?php
 require_once('config.inc.php');
 $con = new mysqli($database_host, $database_user, $database_pass, $group_dbnames[0]);
@@ -148,13 +147,15 @@ window.location.href = 'index.php';
 ?>
 <p>this is a test</p>
 <form method="post">
+	<div class="mdl-textfield mdl-js-textfield">
   Username:<br><input name="login"><br>
   Password:<br><input name="password" type="password"><br>
+	</div>
   <input type="submit">
 </form>
 <br>
 <a href="login.php">Login</a>
-</div>
+
 <!-- _________________________________ footer section________________________-->
 	</body>
 </html>
