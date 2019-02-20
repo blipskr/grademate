@@ -116,7 +116,7 @@
 </div>
   </div>
 </div>
-
+<div class="mdl-grid">
 <?php
 require_once('config.inc.php');
 $con = new mysqli($database_host, $database_user, $database_pass, $group_dbnames[0]);
@@ -156,6 +156,7 @@ window.location.href = 'index.php';
 </form>
 <br>
 <a href="login.php">Login</a>
+</div>
 <!-- _________________________________ footer section________________________-->
 	</body>
 </html>
