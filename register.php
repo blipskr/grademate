@@ -145,13 +145,15 @@ window.location.href = 'index.php';
 }
 
 ?>
-<p>this is a test</p>
 <form action="#">
   <div class="mdl-textfield mdl-js-textfield">
     <input class="mdl-textfield__input" type="text" id="sample1">
     <label class="mdl-textfield__label" for="sample1">Text...</label>
   </div>
 </form>
+<p>this is a test</p>
+<!--
+
 <form method="post">
 	<div class="mdl-textfield mdl-js-textfield">
     <label class="mdl-textfield__label">Username:</label>
@@ -163,7 +165,7 @@ window.location.href = 'index.php';
 </form>
 <br>
 <a href="login.php">Login</a>
-
+-->
 <!-- _________________________________ footer section________________________-->
 	</body>
 </html>
