@@ -121,7 +121,6 @@
 require_once('config.inc.php');
 $con = new mysqli($database_host, $database_user, $database_pass, $group_dbnames[0]);
 
-//TODO: do not hardcode, get from database
 
 if (isset($_POST['login']) && isset($_POST['password'])) //when form submitted
 {
@@ -147,8 +146,7 @@ window.location.href = 'index.php';
 }
 
 ?>
-<h1>Register Now!</h1>
-<hr>
+<p>this is a test</p>
 <form method="post">
   Username:<br><input name="login"><br>
   Password:<br><input name="password" type="password"><br>
