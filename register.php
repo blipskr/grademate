@@ -146,10 +146,18 @@ window.location.href = 'index.php';
 
 ?>
 <p>this is a test</p>
+<form action="#">
+  <div class="mdl-textfield mdl-js-textfield">
+    <input class="mdl-textfield__input" type="text" id="sample1">
+    <label class="mdl-textfield__label" for="sample1">Text...</label>
+  </div>
+</form>
 <form method="post">
 	<div class="mdl-textfield mdl-js-textfield">
-  Username:<br><input name="login"><br>
-  Password:<br><input name="password" type="password"><br>
+    <label class="mdl-textfield__label">Username:</label>
+		<br><input name="login" class="mdl-textfield__input" ><br>
+<label class="mdl-textfield__label">Password:</label>
+<br><input class="mdl-textfield__input" name="password" type="password"><br>
 	</div>
   <input type="submit">
 </form>
