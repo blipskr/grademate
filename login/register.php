@@ -13,7 +13,6 @@ if (isset($_POST['login']) && isset($_POST['password'])) //when form submitted
   $resultName = $con->query($queryName);
   if ($resultName->num_rows == 0)
   {
-    echo $name;
     $sql = "INSERT INTO Login (Username, Password) VALUES ('$username', '$password')";
     mysqli_query($con, $sql);
 ?>
