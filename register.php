@@ -86,7 +86,7 @@
   <main class="mdl-layout__content">
     <div class="page-content">
 			<?php
-			require_once('config.inc.php');
+			require_once('/login/config.inc.php');
 			$con = new mysqli($database_host, $database_user, $database_pass, $group_dbnames[0]);
 
 
@@ -102,7 +102,7 @@
 			    mysqli_query($con, $sql);
 			?>
 			<script type="text/javascript">
-			window.location.href = 'index.php';
+			window.location.href = 'index.html';
 			</script>
 			<?php
 			  }
@@ -114,7 +114,6 @@
 			}
 
 			?>
-
 
 			<form method="post">
 				<div class="mdl-textfield mdl-js-textfield">
