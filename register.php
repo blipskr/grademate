@@ -86,7 +86,7 @@
   <main class="mdl-layout__content">
     <div class="page-content">
 			<?php
-			require_once('/login/config.inc.php');
+			require_once('config.inc.php');
 			$con = new mysqli($database_host, $database_user, $database_pass, $group_dbnames[0]);
 
 
