@@ -156,6 +156,7 @@
 		  $username = $_POST["login"];
 		  $password = $_POST["password"];
 			$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+			echo $hashed_password;
 		  $queryName = "SELECT Username FROM Login WHERE Username='$username' AND Password='$hashed_password'";
 		  $resultName = $con->query($queryName);
 
