@@ -142,7 +142,7 @@
 			}
 			else
 			{
-				?> <script> alreadyRegistered = true; </script> <?php
+				?> <script>function()</script> <?php
 			}
 		}
 
@@ -190,9 +190,6 @@
 			if (! error.showModal) {
 				dialogPolyfill.registerDialog(error);
 			}
-			showErrorButton.addEventListener('click', function() {
-				error.showModal();
-			});
 			error.querySelector('.close').addEventListener('click', function() {
 				error.close();
 			});
