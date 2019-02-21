@@ -114,7 +114,7 @@
 			}
 
 			?>
-<div class="mdl-layout mdl-js-layout">
+<div class="mdl-grid">
 			<form method="post">
 				<div class="mdl-textfield mdl-js-textfield">
 			    <label class="mdl-textfield__label">Username:</label>
