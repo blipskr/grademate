@@ -101,9 +101,7 @@
 			    $sql = "INSERT INTO Login (Username, Password) VALUES ('$username', '$password')";
 			    mysqli_query($con, $sql);
 			?>
-			<script type="text/javascript">
-			window.location.href = 'index.html';
-			</script>
+
 			<?php
 			  }
 			  else
