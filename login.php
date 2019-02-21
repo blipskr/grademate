@@ -158,7 +158,7 @@
 		  $queryName = "SELECT Password FROM Login WHERE Username='$username'";
 		  $resultName = $con->query($queryName);
 			$hashed_password = mysqli_fetch_assoc($resultName);
-			echo $hashed_password;
+      echo implode(" ",$hashed_password);
 
 		  if (password_verify($password, $hashed_password))
 		  {
