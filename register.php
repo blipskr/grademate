@@ -115,10 +115,12 @@
 </div>
   </div>
 </div>
+
+<!--- ErrorMessage for already registered user --->
 <dialog class="mdl-dialog" id="errormessage">
-	<h4 class="mdl-dialog__title">About</h4>
+	<h4 class="mdl-dialog__title">Error!</h4>
 	<div class="mdl-dialog__content">
-<p>test</p>
+<p>There already exists a user with that username. Please pick a different one and try again. </p>
 	</div>
 	<div class="mdl-dialog__actions">
 		<button type="button" class="mdl-button close">Cool</button>
@@ -135,6 +137,8 @@
 		error.close();
 	});
 </script>
+
+<!--- Register PHP --->
 <div class="mdl-layout mdl-js-layout"
 <main class="mdl-layout__content">
 	<div class="page-content">
@@ -171,6 +175,8 @@
       justify-content: center;
     }
 </style>
+
+<!--- Register Form --->
 <div class="mdl-grid center-items">
 
 			<form method="post">
@@ -191,8 +197,6 @@
 			</form>
 			<br>
 		</div>
-
-
 		</div>
 		</div>
 
