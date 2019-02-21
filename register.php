@@ -115,6 +115,7 @@
 
 			?>
 <div class="mdl-grid">
+	<div>
 			<form method="post">
 				<div class="mdl-textfield mdl-js-textfield">
 			    <label class="mdl-textfield__label">Username:</label>
@@ -126,6 +127,7 @@
 			</form>
 			<br>
 			<a href="login.php">Login</a>
+		</div>
 		</div>
 		</div>
   </main>
