@@ -115,29 +115,6 @@
 </div>
   </div>
 </div>
-<dialog class="mdl-dialog" id="errormessage">
-	<h4 class="mdl-dialog__title">About</h4>
-	<div class="mdl-dialog__content">
-<p>test</p>
-	</div>
-	<div class="mdl-dialog__actions">
-		<button type="button" class="mdl-button close">Cool</button>
-	</div>
-</dialog>
-	<script src="javascript/dialog-polyfill.js"></script>
-<script>
-	var error = document.querySelector('#errormessage');
-	var showErrorButton = document.querySelector('#submit');
-	if (! dialog.showModal) {
-		dialogPolyfill.registerDialog(error);
-	}
-	showErrorButton.addEventListener('click', function() {
-		error.showModal();
-	});
-	error.querySelector('.close').addEventListener('click', function() {
-		error.close();
-	});
-</script>
 
 <div class="mdl-layout mdl-js-layout"
 <main class="mdl-layout__content">
@@ -198,6 +175,32 @@
 		</div>
 		</div>
 		</div>
+
+		<button id="submit">test</button>
+
+		<dialog class="mdl-dialog" id="errormessage">
+			<h4 class="mdl-dialog__title">About</h4>
+			<div class="mdl-dialog__content">
+		<p>test</p>
+			</div>
+			<div class="mdl-dialog__actions">
+				<button type="button" class="mdl-button close">Cool</button>
+			</div>
+		</dialog>
+			<script src="javascript/dialog-polyfill.js"></script>
+		<script>
+			var error = document.querySelector('#errormessage');
+			var showErrorButton = document.querySelector('#submit');
+			if (! error.showModal) {
+				dialogPolyfill.registerDialog(error);
+			}
+			showErrorButton.addEventListener('click', function() {
+				error.showModal();
+			});
+			error.querySelector('.close').addEventListener('click', function() {
+				error.close();
+			});
+		</script>
 </main>
 </div>
 <!-- _________________________________ footer section________________________-->
