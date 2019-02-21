@@ -154,11 +154,12 @@
 		{
 			$username = $_POST["login"];
 			$password = $_POST["password"];
+			$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 			$queryName = "SELECT Username FROM Login WHERE Username='$username'";
 			$resultName = $con->query($queryName);
 			if ($resultName->num_rows == 0)
 			{
-				$sql = "INSERT INTO Login (Username, Password) VALUES ('$username', '$password')";
+				$sql = "INSERT INTO Login (Username, Password) VALUES ('$username', '$hashed_password')";
 				mysqli_query($con, $sql);
 		?>
 		<script type="text/javascript">
