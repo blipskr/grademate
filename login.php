@@ -155,10 +155,11 @@
 		{
 		  $username = $_POST["login"];
 		  $password = $_POST["password"];
-		  $queryName = "SELECT Password FROM Login WHERE Username='$username'";
-		  $hashed_password = $con->query($queryName);
-      echo $hashed_password;
-		  if (password_verify($password, $hashed_password))
+			$hashed_password = password_hash($password, PASSWORD_DEFAULT)
+		  $queryName = "SELECT Username FROM Login WHERE Username='$username' AND Password='$hashed_password'";
+		  $resultName = $con->query($queryName);
+
+		  if ($resultName->num_rows != 0)
 		  {
 		    $_SESSION['login'] = $_POST['login']; //write login to server storage
 		?>
