@@ -115,7 +115,7 @@
 </div>
   </div>
 </div>
-
+<script>var alreadyRegistered = false;</script>
 <div class="mdl-layout mdl-js-layout"
 <main class="mdl-layout__content">
 	<div class="page-content">
@@ -142,6 +142,7 @@
 			}
 			else
 			{
+				<script> alreadyRegistered = true; </script>
 			}
 		}
 

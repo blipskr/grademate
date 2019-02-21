@@ -281,38 +281,41 @@
      * Show this dialog modally.
      */
     showModal: function() {
-      if (this.dialog_.hasAttribute('open')) {
-        throw new Error('Failed to execute \'showModal\' on dialog: The element is already open, and therefore cannot be opened modally.');
-      }
-      if (!document.body.contains(this.dialog_)) {
-        throw new Error('Failed to execute \'showModal\' on dialog: The element is not in a Document.');
-      }
-      if (!dialogPolyfill.dm.pushDialog(this)) {
-        throw new Error('Failed to execute \'showModal\' on dialog: There are too many open modal dialogs.');
-      }
+      if (alreadyRegistered)
+      {
+        if (this.dialog_.hasAttribute('open')) {
+          throw new Error('Failed to execute \'showModal\' on dialog: The element is already open, and therefore cannot be opened modally.');
+        }
+        if (!document.body.contains(this.dialog_)) {
+          throw new Error('Failed to execute \'showModal\' on dialog: The element is not in a Document.');
+        }
+        if (!dialogPolyfill.dm.pushDialog(this)) {
+          throw new Error('Failed to execute \'showModal\' on dialog: There are too many open modal dialogs.');
+        }
 
-      if (createsStackingContext(this.dialog_.parentElement)) {
-        console.warn('A dialog is being shown inside a stacking context. ' +
-            'This may cause it to be unusable. For more information, see this link: ' +
-            'https://github.com/GoogleChrome/dialog-polyfill/#stacking-context');
+        if (createsStackingContext(this.dialog_.parentElement)) {
+          console.warn('A dialog is being shown inside a stacking context. ' +
+              'This may cause it to be unusable. For more information, see this link: ' +
+              'https://github.com/GoogleChrome/dialog-polyfill/#stacking-context');
+        }
+
+        this.setOpen(true);
+        this.openAsModal_ = true;
+
+        // Optionally center vertically, relative to the current viewport.
+        if (dialogPolyfill.needsCentering(this.dialog_)) {
+          dialogPolyfill.reposition(this.dialog_);
+          this.replacedStyleTop_ = true;
+        } else {
+          this.replacedStyleTop_ = false;
+        }
+
+        // Insert backdrop.
+        this.dialog_.parentNode.insertBefore(this.backdrop_, this.dialog_.nextSibling);
+
+        // Focus on whatever inside the dialog.
+        this.focus_();
       }
-
-      this.setOpen(true);
-      this.openAsModal_ = true;
-
-      // Optionally center vertically, relative to the current viewport.
-      if (dialogPolyfill.needsCentering(this.dialog_)) {
-        dialogPolyfill.reposition(this.dialog_);
-        this.replacedStyleTop_ = true;
-      } else {
-        this.replacedStyleTop_ = false;
-      }
-
-      // Insert backdrop.
-      this.dialog_.parentNode.insertBefore(this.backdrop_, this.dialog_.nextSibling);
-
-      // Focus on whatever inside the dialog.
-      this.focus_();
     },
 
     /**
