@@ -168,11 +168,11 @@
 		    <script src="javascript/dialog-polyfill.js"></script>
 		  <script>
 		    var dialog = document.querySelector('dialog');
-		    var showDialogButton = document.querySelector('#show-dialog');
+		    var showErrorButton = document.querySelector('#submit');
 		    if (! dialog.showModal) {
 		      dialogPolyfill.registerDialog(dialog);
 		    }
-		    showDialogButton.addEventListener('click', function() {
+		    showErrorButton.addEventListener('click', function() {
 		      dialog.showModal();
 		    });
 		    dialog.querySelector('.close').addEventListener('click', function() {
@@ -203,7 +203,7 @@
 					<label class="mdl-textfield__label">Password:</label>
 				</div>
 				<br>
-				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit">
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
 					Submit
 				</button>
 			</form>
