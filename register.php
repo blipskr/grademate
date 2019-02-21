@@ -17,7 +17,7 @@
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
       <!-- Title -->
-      <span class="mdl-layout-title"><img src="images/grademate.png"  height="38" width="196" href="index.html"></span>      <!-- Add spacer, to align navigation to the right -->
+			<span class="mdl-layout-title"><a href="index.html"><img src="images/grademate.png"  height="38" width="196" href="index.html"></a></span>
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation. We hide it in small screens. -->
       <nav class="mdl-navigation mdl-layout--large-screen-only">
