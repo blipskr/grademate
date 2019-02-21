@@ -149,38 +149,32 @@
 
 		?>
 		<style>
-		#abc {
-text-align: center;
-		}
-
-		#def {
-			display: inline-block;
-		}
+    .mdl-grid.center-items {
+      justify-content: center;
+    }
 </style>
-		<div class="mdl-grid" id="abc">
-			<div class="mdl-cell">
-					<form method="post">
+<div class="mdl-grid center-items">
 
-						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="def">
-							<input class="mdl-textfield__input" type="text" name="login">
-							<label class="mdl-textfield__label">Username:</label>
-						</div>
-						<br>
-						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="def">
-							<input class="mdl-textfield__input" type="password" name="password">
-							<label class="mdl-textfield__label">Password:</label>
-						</div>
-						<br>
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit">
-							Submit
-						</button>
-					</form>
-					<br>
-					<p id="abc">test</p>
-					<a href="login.php">Login</a>
+			<form method="post">
+
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="text" name="login">
+					<label class="mdl-textfield__label">Username:</label>
 				</div>
+				<br>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="password" name="password">
+					<label class="mdl-textfield__label">Password:</label>
 				</div>
-				</div>
+				<br>
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit">
+					Submit
+				</button>
+			</form>
+			<br>
+		</div>
+		</div>
+		</div>
 </main>
 </div>
 <!-- _________________________________ footer section________________________-->
