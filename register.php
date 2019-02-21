@@ -84,7 +84,50 @@
     <nav class="mdl-navigation">
   </div>
   <main class="mdl-layout__content">
-    <div class="page-content"><!-- Your content goes here --></div>
+    <div class="page-content">
+			<?php
+			require_once('config.inc.php');
+			$con = new mysqli($database_host, $database_user, $database_pass, $group_dbnames[0]);
+
+
+			if (isset($_POST['login']) && isset($_POST['password'])) //when form submitted
+			{
+			  $username = $_POST["login"];
+			  $password = $_POST["password"];
+			  $queryName = "SELECT Username FROM Login WHERE Username='$username'";
+			  $resultName = $con->query($queryName);
+			  if ($resultName->num_rows == 0)
+			  {
+			    $sql = "INSERT INTO Login (Username, Password) VALUES ('$username', '$password')";
+			    mysqli_query($con, $sql);
+			?>
+			<script type="text/javascript">
+			window.location.href = 'index.php';
+			</script>
+			<?php
+			  }
+			  else
+			  {
+			    echo "<script>alert('You are already registered!');</script>";
+			    echo "<noscript>You are already registered!</noscript>";
+			  }
+			}
+
+			?>
+
+
+			<form method="post">
+				<div class="mdl-textfield mdl-js-textfield">
+			    <label class="mdl-textfield__label">Username:</label>
+					<br><input name="login" class="mdl-textfield__input" ><br>
+			<label class="mdl-textfield__label">Password:</label>
+			<br><input class="mdl-textfield__input" name="password" type="password"><br>
+				</div>
+			  <input type="submit">
+			</form>
+			<br>
+			<a href="login.php">Login</a>
+		</div>
   </main>
 </div>
 <!--_____________________________ banner section   _________________________ -->
@@ -116,56 +159,7 @@
 </div>
   </div>
 </div>
-<?php
-require_once('config.inc.php');
-$con = new mysqli($database_host, $database_user, $database_pass, $group_dbnames[0]);
 
-
-if (isset($_POST['login']) && isset($_POST['password'])) //when form submitted
-{
-  $username = $_POST["login"];
-  $password = $_POST["password"];
-  $queryName = "SELECT Username FROM Login WHERE Username='$username'";
-  $resultName = $con->query($queryName);
-  if ($resultName->num_rows == 0)
-  {
-    $sql = "INSERT INTO Login (Username, Password) VALUES ('$username', '$password')";
-    mysqli_query($con, $sql);
-?>
-<script type="text/javascript">
-window.location.href = 'index.php';
-</script>
-<?php
-  }
-  else
-  {
-    echo "<script>alert('You are already registered!');</script>";
-    echo "<noscript>You are already registered!</noscript>";
-  }
-}
-
-?>
-<form action="#">
-  <div class="mdl-textfield mdl-js-textfield">
-    <input class="mdl-textfield__input" type="text" id="sample1">
-    <label class="mdl-textfield__label" for="sample1">Text...</label>
-  </div>
-</form>
-<p>this is a test</p>
-<!--
-
-<form method="post">
-	<div class="mdl-textfield mdl-js-textfield">
-    <label class="mdl-textfield__label">Username:</label>
-		<br><input name="login" class="mdl-textfield__input" ><br>
-<label class="mdl-textfield__label">Password:</label>
-<br><input class="mdl-textfield__input" name="password" type="password"><br>
-	</div>
-  <input type="submit">
-</form>
-<br>
-<a href="login.php">Login</a>
--->
 <!-- _________________________________ footer section________________________-->
 	</body>
 </html>
