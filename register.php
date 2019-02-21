@@ -142,8 +142,6 @@
 			}
 			else
 			{
-				?>
-			<?php
 			}
 		}
 
@@ -174,7 +172,6 @@
 			<br>
 		</div>
 
-		<button id="test">test</button>
 
 		<dialog class="mdl-dialog" id="errormessage">
 			<h4 class="mdl-dialog__title">About</h4>
@@ -188,7 +185,7 @@
 			<script src="javascript/dialog-polyfill.js"></script>
 		<script>
 			var error = document.querySelector('#errormessage');
-			var showErrorButton = document.querySelector('#test');
+			var showErrorButton = document.querySelector('#submit');
 			if (! error.showModal) {
 				dialogPolyfill.registerDialog(error);
 			}
