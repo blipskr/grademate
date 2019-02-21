@@ -142,7 +142,7 @@
 			}
 			else
 			{
-				<script> alreadyRegistered = true; </script>
+				?> <script> alreadyRegistered = true; </script> <?php
 			}
 		}
 
