@@ -115,6 +115,29 @@
 </div>
   </div>
 </div>
+<dialog class="mdl-dialog" id="errormessage">
+	<h4 class="mdl-dialog__title">About</h4>
+	<div class="mdl-dialog__content">
+<p>test</p>
+	</div>
+	<div class="mdl-dialog__actions">
+		<button type="button" class="mdl-button close">Cool</button>
+	</div>
+</dialog>
+	<script src="javascript/dialog-polyfill.js"></script>
+<script>
+	var error = document.querySelector('#errormessage');
+	var showErrorButton = document.querySelector('#submit');
+	if (! dialog.showModal) {
+		dialogPolyfill.registerDialog(error);
+	}
+	showErrorButton.addEventListener('click', function() {
+		error.showModal();
+	});
+	error.querySelector('.close').addEventListener('click', function() {
+		error.close();
+	});
+</script>
 
 <div class="mdl-layout mdl-js-layout"
 <main class="mdl-layout__content">
@@ -143,42 +166,6 @@
 			else
 			{
 				?>
-		  <dialog class="mdl-dialog">
-		    <h4 class="mdl-dialog__title">About</h4>
-		    <div class="mdl-dialog__content">
-		      <p>
-		      Grademate is about having fun, and is made with love. ( ͡° ͜ʖ ͡°)
-		      <br>Authors:
-		       <ul>
-		  <li>Brian</li>
-		  <li>Josh</li>
-		  <li>Ilia</li>
-		    <li>Robert</li>
-		      <li>Andy</li>
-		        <li>Danielius</li>
-		          <li>Stephen</li>
-		            <li>Kamil</li>
-		          </ul>
-		      </p>
-		    </div>
-		    <div class="mdl-dialog__actions">
-		      <button type="button" class="mdl-button close">Cool</button>
-		    </div>
-		  </dialog>
-		    <script src="javascript/dialog-polyfill.js"></script>
-		  <script>
-		    var dialog = document.querySelector('dialog');
-		    var showErrorButton = document.querySelector('#submit');
-		    if (! dialog.showModal) {
-		      dialogPolyfill.registerDialog(dialog);
-		    }
-		    showErrorButton.addEventListener('click', function() {
-		      dialog.showModal();
-		    });
-		    dialog.querySelector('.close').addEventListener('click', function() {
-		      dialog.close();
-		    });
-		  </script>
 			<?php
 			}
 		}
