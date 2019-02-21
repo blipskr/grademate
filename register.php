@@ -142,6 +142,22 @@
 			}
 			else
 			{
+				?>
+				<script src="javascript/dialog-polyfill.js"></script>
+			<script>
+				var error = document.querySelector('#errormessage');
+				var showErrorButton = document.querySelector('#submit');
+				if (! error.showModal) {
+					dialogPolyfill.registerDialog(error);
+				}
+				showErrorButton.addEventListener('click', function() {
+					error.showModal();
+				});
+				error.querySelector('.close').addEventListener('click', function() {
+					error.close();
+				});
+			</script>
+			<?php
 			}
 		}
 
@@ -182,20 +198,7 @@
 				<button type="button" class="mdl-button close">Cool</button>
 			</div>
 		</dialog>
-			<script src="javascript/dialog-polyfill.js"></script>
-		<script>
-			var error = document.querySelector('#errormessage');
-			var showErrorButton = document.querySelector('#submit');
-			if (! error.showModal) {
-				dialogPolyfill.registerDialog(error);
-			}
-			showErrorButton.addEventListener('click', function() {
-				error.showModal();
-			});
-			error.querySelector('.close').addEventListener('click', function() {
-				error.close();
-			});
-		</script>
+
 		</div>
 		</div>
 
