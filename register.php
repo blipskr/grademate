@@ -174,8 +174,6 @@
 			<br>
 		</div>
 		</div>
-		</div>
-
 		<button id="test">test</button>
 
 		<dialog class="mdl-dialog" id="errormessage">
@@ -201,6 +199,9 @@
 				error.close();
 			});
 		</script>
+		</div>
+
+
 </main>
 </div>
 <!-- _________________________________ footer section________________________-->
