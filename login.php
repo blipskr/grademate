@@ -5,6 +5,7 @@
  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.light_blue-deep_purple.min.css" />
      <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
        <link rel="stylesheet" type="text/css" href="css/dialog-polyfill.css" />
+			        <link rel="stylesheet" type="text/css" href="css/test.css" />
        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 
 		<title>Grademate</title>
@@ -31,10 +32,14 @@
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
         Agreement/User Policy
       </button>
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-      onclick="location.href='accountaccess.html'">
-        Login/Register
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+      onclick="location.href='login.php'">
+        Login
       </button>
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+			onclick="location.href='register.php'">
+				Register
+			</button>
 
       <!-- show the dialog for the clicks -->
       <body>
@@ -83,9 +88,7 @@
     <span class="mdl-layout-title">Title</span>
     <nav class="mdl-navigation">
   </div>
-  <main class="mdl-layout__content">
-    <div class="page-content"><!-- Your content goes here --></div>
-  </main>
+
 </div>
 <!--_____________________________ banner section   _________________________ -->
     <!--
@@ -117,54 +120,94 @@
   </div>
 </div>
 
-<?php
-session_start(); //gets session id from cookies, or prepa
-require_once('config.inc.php');
-$con = new mysqli($database_host, $database_user, $database_pass, $group_dbnames[0]);
-
-if (isset($_POST['login']) && isset($_POST['password'])) //when form submitted
-{
-  $username = $_POST["login"];
-  $password = $_POST["password"];
-  $queryName = "SELECT Username FROM Login WHERE Username='$username' AND Password='$password'";
-  $resultName = $con->query($queryName);
-
-  if ($resultName->num_rows != 0)
-  {
-    $_SESSION['login'] = $_POST['login']; //write login to server storage
-?>
-<script type="text/javascript">
-window.location.href = 'index.php';
+<!--- ErrorMessage for already registered user --->
+<dialog class="mdl-dialog" id="errormessage">
+	<h4 class="mdl-dialog__title">Error!</h4>
+	<div class="mdl-dialog__content">
+<p>Username and/or password incorrect. Please try again.</p>
+	</div>
+	<div class="mdl-dialog__actions">
+		<button type="button" class="mdl-button close">Cool</button>
+	</div>
+</dialog>
+	<script src="javascript/dialog-polyfill.js"></script>
+<script>
+	var error = document.querySelector('#errormessage');
+	var showErrorButton = document.querySelector('#submit');
+	if (! error.showModal) {
+		dialogPolyfill.registerDialog(error);
+	}
+	error.querySelector('.close').addEventListener('click', function() {
+		error.close();
+	});
 </script>
-<?php
-  }
-  else
-  {
-    echo "<script>alert('Wrong login or password');</script>";
-    echo "<noscript>Wrong login or password</noscript>";
-  }
-}
-$con -> close();
-?>
-<h1>Login Now!</h1>
-<hr>
-<form method="post">
-  Login:<br><input name="login"><br>
-  Password:<br><input name="password" type="password"></input><br>
-  <input type="submit">
-</form>
-<br>
-<a href="register.php">Register</a>
 
-<h1>Register Now!</h1>
-<hr>
-<form method="post">
-  Username:<br><input name="login"><br>
-  Password:<br><input name="password" type="password"><br>
-  <input type="submit">
-</form>
-<br>
-<a href="login.php">Login</a>
+<!--- Register PHP --->
+<div class="mdl-layout mdl-js-layout"
+<main class="mdl-layout__content">
+	<div class="page-content">
+		<?php
+		require_once('config.inc.php');
+		$con = new mysqli($database_host, $database_user, $database_pass, $group_dbnames[0]);
+
+
+		if (isset($_POST['login']) && isset($_POST['password'])) //when form submitted
+		{
+		  $username = $_POST["login"];
+		  $password = $_POST["password"];
+		  $queryName = "SELECT Username FROM Login WHERE Username='$username' AND Password='$password'";
+		  $resultName = $con->query($queryName);
+
+		  if ($resultName->num_rows != 0)
+		  {
+		    $_SESSION['login'] = $_POST['login']; //write login to server storage
+		?>
+		<script type="text/javascript">
+		window.location.href = 'index.php';
+		</script>
+		<?php
+		  }
+		  else
+		  {
+				?> <script>error.showModal()</script> <?php
+		  }
+		}
+		$con -> close();
+		?>
+		<style>
+    .mdl-grid.center-items {
+      justify-content: center;
+    }
+</style>
+
+<!--- Register Form --->
+<div class="mdl-grid center-items">
+
+			<form method="post">
+
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="text" name="login">
+					<label class="mdl-textfield__label">Username:</label>
+				</div>
+				<br>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="password" name="password">
+					<label class="mdl-textfield__label">Password:</label>
+				</div>
+				<br>
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
+					Submit
+				</button>
+			</form>
+			<br>
+		</div>
+		</div>
+		</div>
+
+
+
+</main>
+</div>
 <!-- _________________________________ footer section________________________-->
 	</body>
 </html>

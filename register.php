@@ -32,10 +32,14 @@
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
         Agreement/User Policy
       </button>
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-      onclick="location.href='accountaccess.html'">
-        Login/Register
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+      onclick="location.href='login.php'">
+        Login
       </button>
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+			onclick="location.href='register.php'">
+				Register
+			</button>
 
       <!-- show the dialog for the clicks -->
       <body>
