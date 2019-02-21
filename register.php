@@ -5,6 +5,7 @@
  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.light_blue-deep_purple.min.css" />
      <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
        <link rel="stylesheet" type="text/css" href="css/dialog-polyfill.css" />
+			        <link rel="stylesheet" type="text/css" href="css/test.css" />
        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 
 		<title>Grademate</title>
@@ -83,54 +84,7 @@
     <span class="mdl-layout-title">Title</span>
     <nav class="mdl-navigation">
   </div>
-  <main class="mdl-layout__content">
-    <div class="page-content">
-			<?php
-			require_once('config.inc.php');
-			$con = new mysqli($database_host, $database_user, $database_pass, $group_dbnames[0]);
 
-
-			if (isset($_POST['login']) && isset($_POST['password'])) //when form submitted
-			{
-			  $username = $_POST["login"];
-			  $password = $_POST["password"];
-			  $queryName = "SELECT Username FROM Login WHERE Username='$username'";
-			  $resultName = $con->query($queryName);
-			  if ($resultName->num_rows == 0)
-			  {
-			    $sql = "INSERT INTO Login (Username, Password) VALUES ('$username', '$password')";
-			    mysqli_query($con, $sql);
-			?>
-			<script type="text/javascript">
-			window.location.href = 'index.html';
-			</script>
-			<?php
-			  }
-			  else
-			  {
-			    echo "<script>alert('You are already registered!');</script>";
-			    echo "<noscript>You are already registered!</noscript>";
-			  }
-			}
-
-			?>
-<div class="mdl-grid">
-	<div class="mdl-cell mdl-cell--4-col">
-			<form method="post">
-				<div class="mdl-textfield mdl-js-textfield">
-			    <label class="mdl-textfield__label">Username:</label>
-					<br><input name="login" class="mdl-textfield__input" ><br>
-			<label class="mdl-textfield__label">Password:</label>
-			<br><input class="mdl-textfield__input" name="password" type="password"><br>
-				</div>
-			  <input type="submit">
-			</form>
-			<br>
-			<a href="login.php">Login</a>
-		</div>
-		</div>
-		</div>
-  </main>
 </div>
 <!--_____________________________ banner section   _________________________ -->
     <!--
@@ -162,6 +116,73 @@
   </div>
 </div>
 
+<div class="mdl-layout mdl-js-layout"
+<main class="mdl-layout__content">
+	<div class="page-content">
+		<?php
+		require_once('config.inc.php');
+		$con = new mysqli($database_host, $database_user, $database_pass, $group_dbnames[0]);
+
+
+		if (isset($_POST['login']) && isset($_POST['password'])) //when form submitted
+		{
+			$username = $_POST["login"];
+			$password = $_POST["password"];
+			$queryName = "SELECT Username FROM Login WHERE Username='$username'";
+			$resultName = $con->query($queryName);
+			if ($resultName->num_rows == 0)
+			{
+				$sql = "INSERT INTO Login (Username, Password) VALUES ('$username', '$password')";
+				mysqli_query($con, $sql);
+		?>
+		<script type="text/javascript">
+		window.location.href = 'index.html';
+		</script>
+		<?php
+			}
+			else
+			{
+				echo "<script>alert('You are already registered!');</script>";
+				echo "<noscript>You are already registered!</noscript>";
+			}
+		}
+
+		?>
+		<style>
+		#abc {
+text-align: center;
+		}
+
+		#def {
+			display: inline-block;
+		}
+</style>
+		<div class="mdl-grid" id="abc">
+			<div class="mdl-cell">
+					<form method="post">
+
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="def">
+							<input class="mdl-textfield__input" type="text" name="login">
+							<label class="mdl-textfield__label">Username:</label>
+						</div>
+						<br>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="def">
+							<input class="mdl-textfield__input" type="password" name="password">
+							<label class="mdl-textfield__label">Password:</label>
+						</div>
+						<br>
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit">
+							Submit
+						</button>
+					</form>
+					<br>
+					<p id="abc">test</p>
+					<a href="login.php">Login</a>
+				</div>
+				</div>
+				</div>
+</main>
+</div>
 <!-- _________________________________ footer section________________________-->
 	</body>
 </html>
