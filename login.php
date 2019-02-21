@@ -17,7 +17,7 @@
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
       <!-- Title -->
-      <span class="mdl-layout-title"><img src="images/grademate.png"  height="38" width="196"></span>
+      <span class="mdl-layout-title"><img src="images/grademate.png"  height="38" width="196" href="index.html"></span>
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation. We hide it in small screens. -->
@@ -163,7 +163,7 @@
 		    $_SESSION['login'] = $_POST['login']; //write login to server storage
 		?>
 		<script type="text/javascript">
-		window.location.href = 'index.php';
+		window.location.href = 'index.html';
 		</script>
 		<?php
 		  }
