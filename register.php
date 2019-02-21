@@ -142,7 +142,7 @@
 			}
 			else
 			{
-				?> <script>function()</script> <?php
+				?> <script>error.showModal()</script> <?php
 			}
 		}
 
