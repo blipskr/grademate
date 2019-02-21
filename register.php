@@ -101,7 +101,9 @@
 			    $sql = "INSERT INTO Login (Username, Password) VALUES ('$username', '$password')";
 			    mysqli_query($con, $sql);
 			?>
-
+			<script type="text/javascript">
+			window.location.href = 'index.html';
+			</script>
 			<?php
 			  }
 			  else
@@ -112,7 +114,7 @@
 			}
 
 			?>
-
+<div class="mdl-layout mdl-js-layout">
 			<form method="post">
 				<div class="mdl-textfield mdl-js-textfield">
 			    <label class="mdl-textfield__label">Username:</label>
@@ -124,6 +126,7 @@
 			</form>
 			<br>
 			<a href="login.php">Login</a>
+		</div>
 		</div>
   </main>
 </div>
