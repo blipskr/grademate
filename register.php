@@ -115,7 +115,26 @@
 </div>
   </div>
 </div>
-<script>var alreadyRegistered = false;</script>
+<dialog class="mdl-dialog" id="errormessage">
+	<h4 class="mdl-dialog__title">About</h4>
+	<div class="mdl-dialog__content">
+<p>test</p>
+	</div>
+	<div class="mdl-dialog__actions">
+		<button type="button" class="mdl-button close">Cool</button>
+	</div>
+</dialog>
+	<script src="javascript/dialog-polyfill.js"></script>
+<script>
+	var error = document.querySelector('#errormessage');
+	var showErrorButton = document.querySelector('#submit');
+	if (! error.showModal) {
+		dialogPolyfill.registerDialog(error);
+	}
+	error.querySelector('.close').addEventListener('click', function() {
+		error.close();
+	});
+</script>
 <div class="mdl-layout mdl-js-layout"
 <main class="mdl-layout__content">
 	<div class="page-content">
@@ -174,26 +193,6 @@
 		</div>
 
 
-		<dialog class="mdl-dialog" id="errormessage">
-			<h4 class="mdl-dialog__title">About</h4>
-			<div class="mdl-dialog__content">
-		<p>test</p>
-			</div>
-			<div class="mdl-dialog__actions">
-				<button type="button" class="mdl-button close">Cool</button>
-			</div>
-		</dialog>
-			<script src="javascript/dialog-polyfill.js"></script>
-		<script>
-			var error = document.querySelector('#errormessage');
-			var showErrorButton = document.querySelector('#submit');
-			if (! error.showModal) {
-				dialogPolyfill.registerDialog(error);
-			}
-			error.querySelector('.close').addEventListener('click', function() {
-				error.close();
-			});
-		</script>
 		</div>
 		</div>
 
