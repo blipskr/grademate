@@ -159,7 +159,7 @@
 		  $resultName = $con->query($queryName);
 			$hashed_password = implode(" ",mysqli_fetch_assoc($resultName));
 
-		  if (password_verify($password, $hashed_password))
+		  if (password_verify($password, $hashed_password) AND $resultName->num_rows != 0)
 		  {
 		    $_SESSION['login'] = $_POST['login']; //write login to server storage
 		?>
