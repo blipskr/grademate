@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+# Code for DB connection credentials in a local file.
+# from .local_settings import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -78,8 +80,8 @@ DATABASES = {
         'NAME': '2018_comp10120_x7',
         'ENGINE': 'django.db.backends.mysql',
         'HOST':'dbhost.cs.man.ac.uk',
-        'USER': '',
-        'PASSWORD': '',
+        'USER': 'c71930by',
+        'PASSWORD': 'galaxy73',
         'OPTIONS': {
             'autocommit': True,
         },
