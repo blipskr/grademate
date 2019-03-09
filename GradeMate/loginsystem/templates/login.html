@@ -156,23 +156,20 @@
 <!--- Register Form --->
 <div class="mdl-grid center-items">
 
-			<form method="post">
+			<form method="post" action="/login/">
 <center><h2>Login</h2></center>
+{% csrf_token %}
+{% for field in form %}
 				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-					<input class="mdl-textfield__input" type="text" name="login">
-					<label class="mdl-textfield__label">Username:</label>
-				</div>
-				<br>
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-					<input class="mdl-textfield__input" type="password" name="password">
-					<label class="mdl-textfield__label">Password:</label>
-				</div>
-				<br>
-				<center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
-					Submit
-				</button></center>
-			</form>
-			<br>
+		<label class="mdl-textfield__label">{{ field.label }}</label>
+				{{ field }}
+	</div>
+<br>
+{% endfor %}
+<br>
+<center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
+	Submit
+</button></center>
 		</div>
 		</div>
 		</div>

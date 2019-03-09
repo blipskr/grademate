@@ -12,10 +12,8 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', indexpage.index),
-    url(r'^login/', loginsystem.login),
-    url(r'^register/', loginsystem.register),
-    url(r'^login2/', loginsystem.login2),
-    url(r'^register2/', loginsystem.register2),
+    url(r'^login/', loginsystem.login_view),
+    url(r'^register/', loginsystem.register_view),
 )
 
 urlpatterns += staticfiles_urlpatterns()
