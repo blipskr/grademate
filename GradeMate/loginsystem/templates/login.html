@@ -18,7 +18,7 @@
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
       <!-- Title -->
-			<span class="mdl-layout-title"><a href="/"><img src="/static/images/grademate.png"  height="38" width="196" href="index.html"></a></span>
+			<span class="mdl-layout-title"><a href="/"><img src="/static/images/grademate.png"  height="38" width="196" href="/"></a></span>
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation. We hide it in small screens. -->
@@ -34,11 +34,11 @@
         Agreement/User Policy
       </button>
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-      onclick="location.href='login.php'">
+      onclick="location.href='/login/'">
         Login
       </button>
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-			onclick="location.href='register.php'">
+			onclick="location.href='/register/'">
 				Register
 			</button>
 
@@ -131,7 +131,7 @@
 		<button type="button" class="mdl-button close">Cool</button>
 	</div>
 </dialog>
-	<script src="javascript/dialog-polyfill.js"></script>
+	<script src="/static/javascript/dialog-polyfill.js"></script>
 <script>
 	var error = document.querySelector('#errormessage');
 	var showErrorButton = document.querySelector('#submit');
@@ -168,9 +168,9 @@
 					<label class="mdl-textfield__label">Password:</label>
 				</div>
 				<br>
-				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
+				<center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
 					Submit
-				</button>
+				</button></center>
 			</form>
 			<br>
 		</div>

@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     url(r'^$', indexpage.index),
     url(r'^login/', loginsystem.login),
     url(r'^register/', loginsystem.register),
+    url(r'^login2/', loginsystem.login2),
+    url(r'^register2/', loginsystem.register2),
 )
 
 urlpatterns += staticfiles_urlpatterns()

@@ -59,11 +59,21 @@ WSGI_APPLICATION = 'GradeMate.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-
+#Uni database
+#DATABASES = {
+#    'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    #}
+#}
+#local django database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '2018_comp10120_x7',
+        'USER': 'c71930by',
+        'PASSWORD': 'galaxy73',
+        'HOST': 'dbhost.cs.man.ac.uk',
     }
 }
 
