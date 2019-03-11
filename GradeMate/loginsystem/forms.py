@@ -17,13 +17,16 @@ class RegisterForm(UserCreationForm):
 
         for fieldname in ['username', 'first_name', 'last_name',]:
             self.fields[fieldname].help_text = None
-            self.fields[fieldname].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input'})
         for fieldname in ['password1', 'password2',]:
             self.fields[fieldname].help_text = None
-            self.fields[fieldname].widget = forms.PasswordInput(attrs={'class' : 'mdl-textfield__input'})
 
-        self.fields['email'].widget = forms.EmailInput(attrs={'class' : 'mdl-textfield__input'})
+        self.fields['username'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'username'})
+        self.fields['first_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'firstname'})
+        self.fields['last_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'lastname'})
 
+        self.fields['email'].widget = forms.EmailInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'email'})
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'password1'})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'password2'})
 
 class LoginForm(AuthenticationForm):
         class Meta:

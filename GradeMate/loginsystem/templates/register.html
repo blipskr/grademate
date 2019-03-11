@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+
 {% block formcontent %}
 {% load static %}
+<body>
 			<form method="post" action="/register/">
 				<center><h2>Register</h2></center>
 {% csrf_token %}
@@ -9,6 +11,13 @@
 		<label class="mdl-textfield__label">{{ field.label }}</label>
 				{{ field }}
 	</div>
+
+<div class="mdl-tooltip mdl-tooltip--large" data-mdl-for="password1">
+Minimum of 8 characters, must contain letters and/or symbols.
+</div>
+<div class="mdl-tooltip mdl-tooltip--large" data-mdl-for="password2">
+Please type your password again for verification.
+</div>
 
 <br>
 			{% endfor %}

@@ -7,7 +7,7 @@
        <link rel="stylesheet" type="text/css" href="/static/css/dialog-polyfill.css" />
        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.js"></script>
-		<title>Grademate</title>
+<link rel="stylesheet" type="text/css" href="/static/css/style.css"
 	</head>
     <!-- Always shows a header, even in smaller screens. -->
 <!--____________________________Navigation Bar______________________________ -->
@@ -20,6 +20,10 @@
 			      <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation. We hide it in small screens. -->
+			{% include "about.html" %}
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="location.href='/agreement/'">
+		        Agreement/User Policy
+		      </button>
 
       <nav class="mdl-navigation mdl-layout--large-screen-only">
 				{% if user.is_authenticated %}
@@ -37,52 +41,14 @@
 			</button>
 				{% endif %}
       <!-- show the dialog for the clicks -->
-      <body onload="error.showModal()">
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="show-dialog" type="button" class="mdl-button">About</button>
-  <dialog class="mdl-dialog">
-    <h4 class="mdl-dialog__title">About</h4>
-    <div class="mdl-dialog__content">
-      <p>
-      Grademate is about having fun, and is made with love. ( ͡° ͜ʖ ͡°)
-      <br>Authors:
-       <ul>
-  <li>Brian</li>
-  <li>Josh</li>
-  <li>Ilia</li>
-    <li>Robert</li>
-      <li>Andy</li>
-        <li>Danielius</li>
-          <li>Stephen</li>
-            <li>Kamil</li>
-          </ul>
-      </p>
-    </div>
-    <div class="mdl-dialog__actions">
-      <button type="button" class="mdl-button close">Cool</button>
-    </div>
-  </dialog>
-    <script src="/static/javascript/dialog-polyfill.js"></script>
-  <script>
-    var dialog = document.querySelector('dialog');
-    var showDialogButton = document.querySelector('#show-dialog');
-    if (! dialog.showModal) {
-      dialogPolyfill.registerDialog(dialog);
-    }
-    showDialogButton.addEventListener('click', function() {
-      dialog.showModal();
-    });
-    dialog.querySelector('.close').addEventListener('click', function() {
-      dialog.close();
-    });
-  </script>
 
       </nav>
     </div>
   </header>
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Title</span>
-    <nav class="mdl-navigation">
   </div>
+
   <main class="mdl-layout__content">
     <div class="page-content">
 			{% block stuffbelowheader %}
