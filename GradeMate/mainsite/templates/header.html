@@ -88,8 +88,9 @@
     <nav class="mdl-navigation">
   </div>
   <main class="mdl-layout__content">
-    <div class="page-content"><!-- Your content goes here --></div>
+    <div class="page-content">
+			{% block stuffbelowheader %}
+			{% endblock %}
+		</div>
   </main>
 </div>
-{% block stuffbelowheader %}
-{% endblock %}
