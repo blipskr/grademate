@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from index import views as indexpage
+from mainsite import views as site
 from loginsystem import views as loginsystem
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -11,7 +11,8 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', indexpage.index),
+    url(r'^$', site.index),
+    url(r'^index.html', site.index),
     url(r'^login/', loginsystem.login_view),
     url(r'^register/', loginsystem.register_view),
 )
