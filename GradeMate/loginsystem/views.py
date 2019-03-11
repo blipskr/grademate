@@ -12,7 +12,7 @@ def register_view(request):
             form.save()
             return redirect('/')
         else:
-            return redirect('/register/')
+            return registererror_view(request, form)
     else:
         form = RegisterForm()
         return render(request, 'register.html', { 'form': form })
@@ -25,7 +25,15 @@ def login_view(request):
             login(request, user)
             return redirect('/')
         else:
-            return redirect('/login/')
+            form = LoginForm()
+            return loginerror_view(request, form)
     else:
         form = LoginForm()
         return render(request, 'login.html', { 'form': form })
+
+def registererror_view(request, form):
+    return render(request, 'registererror.html', { 'form': form })
+
+def loginerror_view(request, form):
+
+    return render(request, 'loginerror.html', { 'form': form })

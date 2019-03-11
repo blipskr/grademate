@@ -41,7 +41,7 @@
 			</button>
 
       <!-- show the dialog for the clicks -->
-      <body>
+      <body onload="error.showModal()">
     <button id="show-dialog" type="button" class="mdl-button">About</button>
   <dialog class="mdl-dialog">
     <h4 class="mdl-dialog__title">About</h4>
@@ -91,6 +91,11 @@
     <div class="page-content">
 			{% block stuffbelowheader %}
 			{% endblock %}
+
 		</div>
   </main>
 </div>
+<!-- _________________________________ footer section________________________-->
+	</body>
+
+</html>

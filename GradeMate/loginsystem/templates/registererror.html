@@ -1,0 +1,29 @@
+{% extends 'register.html' %}
+{% load static %}
+{% block errorcontent %}
+
+<dialog class="mdl-dialog" id="errormessage">
+	<h4 class="mdl-dialog__title">Error!</h4>
+	<div class="mdl-dialog__content">
+<p>Registration details invalid. That username may have already been used. Please
+	try again with a different username, and ensure no fields are left blank and your
+	password is strong enough.
+ </p>
+	</div>
+	<div class="mdl-dialog__actions">
+		<button type="button" class="mdl-button close">Close</button>
+	</div>
+</dialog>
+	<script src="javascript/dialog-polyfill.js"></script>
+<script>
+	var error = document.querySelector('#errormessage');
+	var showErrorButton = document.querySelector('#test');
+	if (! error.showModal) {
+		dialogPolyfill.registerDialog(error);
+	}
+	error.querySelector('.close').addEventListener('click', function() {
+		error.close();
+	});
+</script>
+
+{% endblock %}

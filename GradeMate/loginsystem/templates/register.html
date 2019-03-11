@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block formcontent %}
 {% load static %}
-
 			<form method="post" action="/register/">
 				<center><h2>Register</h2></center>
 {% csrf_token %}
@@ -18,5 +17,6 @@
 	Submit
 </button></center>
 			</form>
-
+			{% block errorcontent %}
+						{% endblock %}
 			{% endblock %}
