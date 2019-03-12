@@ -1,24 +1,31 @@
 p {
-    font-family: Georgia, "Times New Roman", Times, serif;
+    font-family: "Roboto", Georgia, "Times New Roman", Times, sans-serif;
+    margin-top: 30px;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 20px;
+
+  }
+
+#errormessage {
+  color: black;
 }
 
-updates {
-color: red
-}
-
-
-#navbar {
-background-image: url("backdrop.png");
-align-content: center;
-}
-
-body {
-
-background-image: linear-gradient(120deg, #4568dc, #b06ab3);
+#agreement {
+padding-top: "0px";
+background-image: linear-gradient(120deg, #a8468d, #a8468d) !important;
 background-attachment: fixed;
 height:100%;
 color: white;
-text-align: center;
+  text-align: justify;
+}
+
+
+body {
+padding-top: "0px";
+background-image: linear-gradient(120deg, #e2e2e2, #e2e2e2);
+background-attachment: fixed;
+height:100%;
 
 }
 
@@ -54,4 +61,8 @@ button {
 button:hover {
     background-color:lightblue;
     color: white;
+}
+
+h2 {
+  color:black;
 }
