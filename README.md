@@ -1,1 +1,1 @@
-Welcome to the project, this is where we will keep everything
+ENSURE you are running Python 2.7.5 or lower and django 1.6.12 or lower. 
