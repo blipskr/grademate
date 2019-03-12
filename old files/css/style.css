@@ -1,0 +1,57 @@
+p {
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+updates {
+color: red
+}
+
+
+#navbar {
+background-image: url("backdrop.png");
+align-content: center;
+}
+
+body {
+
+background-image: linear-gradient(120deg, #4568dc, #b06ab3);
+background-attachment: fixed;
+height:100%;
+color: white;
+text-align: center;
+
+}
+
+.box{
+border-style: none solid;
+border-width: thin;
+padding: 25px;
+box-sizing: border-box;
+}
+
+ #content{
+    word-wrap: break-word;
+    /*max-width: 500px;*/
+    display: inline-flex;
+}
+
+
+button {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    border-radius: 12px
+    background-color: pink;
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color:lightblue;
+    color: white;
+}
