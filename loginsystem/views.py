@@ -52,3 +52,7 @@ def profile_view(request):
     email = request.user.email
 
     return render(request, 'profile.html', { 'username':username, 'firstname':firstname, 'lastname':lastname, 'email':email})
+
+@login_required(login_url="/login/")
+def statistics_view(request):
+    return render(request, 'statistics.html')

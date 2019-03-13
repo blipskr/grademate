@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from mainsite import views as site
 from loginsystem import views as loginsystem
+from game import views as game
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 admin.autodiscover()
@@ -18,6 +19,12 @@ urlpatterns = patterns('',
     url(r'^logout/', loginsystem.logout_view),
     url(r'^profile/', loginsystem.profile_view),
     url(r'^agreement/', site.agreement),
+    url(r'^game/', game.gamepage_view),
+    url(r'^creategroup/', game.creategroup_view),
+    url(r'^entermarks/', game.entermarks_view),
+    url(r'^game/', game.gamepage_view),
+    url(r'^joingroup/', game.joingroup_view),
+    url(r'^statistics/', loginsystem.statistics_view),
 )
 
 urlpatterns += staticfiles_urlpatterns()
