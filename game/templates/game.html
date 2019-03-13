@@ -1,8 +1,7 @@
 {% extends 'header.html' %}
 {% block stuffbelowheader %}
 {% load static %}
-=======
-<!doctype html>
+<!DOCTYPE html>
 <!--
 Material Design Lite
 Copyright 2015 Google Inc. All rights reserved.
@@ -19,39 +18,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License
 -->
-<html lang="en">
-<head>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <title>Grademate</title>
 
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" sizes="192x192" href="images/android-desktop.png">
-
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Material Design Lite">
-  <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
-
-  <!-- Tile icon for Win8 (144x144 + tile color) -->
-  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-  <meta name="msapplication-TileColor" content="#3372DF">
-
-  <link rel="shortcut icon" href="images/favicon.png">
-
-  <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-  <!--
-  <link rel="canonical" href="http://www.example.com/">
--->
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
-<link rel="stylesheet" href="styles2.css">
+<link rel="stylesheet" href="game%20backup_files/css.css">
+<link rel="stylesheet" href="game%20backup_files/icon.css">
+<link rel="stylesheet" href="game%20backup_files/material.css">
+<link rel="stylesheet" href="game%20backup_files/styles2.css">
 <style>
 #view-source {
   position: fixed;
@@ -65,70 +43,14 @@ limitations under the License
 </style>
 </head>
 
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title"><a href="index.html"><img src="../images/grademate.png"  height="38" width="196" href="index.html"></a></span>
-      <!-- Add spacer, to align navigation to the right -->
-      <div class="mdl-layout-spacer"></div>
-      <!-- Navigation. We hide it in small screens. -->
-      <nav class="mdl-navigation mdl-layout--large-screen-only">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-          About
-        </button>
-        <br>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-          Contact
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-          Agreement/User Policy
-        </button>
+<body>
 
-        <!-- show the dialog for the clicks -->
-        <body>
 
-        </nav>
-      </div>
-    </header>
-    <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">Title</span>
-      <nav class="mdl-navigation">
-      </div>
-      <div class="mdl-layout__content">
-        <div class="page-content"><!-- Your content goes here --></div>
-      </div>
-    </div>
->>>>>>> Added forms.py and templates/game.html
+      <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header" style="height: 2000px;">
 
-    <body>
-      <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-        <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
-          <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title">Home</span>
-            <div class="mdl-layout-spacer"></div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-              <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-                <i class="material-icons">search</i>
-              </label>
-              <div class="mdl-textfield__expandable-holder">
-                <input class="mdl-textfield__input" type="text" id="search">
-                <label class="mdl-textfield__label" for="search">Enter your query...</label>
-              </div>
-            </div>
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
-              <i class="material-icons">more_vert</i>
-            </button>
-            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-              <li class="mdl-menu__item">About</li>
-              <li class="mdl-menu__item">Contact</li>
-              <li class="mdl-menu__item">Legal information</li>
-            </ul>
-          </div>
-        </header>
         <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
           <header class="demo-drawer-header">
-            <img src="images/user.jpg" class="demo-avatar">
+            <img src="game%20backup_files/user.jpg" class="demo-avatar">
             <div class="demo-avatar-dropdown">
               <span>username</span>
               <div class="mdl-layout-spacer"></div>
@@ -154,21 +76,21 @@ limitations under the License
           </nav>
         </div>
 
-  <div class="mdl-layout__content mdl-color--grey-100">
+  <main class="mdl-layout__content mdl-color--grey-100" style="overflow: hidden; height: 500px;">
     <div class="mdl-grid demo-content">
       <center><h3> Place Bet</h3></center>
-      <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 200px; position: relative;">
+      <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 300px; position: relative;">
           <div style="display: grid; width: auto;">
             <form action="#">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="sample3">
+                <input class="mdl-textfield__input" id="sample3" type="text">
                 <label class="mdl-textfield__label" for="sample3">Search by member</label>
               </div>
             </form>
 
             <form action="#">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="sample3">
+                <input class="mdl-textfield__input" id="sample3" type="text">
                 <label class="mdl-textfield__label" for="sample3">Search by exam</label>
               </div>
             </form>
@@ -179,16 +101,19 @@ limitations under the License
           </div>
       </div>
     </div>
-  </div>
+  </main>
 
-        <div class="mdl-layout__content mdl-color--grey-100">
+        <main class="mdl-layout__content mdl-color--grey-100" style="overflow: hidden; height: 400px;">
           <div class="mdl-grid demo-content">
             <!-- Expandable Textfield -->
 
 
-            <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 200px; position: relative;">
-
-              <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+            <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 400px; position: relative;">
+              <div>
+                  </div><div>
+                  </div><div>
+                  </div><div>
+                  </div><table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="width: fill-parent;">
                 <thead>
                   <tr>
                     <th class="mdl-data-table__cell--non-numeric">Exam</th>
@@ -197,32 +122,6 @@ limitations under the License
                   </tr>
                 </thead>
                 <tbody>
-
-        <!-- IMPLEMENTING ENTERING BETS FORM-->
-
-        <div class="mdl-grid center-items">
-
-        			<form method="post">
-        <center><h2>Login</h2></center>
-        {% csrf_token %}
-        {% for field in form %}
-        				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        		<label class="mdl-textfield__label">{{ field.label }}</label>
-        				{{ field }}
-        	</div>
-        <br>
-        {% endfor %}
-        <br>
-        <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
-        	Submit
-        </button></center>
-        		</div>
-        		</div>
-        		</div>
-
-          <!-- IMPLEMENTING ENTERING BETS FORM-->
-
-                  <div>
                   <tr>
                     <td class="mdl-data-table__cell--non-numeric">Java</td>
                     <td>Username/Name</td>
@@ -230,16 +129,15 @@ limitations under the License
                       <div style="display: inline;">
                         <form action="#">
                           <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" type="text" id="sample1">
+                            <input class="mdl-textfield__input" id="sample1" type="text">
                             <label class="mdl-textfield__label" for="sample1">Text...</label>
                           </div>
                         </form>
                       </div>
                     </td>
                   </tr>
-                </div>
 
-                  <div>
+
                   <tr>
                     <td class="mdl-data-table__cell--non-numeric">Java</td>
                     <td>Username/Name</td>
@@ -247,16 +145,15 @@ limitations under the License
                       <div style="display: inline;">
                         <form action="#">
                           <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" type="text" id="sample1">
+                            <input class="mdl-textfield__input" id="sample1" type="text">
                             <label class="mdl-textfield__label" for="sample1">Text...</label>
                           </div>
                         </form>
                       </div>
                     </td>
                   </tr>
-                </div>
 
-                  <div>
+
                   <tr>
                     <td class="mdl-data-table__cell--non-numeric">Java</td>
                     <td>Username/Name</td>
@@ -264,16 +161,15 @@ limitations under the License
                       <div style="display: inline;">
                         <form action="#">
                           <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" type="text" id="sample1">
+                            <input class="mdl-textfield__input" id="sample1" type="text">
                             <label class="mdl-textfield__label" for="sample1">Text...</label>
                           </div>
                         </form>
                       </div>
                     </td>
                   </tr>
-                </div>
 
-                  <div>
+
                   <tr>
                     <td class="mdl-data-table__cell--non-numeric">Java</td>
                     <td>Username/Name</td>
@@ -281,14 +177,14 @@ limitations under the License
                       <div style="display: inline;">
                         <form action="#">
                           <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" type="text" id="sample1">
+                            <input class="mdl-textfield__input" id="sample1" type="text">
                             <label class="mdl-textfield__label" for="sample1">Text...</label>
                           </div>
                         </form>
                       </div>
                     </td>
                   </tr>
-                </div>
+
 
                 </tbody>
               </table>
@@ -299,14 +195,14 @@ limitations under the License
               Save Changes
             </button>
           </div>
-        </div>
+        </main>
 
-        <div class="mdl-layout__content mdl-color--grey-100">
+        <main class="mdl-layout__content mdl-color--grey-100" style="overflow: hidden; height: 500px;">
           <div class="mdl-grid demo-content">
             <center><h3> Current Game Stats</h3></center>
-            <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 200px; position: relative;">
+            <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 400px; position: relative;">
               <p>See the average bet on you per exam.</p>
-              <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+              <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="width: fill-parent;">
                 <thead>
                   <tr>
                     <th class="mdl-data-table__cell--non-numeric">Exam</th>
@@ -344,14 +240,14 @@ limitations under the License
               </table>
             </div>
           </div>
-        </div>
+        </main>
 
-        <div class="mdl-layout__content mdl-color--grey-100">
+        <main class="mdl-layout__content mdl-color--grey-100" style="overflow: hidden; height: 400px;">
           <div class="mdl-grid demo-content">
             <center><h3> Leaderboard</h3></center>
-            <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 200px; position: relative;">
+            <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 300px; position: relative;">
               <p>Updated at the end of each season.</p>
-              <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+              <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="width: fill-parent;">
                 <thead>
                   <tr>
                     <th class="mdl-data-table__cell--non-numeric">User</th>
@@ -378,7 +274,7 @@ limitations under the License
               </table>
             </div>
           </div>
-        </div>
+        </main>
 
         <style type="text/css">
         .mdl-cell {
@@ -392,6 +288,7 @@ limitations under the License
 
       </div>
 
-    </body>
-    </html>
-    {% endblock %}
+
+
+</body></html>
+  {% endblock %}
