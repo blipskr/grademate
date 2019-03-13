@@ -8,12 +8,11 @@ from models import Result, Exam, GroupMember
 def creategroup_view(request):
     userName = request.user.username
     userId = User.objects.filter(username=userName).values('id')
-    userGroups = GroupMember.objects.filter(userId).values('group_id').distinct()
+    userGroups = GroupMember.objects.filter(user=userId).values('group_id').distinct()
     userExams = []
-    for group in userGroups:
-        groupExams = GroupMember.objects.filter(userId).values('group_id').distinct()
-
-
+    for aGroup in userGroups:
+        groupExams = Exam.objects.filter(group=aGroup).values('group_id').distinct()
+        userExams.extend(groupExams)
 
     return render(request, 'creategroup.html')
 
