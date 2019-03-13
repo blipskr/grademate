@@ -1,11 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class User(models.Model):
-    user_id = models.CharField('User ID', max_length=10, primary_key=True)
-    user_name = models.CharField('User Name', max_length=20)
-
-    def __unicode__(self):
-        return self.user_name
 
 class Group(models.Model):
     group_id = models.CharField('Group ID', max_length=10, primary_key=True)
