@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Group(models.Model):
-    group_id = models.CharField('Group ID', max_length=10, primary_key=True)
+    group_id = models.AutoField('Group ID', primary_key=True)
     group_name = models.CharField('Group Name', max_length=20)
 
     def __unicode__(self):
@@ -18,14 +18,14 @@ class GroupMember(models.Model):
         return self.user
 
 class Exam(models.Model):
-    exam_id = models.CharField('Exam ID', max_length=10, primary_key=True)
+    exam_id = models.AutoField('Exam ID', primary_key=True)
     group = models.ForeignKey(Group)
 
     def __unicode__(self):
         return self.exam_id
 
 class Bet(models.Model):
-    bet_id = models.CharField('Bet ID', max_length=10, primary_key=True)
+    bet_id = models.AutoField('Bet ID', primary_key=True)
     exam = models.ForeignKey(Exam)
     user = models.ForeignKey(User, related_name='creator')
     target = models.ForeignKey(User, related_name='target')
