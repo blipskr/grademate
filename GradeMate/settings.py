@@ -41,7 +41,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'mainsite',
     'loginsystem',
+<<<<<<< HEAD
     'game',
+=======
+    'game'
+>>>>>>> Models created and syncdb initiated
 )
 
 MIDDLEWARE_CLASSES = (
