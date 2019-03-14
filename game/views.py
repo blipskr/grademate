@@ -1,7 +1,8 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from models import Result, Exam, GroupMember
+from forms import EnterBetForm
+from models import Result, Exam, GroupMember, Bet
 
 # Create your views here.
 @login_required(login_url="/login/")
@@ -22,7 +23,21 @@ def entermarks_view(request):
 
 @login_required(login_url="/login/")
 def gamepage_view(request):
-    return render(request, 'game.html')
+    if request.method == 'POST':
+        betForm = EnterBetForm(request.POST)
+        if betForm.is_valid():
+            targetInForm = betForm.cleaned_data['user']
+            examInForm = betForm.cleaned_data['exam']
+            markInForm = betForm.cleaned_data['mark']
+            examObject = Exam.objects.get(exam_id=examInForm)
+            targetObject = User.objects.get(id=targetInForm)
+            userObject = User.objects.get(id=request.user.id)
+            betObject = Bet(exam = examObject, target = targetObject, user = userObject, guess_mark = markInForm)
+            betObject.save()
+        return redirect('game.html')
+    else:
+        betForm = EnterBetForm()
+    return render(request, 'game.html', {'betForm': betForm})
 
 @login_required(login_url="/login/")
 def joingroup_view(request):

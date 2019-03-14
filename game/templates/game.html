@@ -80,7 +80,22 @@ limitations under the License
     <div class="mdl-grid demo-content">
       <center><h3> Place Bet</h3></center>
       <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 300px; position: relative;">
-          <div style="display: grid; width: auto;">
+          <div style="display: inline-grid; width: auto;">
+
+            <form method="post" action="game.html">
+              {% csrf_token %}
+              {% for field in betForm %}
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label">{{ field.label }}</label>
+                {{ field }}
+              </div>
+              <br>
+              {% endfor %}
+              <br>
+              <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
+                Place a bet
+              </button></center>
+<!-- Original HTML forms
             <form action="#">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" id="sample3" type="text">
@@ -98,6 +113,7 @@ limitations under the License
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
               Update
             </button>
+Original HTML forms end -->
           </div>
       </div>
     </div>
