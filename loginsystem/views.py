@@ -45,13 +45,7 @@ def logout_view(request):
 
 @login_required(login_url="/login/")
 def profile_view(request):
-    user = request.user
-    username = request.user.username
-    firstname = request.user.first_name
-    lastname = request.user.last_name
-    email = request.user.email
-
-    return render(request, 'profile.html', { 'username':username, 'firstname':firstname, 'lastname':lastname, 'email':email})
+    return render(request, 'profile.html',)
 
 @login_required(login_url="/login/")
 def statistics_view(request):

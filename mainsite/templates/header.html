@@ -45,10 +45,11 @@
       </nav>
     </div>
   </header>
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Title</span>
-  </div>
-
+					{% if user.is_authenticated %}
+<div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+{% include "sidebar.html" %}
+</div>
+				{% endif %}
   <main class="mdl-layout__content">
     <div class="page-content">
 			{% block stuffbelowheader %}

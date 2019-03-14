@@ -1,0 +1,19 @@
+{% extends 'header.html' %}
+
+{% load static %}
+
+{% block stuffbelowheader %}
+<body>
+  <br>
+  <br>
+  <br>
+  <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick="window.location='/creategroup/'">
+    Create Group
+  </button></center>
+  <br>
+  <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick="window.location='/joingroup/'">
+    Join Group
+  </button></center>
+</body>
+
+{% endblock %}

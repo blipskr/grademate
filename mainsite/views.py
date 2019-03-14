@@ -6,3 +6,6 @@ def index(request):
 
 def agreement(request):
     return render(request, 'agreement.html')
+
+def mygroups(request):
+    return render(request, 'mygroups.html')

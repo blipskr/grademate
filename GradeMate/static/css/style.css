@@ -66,3 +66,8 @@ button:hover {
 h2 {
   color:black;
 }
+
+
+.mdl-navigation__link {
+  color: white !important;
+}
