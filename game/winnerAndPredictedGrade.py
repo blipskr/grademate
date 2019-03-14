@@ -33,7 +33,7 @@ try:
       currentGuesses += 1
     result = math.trunc(round(float(currentSum) / currentGuesses, 2))
     return result
-    
+
   # take exam mark (arguments are passed to a function)
   def decideRewardWinner(targetMark, targetID, examID):
     smallestDifference = 100;
@@ -81,7 +81,7 @@ try:
 except Error as e:
   print ("Error while connecting to MySQL", e)
 
-finally:
-  if (mydb.is_connected()):
+#finally:
+  #if (mydb.is_connected()):
     #mydb.close()
     #print("MySQL connection is closed")
