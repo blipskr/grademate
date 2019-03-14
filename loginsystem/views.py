@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from forms import RegisterForm, LoginForm
+from forms import RegisterForm, LoginForm, AccountEditForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -50,3 +50,15 @@ def profile_view(request):
 @login_required(login_url="/login/")
 def statistics_view(request):
     return render(request, 'statistics.html')
+
+@login_required(login_url="/login/")
+def accountsettings_view(request):
+    if request.method == 'POST':
+        form = AccountEditForm(data=request.POST, instance=request.user)
+        update = form.save(commit=False)
+        update.user = request.user
+        update.save()
+    else:
+        form = AccountEditForm()
+
+    return render(request, 'accountsettings.html', {'form': form})

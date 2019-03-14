@@ -1,17 +1,12 @@
-{% extends 'header.html' %}
-{% block stuffbelowheader %}
+{% extends 'standardlayout.html' %}
+{% block content %}
 {% load static %}
 
 <!-- select exam -->
-<br>
-<br>
-<br>
 
+<div class="markEntry">
+  <h1><center>Join Group</center></h1>
 
-<h1 style="top: 20%; position: relative;"><center>Join Group</center></h1>
-
-
-<div class="markEntry" style="justify-content: center; align-items: center;  display: grid; ">
     <form action="#">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
           <input class="mdl-textfield__input" type="text" id="sample3">
@@ -30,9 +25,9 @@
 
 
 <!-- Raised button with ripple -->
-<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+<center><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
   Join
-</button>
+</button></center>
 
 </div>
  <style>.markEntry{

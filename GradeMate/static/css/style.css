@@ -4,7 +4,7 @@ p {
     margin-left: 15%;
     margin-right: 15%;
     margin-bottom: 20px;
-
+    text-align: center;
   }
 
 #errormessage {
@@ -70,4 +70,12 @@ h2 {
 
 .mdl-navigation__link {
   color: white !important;
+}
+
+th {
+  align: center;
+}
+
+#stats p {
+    text-align: center;
 }

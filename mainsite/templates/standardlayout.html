@@ -1,0 +1,27 @@
+{% extends 'header.html' %}
+
+{% load static %}
+{% block stuffbelowheader %}
+
+<!--- ErrorMessage for already registered user --->
+
+<!--- Register PHP --->
+<div class="mdl-layout mdl-js-layout"
+<main class="mdl-layout__content">
+	<div class="page-content">
+		<style>
+    .mdl-grid.center-items {
+      justify-content: center;
+    }
+</style>
+
+<!--- Register Form --->
+<div class="mdl-grid center-items">
+
+	{% block content %}
+{% endblock %}
+		</div>
+		</div>
+
+
+{% endblock %}
