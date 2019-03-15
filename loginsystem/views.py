@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from forms import RegisterForm, LoginForm, AccountEditForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 # Create your views here.
 
@@ -53,12 +54,19 @@ def statistics_view(request):
 
 @login_required(login_url="/login/")
 def accountsettings_view(request):
+    wrongfielderror = 'accountsettingswrongfielderror.html'
     if request.method == 'POST':
         form = AccountEditForm(data=request.POST, instance=request.user)
-        update = form.save(commit=False)
-        update.user = request.user
-        update.save()
+        if form.is_valid():
+            password = form.cleaned_data['password1']
+            editUser = authenticate(username=request.user.username, password=password)
+            if editUser is not None:
+                form.save()
+                return redirect('/profile/')
+            else:
+                return render(request, 'accountsettingsautherror.html', { 'form': form, })
+        else:
+            return render(request, 'accountsettingswrongfielderror.html', { 'form': form })
     else:
         form = AccountEditForm()
-
-    return render(request, 'accountsettings.html', {'form': form})
+        return render(request, 'accountsettings.html', {'form': form})

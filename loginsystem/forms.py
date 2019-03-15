@@ -40,16 +40,18 @@ class LoginForm(AuthenticationForm):
             self.fields['password'].widget = forms.PasswordInput(attrs={'class' : 'mdl-textfield__input'})
 
 class AccountEditForm(forms.ModelForm):
+    password1 = forms.CharField(required = True, label="Password")
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email',]
+        fields = ('first_name', 'last_name', 'email', 'password1')
 
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
 
         for fieldname in ['first_name', 'last_name', 'email',]:
             self.fields[fieldname].help_text = None
-            
+
         self.fields['first_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'username'})
         self.fields['last_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'firstname'})
         self.fields['email'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'lastname'})
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'password1'})
