@@ -94,26 +94,7 @@ limitations under the License
               <br>
               <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
                 Place a bet
-              </button></center>
-<!-- Original HTML forms
-            <form action="#">
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" id="sample3" type="text">
-                <label class="mdl-textfield__label" for="sample3">Search by member</label>
-              </div>
-            </form>
-
-            <form action="#">
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" id="sample3" type="text">
-                <label class="mdl-textfield__label" for="sample3">Search by exam</label>
-              </div>
-            </form>
-
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-              Update
-            </button>
-Original HTML forms end -->
+              </button></center></form>
           </div>
       </div>
     </div>
@@ -124,7 +105,7 @@ Original HTML forms end -->
             <!-- Expandable Textfield -->
 
 
-            <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 400px; position: relative;">
+            <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; min-height:200px; position: relative;">
               <div>
                   </div><div>
                   </div><div>
@@ -138,78 +119,37 @@ Original HTML forms end -->
                   </tr>
                 </thead>
                 <tbody>
+
+                  <form method="post" action="game.html">
+                  {% csrf_token %}
+                  {% if yourBetsList %}
+                  {% for label in yourBetsList %}
+                  {% for form in updateBetForm %}
                   <tr>
-                    <td class="mdl-data-table__cell--non-numeric">Java</td>
-                    <td>Username/Name</td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ label.exam }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ label.target_id }}</td>
                     <td>
                       <div style="display: inline;">
-                        <form action="#">
-                          <div class="mdl-textfield mdl-js-textfield">
+                        <div class="mdl-textfield mdl-js-textfield">
                             <input class="mdl-textfield__input" id="sample1" type="text">
-                            <label class="mdl-textfield__label" for="sample1">Text...</label>
+                            <label class="mdl-textfield__label" for="sample1">{{label.guess_mark}}{{ form.label }}</label>
                           </div>
-                        </form>
                       </div>
                     </td>
                   </tr>
-
-
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">Java</td>
-                    <td>Username/Name</td>
-                    <td>
-                      <div style="display: inline;">
-                        <form action="#">
-                          <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" id="sample1" type="text">
-                            <label class="mdl-textfield__label" for="sample1">Text...</label>
-                          </div>
-                        </form>
-                      </div>
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">Java</td>
-                    <td>Username/Name</td>
-                    <td>
-                      <div style="display: inline;">
-                        <form action="#">
-                          <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" id="sample1" type="text">
-                            <label class="mdl-textfield__label" for="sample1">Text...</label>
-                          </div>
-                        </form>
-                      </div>
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">Java</td>
-                    <td>Username/Name</td>
-                    <td>
-                      <div style="display: inline;">
-                        <form action="#">
-                          <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" id="sample1" type="text">
-                            <label class="mdl-textfield__label" for="sample1">Text...</label>
-                          </div>
-                        </form>
-                      </div>
-                    </td>
-                  </tr>
-
-
+                  {% endfor %}
+                  {% endfor %}
+                  {% else %}
+                  <tr>You have not placed any bets yet.</tr>
+                  {% endif %}
                 </tbody>
               </table>
               <!-- Raised button with ripple -->
-
+              <br>
+              <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
+                Update your bets
+              </button></center></form>
             </div>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="position: relative; left: 40%;">
-              Save Changes
-            </button>
           </div>
         </main>
 
