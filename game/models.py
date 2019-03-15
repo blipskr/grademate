@@ -36,6 +36,13 @@ class Bet(models.Model):
     def __unicode__(self):
         return self.bet_id
 
+class ExamStats(models.Model):
+    id = models.AutoField('Exam Stats ID', primary_key=True)
+    exam = models.ForeignKey(Exam)
+    average_bet = models.PositiveIntegerField('Average bet')
+    no_of_bets = models.PositiveIntegerField('No of bets')
+
+
 class Result(models.Model):
     exam = models.ForeignKey(Exam)
     user = models.ForeignKey(User)

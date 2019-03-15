@@ -216,8 +216,12 @@ Original HTML forms end -->
         <main class="mdl-layout__content mdl-color--grey-100" style="overflow: hidden; height: 500px;">
           <div class="mdl-grid demo-content">
             <center><h3> Current Game Stats</h3></center>
+            <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; min-height:200px; position: relative;">
+            <!-- height:400px is not necessary
             <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 400px; position: relative;">
+            The following paragraph is not necessary
               <p>See the average bet on you per exam.</p>
+              End of unnecessary HTML            -->
               <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="width: fill-parent;">
                 <thead>
                   <tr>
@@ -227,6 +231,19 @@ Original HTML forms end -->
                   </tr>
                 </thead>
                 <tbody>
+                  {% csrf_token %}
+                  {% if betsListOnYou %}
+                  {% for element in betsListOnYou %}
+                  <tr>
+                    <td class="mdl-data-table__cell--non-numeric">{{ element.exam }}</td>
+                    <td>{{ element.average_bet }}</td>
+                    <td>{{ element.no_of_bets }}</td>
+                  </tr>
+                  {% endfor %}
+                  {% else %}
+                  <tr>No one has placed bet on you</tr>
+                  {% endif %}
+                  <!-- ORIGINAL BETS ON YOU TABLE
                   <tr>
                     <td class="mdl-data-table__cell--non-numeric"> Java</td>
                     <td>53.7</td>
@@ -252,6 +269,7 @@ Original HTML forms end -->
                     <td>53.7</td>
                     <td>14</td>
                   </tr>
+                ORIGINAL BETS ON YOU TABLE-->
                 </tbody>
               </table>
             </div>
