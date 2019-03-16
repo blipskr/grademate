@@ -20,7 +20,7 @@ class EnterBetForm(forms.ModelForm):
 
 class UpdateBetForm(forms.Form):
     mark = forms.IntegerField(label='', max_value=100, min_value=0)
-
+    target = forms.charField(choices=USERS)
     class Meta:
         model = Bet
         fields = ('exam', 'target', 'guess_mark', 'user')
