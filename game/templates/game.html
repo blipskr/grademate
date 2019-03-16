@@ -6,7 +6,7 @@
   <div class="mdl-grid center-items">
         <div class="mdl-cell mdl-cell--2-col"></div>
     <div class="mdl-cell mdl-cell--4-col">
-      <center><h3> Place Bet</h3>
+      <center><h3>Make Prediction</h3>
         <form method="post" action="/game/{{ group }}/">
               {% csrf_token %}
               {% for field in betForm %}
@@ -18,13 +18,13 @@
               {% endfor %}
               <br>
               <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
-                Place a bet
+                Submit Prediction
               </button></center></form>
 </center>
     </div>
 
             <div class="demo-charts mdl-cell mdl-cell--4-col" style="position: relative;">
-                  <center><h3>Change Bet</h3>
+                  <center><h3>Change Prediction</h3>
               <div>
                   </div><div>
                   </div><div>
@@ -34,7 +34,7 @@
                   <tr>
                     <th class="mdl-data-table__cell--non-numeric">Exam</th>
                     <th>Member</th>
-                    <th>Bet Field</th>
+                    <th>Predicted Mark</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -66,7 +66,7 @@
               <!-- Raised button with ripple -->
               <br>
               <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
-                Update your bets
+                Update your predictions
               </button></center></form>
             </center>
 
@@ -84,8 +84,8 @@
                 <thead>
                   <tr>
                     <th class="mdl-data-table__cell--non-numeric">Exam</th>
-                    <th>Average Bet</th>
-                    <th>No of Bets</th>
+                    <th>Predicted Mark</th>
+                    <th>No of Guess</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -1,6 +1,8 @@
 from django import forms
 from models import Bet, Result
 from django.contrib.auth.models import User
+import dbqueries as query
+
 
 
 class EnterBetForm(forms.ModelForm):
@@ -11,7 +13,7 @@ class EnterBetForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(EnterBetForm, self).__init__(*args, **kwargs)
-        self.fields['guess_mark'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'guess_mark  '})
+        self.fields['guess_mark'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'guess_mark'})
 
 
 
