@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from forms import EnterBetForm, UpdateBetForm
-from models import Result, Exam, GroupMember, Bet
+from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import math
 
@@ -57,22 +57,39 @@ def processUpdateBetForm(request, betForm):
     markInForm = betForm.cleaned_data['mark']
     yourBets = Bet.objects.filter(user=request.user.id)
 
-# Create your views here.
 @login_required(login_url="/login/")
 def creategroup_view(request):
-    userName = request.user.username
-    userId = User.objects.filter(username=userName).values('id')
-    userGroups = GroupMember.objects.filter(user=userId).values('group_id').distinct()
+    return render(request, 'creategroup.html')
+
+# Returns list of user's group IDs which he is a member of.
+def retrieveUserGroupIds(userId):
+    userGroupsObject = GroupMember.objects.filter(user=userId).values('group_id')
+    userGroupIdsList = []
+    for element in userGroupsObject:
+        groupId = element['group_id']
+        userGroupIdsList.append(groupId)
+    return userGroupIdsList
+
+# Takes a list of groupIds and returns a list of corresponding groupnames
+def extractGroupNames(groupIds):
+    listOfGroupNames = []
+    for groupId in groupIds:
+        groupObject = Group.objects.filter(group_id=groupId).values('group_name')
+        groupName = groupObject[0]['group_name']
+        listOfGroupNames.append(groupName)
+    return listOfGroupNames
+
+@login_required(login_url="/login/")
+def entermarks_view(request):
+    retrieveUserGroups
+    userId = request.user.id
+    extractGroupNames(retrieveUserGroupIds(userId))
+    for
     userExams = []
     for aGroup in userGroups:
         groupExams = Exam.objects.filter(group=aGroup).values('group_id').distinct()
         userExams.extend(groupExams)
-
-    return render(request, 'creategroup.html')
-
-@login_required(login_url="/login/")
-def entermarks_view(request):
-    return render(request, 'entermarks.html')
+    return render(request, 'entermarks.html', )
 
 @login_required(login_url="/login/")
 def gamepage_view(request):
