@@ -50,15 +50,19 @@ def createExamStats(betsObject):
 def processEnterBetForm(request, betForm):
     targetInForm = betForm['target']
     examInForm = betForm['exam']
+    betForm2 = betForm.save(commit=False)
+    betForm2.user = request.user
+    print betForm2.user
     if targetInForm != request.user.id:
-        print betForm.errors
         if betForm.is_valid():
-            betForm.save()
+            betForm2.save()
 
 # method takes request and betForm, processes UpdateBetForm
 def processUpdateBetForm(request, betForm):
     markInForm = betForm['mark']
     yourBets = Bet.objects.filter(user=request.user.id)
+    if betForm.is_valid():
+        betForm.save()
 
 
 @login_required(login_url="/login/")
@@ -129,18 +133,16 @@ def gamepage_view(request, gamename):
         enterBetForm = EnterBetForm()
         relevantExams = []
         unprocessedExams = Exam.objects.filter(group_id=groupid).values('exam_id')
-        print unprocessedExams
         numberofExams = 0
         for exam in unprocessedExams:
             currentexam = unprocessedExams[numberofExams]['exam_id']
             relevantExams.append(currentexam)
             numberofExams = numberofExams + 1
-        print 'groupid: ' + str(groupid)
-        print 'relevantexams: ' + str(relevantExams)
         yourBets = Bet.objects.filter(user=request.user.id, exam_id__in=relevantExams)
         updateBetForm = UpdateBetForm()
         betsObject = Bet.objects.filter(target=request.user.id)
         examStatsObject = createExamStats(betsObject)
+
         return render(request, 'game.html', {'yourBetsList': yourBets, 'updateBetForm': updateBetForm, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
 
 @login_required(login_url="/login/")

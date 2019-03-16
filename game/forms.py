@@ -7,10 +7,12 @@ class EnterBetForm(forms.ModelForm):
 
     class Meta:
         model = Bet
-        fields = ('exam', 'target', 'guess_mark', 'user')
+        fields = ('exam', 'target', 'guess_mark',)
 
     def __init__(self, *args, **kwargs):
         super(EnterBetForm, self).__init__(*args, **kwargs)
+
+
 
 
 
@@ -19,7 +21,7 @@ class UpdateBetForm(forms.Form):
 
     class Meta:
         model = Bet
-        fields = ('exam', 'target', 'guess_mark',)
+        fields = ('exam', 'target', 'guess_mark', 'user')
 
     def __init__(self, *args, **kwargs):
         super(UpdateBetForm, self).__init__(*args, **kwargs)
