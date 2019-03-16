@@ -129,10 +129,14 @@ def gamepage_view(request, gamename):
         enterBetForm = EnterBetForm()
         relevantExams = []
         unprocessedExams = Exam.objects.filter(group_id=groupid).values('exam_id')
+        print unprocessedExams
+        numberofExams = 0
         for exam in unprocessedExams:
-            currentexam = unprocessedExams[0]['exam_id']
+            currentexam = unprocessedExams[numberofExams]['exam_id']
             relevantExams.append(currentexam)
-
+            numberofExams = numberofExams + 1
+        print 'groupid: ' + str(groupid)
+        print 'relevantexams: ' + str(relevantExams)
         yourBets = Bet.objects.filter(user=request.user.id, exam_id__in=relevantExams)
         updateBetForm = UpdateBetForm()
         betsObject = Bet.objects.filter(target=request.user.id)
