@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from forms import EnterBetForm, UpdateBetForm
+from forms import EnterBetForm, UpdateBetForm, EnterMarksForm
 from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import math
@@ -85,17 +85,37 @@ def extractGroupNames(groupIds):
         listOfGroupNames.append(groupName)
     return listOfGroupNames
 
+# takes a name of group and returns its id
 def extractGroupId(groupName):
-    groupObject = Group.objects.filter(group_name=groupName).values('group_id')
-    groupId = groupObject[0]['group_id']
+    groupObject = Group.objects.get(group_name=groupName)
+    groupId = groupObject.group_id
     return groupId
+
+# takes an id of a group ans returns its name
+def extractGroupName(groupId):
+    groupObject = Group.objects.get(group_id=groupId)
+    groupName = groupObject.group_name
+    return groupName
+
+# takes an id of a group and returns all the exam names associated with the group
+def retrieveGroupExams(groupId):
+    examObjects = Exam.objects.filter(group=groupId).values('exam_name')
+    listOfExamNames = []
+    for examObject in examObjects:
+        examName = examObject['exam_name']
+        listOfExamNames.append(examName)
+    return listOfExamNames
+
 
 @login_required(login_url="/login/")
 def entermarks_view(request):
     userId = request.user.id
-    extractGroupNames(retrieveUserGroupIds(userId))
-    userExams = []
-    return render(request, 'entermarks.html', )
+    userGroups = extractGroupNames(retrieveUserGroupIds(userId))
+    groupExams = retrieveGroupExams(1) # hardcoded data for now !!!CHANGE
+
+
+    return render(request, 'entermarks.html', {'MarksForm' : EnterMarksForm})
+
 
 @login_required(login_url="/login/")
 def gamepage_view(request, game):
