@@ -13,7 +13,23 @@
 <center>
 
 <!-- Select with floating label and arrow -->
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+    <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">-->
+        <form method="post" action="POST">
+        {% csrf_token %}
+        {% csrf_token %}
+        {% for field in MarksForm %}
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <label class="mdl-textfield__label">{{ field.label }}</label>
+          {{ field }}
+        </div>
+        <br>
+        {% endfor %}
+        <br>
+        <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
+          Place a bet
+        </button></center></form>
+        <br>
+
         <input type="text" value="" class="mdl-textfield__input" id="exam" readonly>
         <input type="hidden" value="" name="sample4">
         <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
@@ -23,10 +39,11 @@
             <li class="mdl-menu__item" data-val="BLR">Fundamentals of Distributed Systems</li>
             <li class="mdl-menu__item" data-val="RUS">Fundamentals of Artificial Intelligence</li>
         </ul>
-    </div>
+    <!--</div>-->
 
 <!-- Numeric Textfield -->
 <form action="#">
+    {% csrf_token %}
     <div class="mdl-textfield mdl-js-textfield">
       <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample2">
       <label class="mdl-textfield__label" for="sample2" style="color:black">Mark...</label>
