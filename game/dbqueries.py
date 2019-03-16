@@ -105,3 +105,17 @@ def getGroups(request):
     userId = request.user.id
     groups = extractGroupNames(retrieveUserGroupIds(userId))
     return groups
+
+# Takes a name of the group and returns list of tuples containing userIds and usernames respectively
+def extractUserNames(groupName)
+    groupId = Group.objects.get(group_name=groupName).group_id
+    groupMemberObjects = GroupMember.objects.filter(group=groupId).values('user_id')
+    userIdsList = []
+    for groupObject in groupMemberObjects:
+        userId = groupObject['user_id']
+        userIdsList.append(userId)
+    listOfTuples = []
+    for userId in userIdsList:
+        userName = User.objects.get(pk=userId).username
+        listOfTuples.append((userId, userName))
+    return listOfTuples
