@@ -79,3 +79,6 @@ th {
 #stats p {
     text-align: center;
 }
+.mdl-list__item-primary-content {
+    align: center !important;
+}

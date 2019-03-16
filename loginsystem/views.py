@@ -54,7 +54,6 @@ def statistics_view(request):
 
 @login_required(login_url="/login/")
 def accountsettings_view(request):
-    wrongfielderror = 'accountsettingswrongfielderror.html'
     if request.method == 'POST':
         form = AccountEditForm(data=request.POST, instance=request.user)
         if form.is_valid():
@@ -68,5 +67,5 @@ def accountsettings_view(request):
         else:
             return render(request, 'accountsettingswrongfielderror.html', { 'form': form })
     else:
-        form = AccountEditForm()
+        form = AccountEditForm(initial={'first_name': request.user.first_name, 'last_name': request.user.last_name, 'email': request.user.email })
         return render(request, 'accountsettings.html', {'form': form})

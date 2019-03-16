@@ -53,5 +53,5 @@ class AccountEditForm(forms.ModelForm):
 
         self.fields['first_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'username'})
         self.fields['last_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'firstname'})
-        self.fields['email'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'lastname'})
+        self.fields['email'].widget = forms.EmailInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'lastname'})
         self.fields['password1'].widget = forms.PasswordInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'password1'})
