@@ -21,9 +21,10 @@ class GroupMember(models.Model):
 class Exam(models.Model):
     exam_id = models.AutoField('Exam ID', primary_key=True)
     group = models.ForeignKey(Group)
+    exam_name = models.CharField('Exam Name', max_length=40)
 
     def __unicode__(self):
-        return self.exam_id
+        return self.exam_name
 
 class Bet(models.Model):
     bet_id = models.AutoField('Bet ID', primary_key=True)
