@@ -11,7 +11,7 @@ class EnterBetForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(EnterBetForm, self).__init__(*args, **kwargs)
-
+        self.fields['guess_mark'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'guess_mark  '})
 
 
 
