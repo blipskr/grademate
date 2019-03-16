@@ -7,7 +7,7 @@
         <div class="mdl-cell mdl-cell--3-col"></div>
     <div class="mdl-cell mdl-cell--3-col">
       <center><h3> Place Bet</h3>
-            <form method="post" action="game.html">
+        <form method="post" action="/game/{{ group }}/">
               {% csrf_token %}
               {% for field in betForm %}
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -39,7 +39,7 @@
                 </thead>
                 <tbody>
 
-                  <form method="post" action="game.html">
+                  <form method="post" action="/game/{{ group }}/">
                   {% csrf_token %}
                   {% if yourBetsList %}
                   {% for label in yourBetsList %}

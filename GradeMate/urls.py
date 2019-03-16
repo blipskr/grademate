@@ -19,14 +19,13 @@ urlpatterns = patterns('',
     url(r'^logout/', loginsystem.logout_view),
     url(r'^profile/', loginsystem.profile_view),
     url(r'^agreement/', site.agreement),
-    url(r'^game/', game.gamepage_view),
     url(r'^creategroup/', game.creategroup_view),
     url(r'^entermarks/', game.entermarks_view),
-    url(r'^game/(?P<game>\w{0,50})/$', game.gamepage_view),
     url(r'^joingroup/', game.joingroup_view),
     url(r'^statistics/', loginsystem.statistics_view),
     url(r'^mygroups/', site.mygroups),
     url(r'^accountsettings/', loginsystem.accountsettings_view),
+    url(r'^game/(?P<gamename>\w+)/$', game.gamepage_view ),
 )
 
 urlpatterns += staticfiles_urlpatterns()

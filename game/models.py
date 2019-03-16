@@ -29,7 +29,7 @@ class Exam(models.Model):
 class Bet(models.Model):
     bet_id = models.AutoField('Bet ID', primary_key=True)
     exam = models.ForeignKey(Exam)
-    user = models.ForeignKey(User, related_name='creator')
+    user = models.ForeignKey(User, related_name='creator',)
     target = models.ForeignKey(User, related_name='target')
     guess_mark = models.PositiveIntegerField('Guessed Mark')
     win = models.NullBooleanField('Winning Bet', default=None, blank=True)
