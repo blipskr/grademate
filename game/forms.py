@@ -4,7 +4,7 @@ from models import Bet
 class EnterBetForm(forms.Form):
     user = forms.CharField(label='Username', max_length=100)
     exam = forms.CharField(label='Exam', max_length=100)
-    mark = forms.IntegerField(label='Mark Estimate', max_value=100, min_value=1)
+    mark = forms.IntegerField(label='Mark Estimate', max_value=100, min_value=0)
 
     class Meta:
         model = Bet
