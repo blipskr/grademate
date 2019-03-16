@@ -85,6 +85,11 @@ def extractGroupNames(groupIds):
         listOfGroupNames.append(groupName)
     return listOfGroupNames
 
+def extractGroupId(groupName):
+    groupObject = Group.objects.filter(group_name=groupName).values('group_id')
+    groupId = groupObject[0]['group_id']
+    return groupId
+
 @login_required(login_url="/login/")
 def entermarks_view(request):
     userId = request.user.id
