@@ -82,3 +82,7 @@ th {
 .mdl-list__item {
     text-align: center !important;
 }
+li {
+  width: 100px !important;
+  text-align:center !important;
+}

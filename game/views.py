@@ -87,18 +87,13 @@ def extractGroupNames(groupIds):
 
 @login_required(login_url="/login/")
 def entermarks_view(request):
-    retrieveUserGroups
     userId = request.user.id
     extractGroupNames(retrieveUserGroupIds(userId))
-    for
     userExams = []
-    for aGroup in userGroups:
-        groupExams = Exam.objects.filter(group=aGroup).values('group_id').distinct()
-        userExams.extend(groupExams)
     return render(request, 'entermarks.html', )
 
 @login_required(login_url="/login/")
-def gamepage_view(request):
+def gamepage_view(request, game):
     # if it is POST, either EnterBetForm or UpdateBetForm has been sent
     if request.method == 'POST':
         enterBetForm = EnterBetForm(request.POST)
@@ -120,3 +115,8 @@ def gamepage_view(request):
 @login_required(login_url="/login/")
 def joingroup_view(request):
     return render(request, 'joingroup.html')
+
+def getGroups(request):
+    userId = request.user.id
+    groups = extractGroupNames(retrieveUserGroupIds(userId))
+    return groups

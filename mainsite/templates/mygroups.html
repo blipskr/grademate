@@ -1,59 +1,23 @@
 {% extends 'header.html' %}
+{ % from game import views as game % }
 
 {% load static %}
 
 {% block stuffbelowheader %}
 <body>
+
+
+
   <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--3-col"></div>
   <div class="demo-charts mdl-cell mdl-cell--6-col" style="position: relative; text-align: center;" id="stats">
     <center><h3>My groups</h3></center>
-    <ul class="" style="display: inline-grid; text-align: center;">
-      <li class="mdl-list__item">
-            <a href="/game/">Test Group</a>
-        </li>
-        <li class="mdl-list__item">
-              Group ID
+    <br>
+  {% for group in groupNames %}
 
-          </li>
-          <li class="mdl-list__item">
+  <a href="/game/{{ group }}"><h6>{{ group }}</h6> </a>
 
-              Group ID
-
-          </li>
-          <li class="mdl-list__item">
-
-              Group ID
-
-          </li>  <li class="mdl-list__item">
-
-              Group ID
-
-          </li>  <li class="mdl-list__item">
-
-              Group ID
-
-          </li>  <li class="mdl-list__item">
-
-              Group ID
-
-          </li>  <li class="mdl-list__item">
-
-              Group ID
-
-          </li>  <li class="mdl-list__item">
-
-              Group ID
-
-          </li>  <li class="mdl-list__item">
-
-              Group ID
-
-          </li>  <li class="mdl-list__item">
-
-              Group ID
-
-          </li>
+        {% endfor %}
         </ul>
       </div>
           <div class="mdl-cell mdl-cell--3-col"></div>
