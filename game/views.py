@@ -6,6 +6,12 @@ from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import math
 
+# method takes as an input request
+# returns a list of current users groups
+def retrieveUsersGroups(request):
+    usersGroups = GroupMember.objects.filter(user = request.user.id)
+    return usersGroups
+
 # method takes as an input array of Bet objects
 # returns a list of ExamStats objects, each of which contains
 # average bet and no of ExamStats
@@ -108,7 +114,8 @@ def gamepage_view(request):
     updateBetForm = UpdateBetForm()
     betsObject = Bet.objects.filter(target=request.user.id)
     examStatsObject = createExamStats(betsObject)
-    return render(request, 'game.html', {'yourBetsList': yourBets, 'updateBetForm': updateBetForm, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject})
+    usersGroups = retrieveUsersGroups(request)
+    return render(request, 'game.html', {'yourBetsList': yourBets, 'updateBetForm': updateBetForm, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'yourGroups': usersGroups})
 
 @login_required(login_url="/login/")
 def joingroup_view(request):
