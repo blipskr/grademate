@@ -1,65 +1,11 @@
-{% extends 'standardlayout.html' %}
-{% block content %}
+{% extends 'header.html' %}
+{% block stuffbelowheader %}
 {% load static %}
-
-<body>
-      <div class="mdl-grid demo-content" >
-        <center><h3>My groups</h3></center>
-        <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col" style="overflow: auto; position: relative;" id="stats">
-          <ul class="demo-list-item mdl-list" style="display: inline-grid;">
-            <li class="mdl-list__item">
-              <span class="mdl-list__item-primary-content">
-                Group ID              </span>
-              </li>
-              <li class="mdl-list__item">
-                <span class="mdl-list__item-primary-content">
-                  Group ID              </span>
-                </li>
-                <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>
-                <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="mdl-grid demo-content">
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--3-col"></div>
+          <div class="demo-charts mdl-cell mdl-cell--6-col">
             <center><h3>Bet History</h3></center>
-            <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: hidden;">
+            <div class=" mdl-cell mdl-cell--12-col mdl-grid" style="overflow: hidden;">
               <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="width: fill-parent;">
                 <thead>
                   <tr>
@@ -108,11 +54,13 @@
               </table>
             </div>
           </div>
-
-          <div class="mdl-grid demo-content">
-            <center><h3>Charts</h3></center>
-            <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="display: inline">
-              <div class="mdl-grid" id="stats">
+            <div class="mdl-cell mdl-cell--3-col"></div>
+</div>
+          <div class="mdl-grid demo-content ">
+  <div class="mdl-cell mdl-cell--3-col"></div>
+            <div class="demo-charts mdl-cell mdl-cell--6-col mdl-grid" style="display: inline">
+              <center><h3>Charts</h3></center>
+              <div class="mdl-grid mdl-color--white mdl-shadow--2dp" id="stats">
                 <div class="mdl-cell mdl-cell--3-col">
                   <p>
                     Accuracy:
@@ -151,6 +99,7 @@
                 </div>
               </div>
             </div>
+              <div class="mdl-cell mdl-cell--3-col"></div>
           </div>
 
 

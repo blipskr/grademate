@@ -76,9 +76,9 @@ th {
   align: center;
 }
 
-#stats p {
-    text-align: center;
+#stats {
+    text-align: center !important;
 }
-.mdl-list__item-primary-content {
-    align: center !important;
+.mdl-list__item {
+    text-align: center !important;
 }
