@@ -4,7 +4,11 @@
 
 <body>
   <div class="mdl-grid center-items">
-        <div class="mdl-cell mdl-cell--3-col"></div>
+      <div class="mdl-cell mdl-cell--3-col">
+        <form action="/mygroups/" method="get">
+          <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" value="Go Back" name="returnButton" id="returnButton1">
+        </form>
+      </div>
     <div class="mdl-cell mdl-cell--3-col">
       <center><h3> Place Bet</h3>
         <form method="post" action="/game/{{ group }}/">
@@ -163,9 +167,12 @@
               </table>
             </center>
             </div>
-                            <div class="mdl-cell mdl-cell--3-col"></div>
+                            <div class="mdl-cell mdl-cell--3-col">
+                              <form action="/game/{{ group }}/entermarks/" method="get">
+                                <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" value="Enter Marks" name="" id="returnButton1">
+                              </form>
+                            </div>
           </div>
-
         <style type="text/css">
         .mdl-cell {
           display: inline-grid;

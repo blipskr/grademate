@@ -2,16 +2,11 @@ from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from forms import EnterBetForm, UpdateBetForm
+from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm
 from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import dbqueries as query
 import math
-
-# method takes as an input request
-# returns a list of current users groups
-def retrieveUsersGroups(request):
-    usersGroups = GroupMember.objects.filter(user = request.user.id)
-    return usersGroups
 
 # method takes as an input array of Bet objects
 # returns a list of ExamStats objects, each of which contains
@@ -52,35 +47,24 @@ def createExamStats(betsObject):
 def creategroup_view(request):
     return render(request, 'creategroup.html')
 
-# Returns list of user's group IDs which he is a member of.
-def retrieveUserGroupIds(userId):
-    userGroupsObject = GroupMember.objects.filter(user=userId).values('group_id')
-    userGroupIdsList = []
-    for element in userGroupsObject:
-        groupId = element['group_id']
-        userGroupIdsList.append(groupId)
-    return userGroupIdsList
-
-# Takes a list of groupIds and returns a list of corresponding groupnames
-def extractGroupNames(groupIds):
-    listOfGroupNames = []
-    for groupId in groupIds:
-        groupObject = Group.objects.filter(group_id=groupId).values('group_name')
-        groupName = groupObject[0]['group_name']
-        listOfGroupNames.append(groupName)
-    return listOfGroupNames
-
-def extractGroupId(groupName):
-    groupObject = Group.objects.filter(group_name=groupName).values('group_id')
-    groupId = groupObject[0]['group_id']
-    return groupId
-
 @login_required(login_url="/login/")
-def entermarks_view(request):
+def entermarks_view(request, gamename):
     userId = request.user.id
-    extractGroupNames(retrieveUserGroupIds(userId))
-    userExams = []
-    return render(request, 'entermarks.html', )
+    groupId = Group.objects.get(group_name=gamename)
+    groupExams = query.retrieveGroupExams(groupId)
+    # if it is POST, either EnterBetForm or UpdateBetForm has been sent
+    if request.method == 'POST':
+        enterMarksForm = EnterMarksForm(request.POST, group=gamename)
+        resultsObject = enterMarksForm.save(commit=False)
+        resultsObject.user = request.user
+        resultsObject.save()
+        #viewMarksForm = UpdateBetForm(request.POST)
+        #query.processUpdateBetForm(request, viewMarksForm)
+        return redirect('/game/' + gamename + '/entermarks/')
+    else:
+        enterMarksForm = EnterMarksForm(group=gamename)
+        viewMarksForm = ViewMarksForm(group=gamename)
+        return render(request, 'entermarks.html', {'EnterMarksForm' : enterMarksForm, 'ViewMarksForm' : viewMarksForm, 'group': gamename})
 
 @login_required(login_url="/login/")
 def gamepage_view(request, gamename):
