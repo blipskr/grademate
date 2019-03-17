@@ -6,21 +6,25 @@ import dbqueries as query
 
 
 class EnterBetForm(forms.ModelForm):
-
+    target = forms.ModelChoiceField(queryset=User.objects.filter(pk=1))
     class Meta:
         model = Bet
         fields = ('exam', 'target', 'guess_mark',)
 
     def __init__(self, *args, **kwargs):
+        global target
+        self.group = kwargs.pop('group')
         super(EnterBetForm, self).__init__(*args, **kwargs)
         self.fields['guess_mark'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'guess_mark'})
-
-
-
+        USERS = query.extractUserNames(self.group)
+        test = query.test(self.group)
+        print test
+        self.fields['target'].queryset = User.objects.filter(pk__in=test)
 
 class UpdateBetForm(forms.Form):
     mark = forms.IntegerField(label='', max_value=100, min_value=0)
-    target = forms.charField(choices=USERS)
+
+
     class Meta:
         model = Bet
         fields = ('exam', 'target', 'guess_mark', 'user')
@@ -28,8 +32,10 @@ class UpdateBetForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(UpdateBetForm, self).__init__(*args, **kwargs)
 
+
         for fieldname in ['mark',]:
             self.fields[fieldname].help_text = None
+
 
         self.fields['mark'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'mark'})
 

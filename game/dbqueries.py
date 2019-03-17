@@ -3,6 +3,7 @@ from forms import EnterBetForm, UpdateBetForm, EnterMarksForm
 from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import math
+import unicodedata
 
 # method takes as an input request
 # returns a list of current users groups
@@ -53,6 +54,7 @@ def processEnterBetForm(request, betForm):
     print betForm2.user
     if targetInForm != request.user.id:
         if betForm.is_valid():
+            print 'ok'
             betForm2.save()
 
 # method takes request and betForm, processes UpdateBetForm
@@ -107,7 +109,7 @@ def getGroups(request):
     return groups
 
 # Takes a name of the group and returns list of tuples containing userIds and usernames respectively
-def extractUserNames(groupName)
+def extractUserNames(groupName):
     groupId = Group.objects.get(group_name=groupName).group_id
     groupMemberObjects = GroupMember.objects.filter(group=groupId).values('user_id')
     userIdsList = []
@@ -116,6 +118,18 @@ def extractUserNames(groupName)
         userIdsList.append(userId)
     listOfTuples = []
     for userId in userIdsList:
+        uid = User.objects.get(pk=userId)
         userName = User.objects.get(pk=userId).username
-        listOfTuples.append((userId, userName))
+        string = unicodedata.normalize('NFKD', userName).encode('ascii','ignore')
+        listOfTuples.append((uid, uid))
     return listOfTuples
+
+def test(groupName):
+        groupId = Group.objects.get(group_name=groupName).group_id
+        groupMemberObjects = GroupMember.objects.filter(group=groupId).values('user_id')
+        userIdsList = []
+        for groupObject in groupMemberObjects:
+            userId = groupObject['user_id']
+            uid = User.objects.get(pk=userId)
+            userIdsList.append(userId)
+        return userIdsList

@@ -26,13 +26,13 @@ def gamepage_view(request, gamename):
     groupid = query.extractGroupId(gamename)
     # if it is POST, either EnterBetForm or UpdateBetForm has been sent
     if request.method == 'POST':
-        enterBetForm = EnterBetForm(request.POST)
+        enterBetForm = EnterBetForm(request.POST, group=gamename)
         updateBetForm = UpdateBetForm(request.POST)
         query.processEnterBetForm(request, enterBetForm)
         query.processUpdateBetForm(request, updateBetForm)
         return redirect('/game/' + gamename)
     else:
-        enterBetForm = EnterBetForm()
+        enterBetForm = EnterBetForm(group=gamename)
         relevantExams = []
         unprocessedExams = Exam.objects.filter(group_id=groupid).values('exam_id')
         numberofExams = 0
