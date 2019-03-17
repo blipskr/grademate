@@ -1,11 +1,13 @@
 from django import forms
 from models import Bet, Result
 from django.contrib.auth.models import User
+from models import Exam
 import dbqueries as query
 
 
 
 class EnterBetForm(forms.ModelForm):
+    exam = forms.ModelChoiceField(queryset=User.objects.filter(pk=1))
     target = forms.ModelChoiceField(queryset=User.objects.filter(pk=1))
     class Meta:
         model = Bet
@@ -16,10 +18,10 @@ class EnterBetForm(forms.ModelForm):
         self.group = kwargs.pop('group')
         super(EnterBetForm, self).__init__(*args, **kwargs)
         self.fields['guess_mark'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'guess_mark'})
-        USERS = query.extractUserNames(self.group)
-        test = query.test(self.group)
-        print test
-        self.fields['target'].queryset = User.objects.filter(pk__in=test)
+        groupusers = query.userIDsinGroup(self.group)
+        groupexams = query.examIDsinGroup(self.group)
+        self.fields['target'].queryset = User.objects.filter(pk__in=groupusers)
+        self.fields['exam'].queryset = Exam.objects.filter(pk__in=groupexams)
 
 class UpdateBetForm(forms.Form):
     mark = forms.IntegerField(label='', max_value=100, min_value=0)

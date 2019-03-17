@@ -109,22 +109,8 @@ def getGroups(request):
     return groups
 
 # Takes a name of the group and returns list of tuples containing userIds and usernames respectively
-def extractUserNames(groupName):
-    groupId = Group.objects.get(group_name=groupName).group_id
-    groupMemberObjects = GroupMember.objects.filter(group=groupId).values('user_id')
-    userIdsList = []
-    for groupObject in groupMemberObjects:
-        userId = groupObject['user_id']
-        userIdsList.append(userId)
-    listOfTuples = []
-    for userId in userIdsList:
-        uid = User.objects.get(pk=userId)
-        userName = User.objects.get(pk=userId).username
-        string = unicodedata.normalize('NFKD', userName).encode('ascii','ignore')
-        listOfTuples.append((uid, uid))
-    return listOfTuples
 
-def test(groupName):
+def userIDsinGroup(groupName):
         groupId = Group.objects.get(group_name=groupName).group_id
         groupMemberObjects = GroupMember.objects.filter(group=groupId).values('user_id')
         userIdsList = []
@@ -133,3 +119,13 @@ def test(groupName):
             uid = User.objects.get(pk=userId)
             userIdsList.append(userId)
         return userIdsList
+
+def examIDsinGroup(groupName):
+        groupId = Group.objects.get(group_name=groupName).group_id
+        groupMemberObjects = Exam.objects.filter(group=groupId).values('exam_id')
+        print groupMemberObjects
+        examIDsList = []
+        for groupObject in groupMemberObjects:
+            examID = groupObject['exam_id']
+            examIDsList.append(examID)
+        return examIDsList
