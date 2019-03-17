@@ -4,6 +4,7 @@ from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import math
 import unicodedata
+from django.shortcuts import render, render_to_response, redirect
 
 # method takes as an input request
 # returns a list of current users groups
@@ -54,15 +55,17 @@ def processEnterBetForm(request, betForm):
     print betForm2.user
     if targetInForm != request.user.id:
         if betForm.is_valid():
-            print 'ok'
             betForm2.save()
 
 # method takes request and betForm, processes UpdateBetForm
 def processUpdateBetForm(request, betForm):
-    markInForm = betForm['mark']
-    yourBets = Bet.objects.filter(user=request.user.id)
-    if betForm.is_valid():
-        betForm.save()
+    newmark = betForm.data['mark']
+    betid = betForm.data['bet']
+    print betid
+    print newmark
+    Bet.objects.filter(pk=betid).update(guess_mark=newmark)
+    return redirect('/')
+
 
 # Returns list of user's group IDs which he is a member of.
 def retrieveUserGroupIds(userId):
@@ -123,7 +126,6 @@ def userIDsinGroup(groupName):
 def examIDsinGroup(groupName):
         groupId = Group.objects.get(group_name=groupName).group_id
         groupMemberObjects = Exam.objects.filter(group=groupId).values('exam_id')
-        print groupMemberObjects
         examIDsList = []
         for groupObject in groupMemberObjects:
             examID = groupObject['exam_id']

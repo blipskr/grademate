@@ -24,22 +24,15 @@ class EnterBetForm(forms.ModelForm):
         self.fields['exam'].queryset = Exam.objects.filter(pk__in=groupexams)
 
 class UpdateBetForm(forms.Form):
-    mark = forms.IntegerField(label='', max_value=100, min_value=0)
-
-
-    class Meta:
-        model = Bet
-        fields = ('exam', 'target', 'guess_mark', 'user')
+    bet = forms.ModelChoiceField(queryset=Bet.objects.filter(pk=1))
+    mark = forms.IntegerField()
 
     def __init__(self, *args, **kwargs):
+        self.myBets = kwargs.pop('bets')
         super(UpdateBetForm, self).__init__(*args, **kwargs)
-
-
-        for fieldname in ['mark',]:
-            self.fields[fieldname].help_text = None
-
-
+        self.fields['bet'].queryset = self.myBets
         self.fields['mark'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'mark'})
+
 
 class EnterMarksForm(forms.ModelForm):
     user = forms.CharField(label='Username', max_length=100)

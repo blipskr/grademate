@@ -17,7 +17,7 @@
               <br>
               {% endfor %}
               <br>
-              <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
+              <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="place">
                 Place a bet
               </button></center></form>
 </center>
@@ -32,9 +32,10 @@
                   </div><table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
                 <thead>
                   <tr>
+                    <th>Bet ID</th>
                     <th class="mdl-data-table__cell--non-numeric">Exam</th>
                     <th>Member</th>
-                    <th>Bet Field</th>
+                    <th>Predicted Mark</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -42,32 +43,31 @@
                   <form method="post" action="/game/{{ group }}/">
                   {% csrf_token %}
                   {% if yourBetsList %}
-                  {% for label in yourBetsList %}
-                  {% for form in updateBetForm %}
+                  {% for bet in yourBetsList %}
                   <tr>
-                    <td class="mdl-data-table__cell--non-numeric">{{ label.exam }}</td>
-                    <td class="mdl-data-table__cell--non-numeric">{{ label.target_id }}</td>
-                    <td>
-                      <div style="display: inline;">
-                        <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" id="sample1" type="text">
-                            <label class="mdl-textfield__label" for="sample1">{{label.guess_mark}}{{ form.label }}</label>
-                          </div>
-                      </div>
-                    </td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ bet.bet_id }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ bet.exam }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ bet.target_id }}</td>
+                    <td>{{ bet.guess_mark }}</td>
                   </tr>
                   {% endfor %}
-                  {% endfor %}
+
+
                   {% else %}
                   <tr>You have not placed any bets yet.</tr>
                   {% endif %}
                 </tbody>
               </table>
+              <br>
+              {% for field in updatebetform %}
+{{field}}
+{% endfor %}
+<br>
               <!-- Raised button with ripple -->
               <br>
-              <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
+              <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="update">
                 Update your bets
-              </button></center></form>
+              </button></center>    </form>
             </center>
 
             </div>
