@@ -13,13 +13,18 @@
 <center>
   <form method="post" action="/game/{{ group }}/entermarks/">
     {% csrf_token %}
-    {% for field in EnterMarksForm %}
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <label class="mdl-textfield__label">{{ field.label }}</label>
-        {{ field }}
-      </div>
-      <br>
-    {% endfor %}
+    {{ form.non_field_errors }}
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <label class="mdl-textfield__label">{{ EnterMarksForm.exam.label }}</label>
+      {{ EnterMarksForm.exam }}
+    </div>
+    <br>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <label class="mdl-textfield__label">{{ EnterMarksForm.mark.label }}</label>
+      {{ EnterMarksForm.mark }}
+      {{ EnterMarksForm.mark.errors }}
+    </div>
+    <br>
     <br>
     <center>
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
@@ -27,16 +32,17 @@
       </button>
     </center>
     <br>
-    <br>
-    <form method="post" action="/game/{{ group }}/entermarks/">
-      {% csrf_token %}
-      {% for field in viewMarksForm %}
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <label class="mdl-textfield__label">{{ field.label }}</label>
-          {{ field }}
-        </div>
-        <br>
-      {% endfor %}
+  </form>
+  <br>
+  <form method="post" action="/game/{{ group }}/entermarks/">
+    {% csrf_token %}
+    {% for field in viewMarksForm %}
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <label class="mdl-textfield__label">{{ field.label }}</label>
+        {{ field }}
+      </div>
+      <br>
+    {% endfor %}
   </form>
   <br>
 

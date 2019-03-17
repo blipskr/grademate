@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from models import Exam
 import dbqueries as query
 
+from django.core.exceptions import ValidationError
+
 
 
 class EnterBetForm(forms.ModelForm):
@@ -35,6 +37,7 @@ class UpdateBetForm(forms.Form):
 
 
 class EnterMarksForm(forms.ModelForm):
+    error_css_class = 'error'
     exam = forms.ModelChoiceField(queryset=User.objects.filter(pk=1))
     mark = forms.IntegerField(label='Mark Estimate', max_value=100, min_value=0)
 
@@ -52,6 +55,13 @@ class EnterMarksForm(forms.ModelForm):
 
         for fieldname in ['exam', 'mark',]:
             self.fields[fieldname].help_text = None
+
+    def clean(self):
+        mark = self.cleaned_data.get('mark')
+        if not (mark <= 100 and mark >= 0):
+            raise ValidationError("Invalid mark")
+        return mark
+
 class ViewMarksForm(forms.ModelForm):
     exam = forms.CharField(label='Exam', max_length=100)
     mark = forms.IntegerField(label='Mark Estimate', max_value=100, min_value=0)

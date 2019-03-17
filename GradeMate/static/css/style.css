@@ -86,3 +86,7 @@ li {
   width: 100px !important;
   text-align:center !important;
 }
+
+.errorlist {
+    text-align: left !important;
+}

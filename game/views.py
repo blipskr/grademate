@@ -7,6 +7,7 @@ from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import dbqueries as query
 import math
+from django.core.exceptions import ValidationError
 
 # method takes as an input array of Bet objects
 # returns a list of ExamStats objects, each of which contains
@@ -52,23 +53,26 @@ def entermarks_view(request, gamename):
     userId = request.user.id
     groupId = Group.objects.get(group_name=gamename)
     groupExams = query.retrieveGroupExams(groupId)
-    # if it is POST, either EnterBetForm or UpdateBetForm has been sent
+    # if it is POST, EnterMarksForm has been sent
     if request.method == 'POST':
         enterMarksForm = EnterMarksForm(request.POST, group=gamename)
-        resultsObject = enterMarksForm.save(commit=False)
-        resultsObject.user = request.user
-        resultsObject.save()
-        #viewMarksForm = UpdateBetForm(request.POST)
-        #query.processUpdateBetForm(request, viewMarksForm)
-        return redirect('/game/' + gamename + '/entermarks/')
+        if enterMarksForm.is_valid():
+            resultsObject = enterMarksForm.save(commit=False)
+            resultsObject.user = request.user
+            resultsObject.save()
+            # redirect to clear the form after saving
+            return redirect('/game/' + gamename + '/entermarks/')
+        else:
+            # render to display the error
+            return render(request, 'entermarks.html', {'EnterMarksForm' : enterMarksForm, 'group': gamename})
     else:
         enterMarksForm = EnterMarksForm(group=gamename)
         viewMarksForm = ViewMarksForm(group=gamename)
-        return render(request, 'entermarks.html', {'EnterMarksForm' : enterMarksForm, 'ViewMarksForm' : viewMarksForm, 'group': gamename})
+        return render(request, 'entermarks.html', {'EnterMarksForm' : enterMarksForm, 'ViewMarksForm': viewMarksForm, 'group': gamename})
 
 @login_required(login_url="/login/")
 def gamepage_view(request, gamename):
-    groupid = extractGroupId(gamename)
+    groupid = query.extractGroupId(gamename)
     yourBets = ''
     # if it is POST, either EnterBetForm or UpdateBetForm has been sent
     if request.method == 'POST' and 'place' in request.POST:
