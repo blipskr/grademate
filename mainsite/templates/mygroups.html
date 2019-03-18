@@ -1,34 +1,36 @@
 {% extends 'header.html' %}
-{ % from game import views as game % }
-
 {% load static %}
-
 {% block stuffbelowheader %}
+
 <body>
 
 
 
   <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--3-col"></div>
-  <div class="demo-charts mdl-cell mdl-cell--6-col" style="position: relative; text-align: center;" id="stats">
-    <center><h3>My groups</h3></center>
-    <br>
-  {% for group in groupNames %}
+    <div class="demo-charts mdl-cell mdl-cell--6-col" style="position: relative; text-align: center;" id="stats">
+      <center>
+        <h3>My groups</h3>
+      </center>
+      <br>
+      {% for group in groupNames %}
 
-  <a href="/game/{{ group }}"><h6>{{ group }}</h6> </a>
+      <a href="/game/{{ group }}">
+        <h6>{{ group }}</h6>
+      </a>
 
-        {% endfor %}
-        </ul>
-      </div>
-          <div class="mdl-cell mdl-cell--3-col"></div>
-        </div>
+      {% endfor %}
+      </ul>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col"></div>
+  </div>
   <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick="window.location='/creategroup/'">
-    Create Group
-  </button></center>
+      Create Group
+    </button></center>
   <br>
   <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick="window.location='/joingroup/'">
-    Join Group
-  </button></center>
+      Join Group
+    </button></center>
 </body>
 
 {% endblock %}

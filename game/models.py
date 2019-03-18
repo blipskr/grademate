@@ -10,6 +10,7 @@ class Group(models.Model):
     def __unicode__(self):
         return self.group_name
 
+
 class GroupMember(models.Model):
     group = models.ForeignKey(Group)
     user = models.ForeignKey(User)
@@ -18,6 +19,7 @@ class GroupMember(models.Model):
     def __unicode__(self):
         return self.user
 
+
 class Exam(models.Model):
     exam_id = models.AutoField('Exam ID', primary_key=True)
     group = models.ForeignKey(Group)
@@ -25,6 +27,7 @@ class Exam(models.Model):
 
     def __unicode__(self):
         return self.exam_name
+
 
 class Bet(models.Model):
     bet_id = models.AutoField('Bet ID', primary_key=True)
@@ -36,6 +39,7 @@ class Bet(models.Model):
 
     def __unicode__(self):
         return self.bet_id
+
 
 class Result(models.Model):
     exam = models.ForeignKey(Exam)

@@ -1,72 +1,67 @@
 p {
-    font-family: "Roboto", Georgia, "Times New Roman", Times, sans-serif;
-    margin-top: 30px;
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-bottom: 20px;
-    text-align: center;
-  }
+  font-family: "Roboto", Georgia, "Times New Roman", Times, sans-serif;
+  margin-top: 30px;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 20px;
+  text-align: center;
+}
 
 #errormessage {
   color: black;
 }
 
 #agreement {
-padding-top: "0px";
-background-image: linear-gradient(120deg, #a8468d, #a8468d) !important;
-background-attachment: fixed;
-height:100%;
-color: white;
+  padding-top: "0px";
+  background-image: linear-gradient(120deg, #a8468d, #a8468d) !important;
+  background-attachment: fixed;
+  height: 100%;
+  color: white;
   text-align: justify;
 }
 
-
 body {
-padding-top: "0px";
-background-image: linear-gradient(120deg, #e2e2e2, #e2e2e2);
-background-attachment: fixed;
-height:100%;
-
+  padding-top: "0px";
+  background-image: linear-gradient(120deg, #e2e2e2, #e2e2e2);
+  background-attachment: fixed;
+  height: 100%;
 }
 
-.box{
-border-style: none solid;
-border-width: thin;
-padding: 25px;
-box-sizing: border-box;
+.box {
+  border-style: none solid;
+  border-width: thin;
+  padding: 25px;
+  box-sizing: border-box;
 }
 
- #content{
-    word-wrap: break-word;
-    /*max-width: 500px;*/
-    display: inline-flex;
+#content {
+  word-wrap: break-word;
+  /*max-width: 500px;*/
+  display: inline-flex;
 }
-
 
 button {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    border-radius: 12px
-    background-color: pink;
-    border: none;
-    color: black;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  border-radius: 12px background-color: pink;
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
 
 button:hover {
-    background-color:lightblue;
-    color: white;
+  background-color: lightblue;
+  color: white;
 }
 
 h2 {
-  color:black;
+  color: black;
 }
-
 
 .mdl-navigation__link {
   color: white !important;
@@ -77,16 +72,18 @@ th {
 }
 
 #stats {
-    text-align: center !important;
+  text-align: center !important;
 }
+
 .mdl-list__item {
-    text-align: center !important;
+  text-align: center !important;
 }
+
 li {
   width: 100px !important;
-  text-align:center !important;
+  text-align: center !important;
 }
 
 .errorlist {
-    text-align: left !important;
+  text-align: left !important;
 }
