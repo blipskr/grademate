@@ -76,8 +76,8 @@ def gamepage_view(request, gamename):
     yourBets = ''
     # if it is POST, either EnterBetForm or UpdateBetForm has been sent
     if request.method == 'POST' and 'place' in request.POST:
-        enterBetForm = EnterBetForm(request.POST, group=gamename)
-        query.processEnterBetForm(request, enterBetForm)
+        enterBetForm = EnterBetForm(request.POST, group=gamename, user=request.user)
+        query.processEnterBetForm(request, enterBetForm, gamename)
         print 'test'
         return redirect('/game/' + gamename)
     elif request.method == 'POST' and 'update' in request.POST:
@@ -85,13 +85,15 @@ def gamepage_view(request, gamename):
         query.processUpdateBetForm(request, updatebetform)
         return redirect('/game/' + gamename)
     else:
-        enterBetForm = EnterBetForm(group=gamename)
+        enterBetForm = EnterBetForm(group=gamename, user=request.user)
         relevantExams = []
         unprocessedExams = Exam.objects.filter(group_id=groupid).values('exam_id')
+        examCount = 0
         for exam in unprocessedExams:
-            currentexam = unprocessedExams[0]['exam_id']
+            currentexam = unprocessedExams[examCount]['exam_id']
             relevantExams.append(currentexam)
-
+            examCount = examCount + 1
+        print relevantExams
         yourBets = Bet.objects.filter(user=request.user.id, exam_id__in=relevantExams)
         updatebetform = UpdateBetForm(bets=yourBets)
         examStatsObject = createExamStats(yourBets)

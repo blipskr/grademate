@@ -47,22 +47,24 @@ def createExamStats(betsObject):
     return examStatsObjects
 
 # method takes request and betForm, processes betForm
-def processEnterBetForm(request, betForm):
-    targetInForm = betForm['target']
-    examInForm = betForm['exam']
-    betForm2 = betForm.save(commit=False)
-    betForm2.user = request.user
-    print betForm2.user
-    if targetInForm != request.user.id:
-        if betForm.is_valid():
-            betForm2.save()
+def processEnterBetForm(request, betForm, gamename):
+    examinstance = Exam.objects.get
+    targetname = betForm.data['target']
+    examname = betForm.data['exam']
+    examid = extractExamIDgivenGroup(examname, gamename)
+    targetid = getUserID(targetname)
+    guessmark = betForm.data['guess_mark']
+    exam = Exam.objects.get(pk=examid)
+    target = User.objects.get(pk=targetid)
+    newBet = Bet(exam=exam, user=request.user, target=target, guess_mark=guessmark)
+    newBet.save()
+    print 'ok'
 
 # method takes request and betForm, processes UpdateBetForm
 def processUpdateBetForm(request, betForm):
+    print type(betForm['bet'])
     newmark = betForm.data['mark']
     betid = betForm.data['bet']
-    print betid
-    print newmark
     Bet.objects.filter(pk=betid).update(guess_mark=newmark)
     return redirect('/')
 
@@ -90,6 +92,22 @@ def extractGroupId(groupName):
     groupObject = Group.objects.get(group_name=groupName)
     groupId = groupObject.group_id
     return groupId
+
+def extractExamID(examname):
+    examObject = Exam.objects.get(e=examname)
+    groupId = groupObject.group_id
+    return groupId
+
+def getUserID(targetname):
+    userObject = User.objects.get(username=targetname)
+    userID = userObject.id
+    return userID
+
+def extractExamIDgivenGroup(examname, gamename):
+    groupid = extractGroupId(gamename)
+    examObject = Exam.objects.get(exam_name=examname, group_id=groupid)
+    examid = examObject.exam_id
+    return examid
 
 # takes an id of a group ans returns its name
 def extractGroupName(groupId):

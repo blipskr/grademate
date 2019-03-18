@@ -1,0 +1,27 @@
+{% extends 'standardlayout.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Numeric Textfield with Floating Label -->
+<form action="#">
+  <!-- Select with fixed height -->
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
+          <input type="text" value="" class="mdl-textfield__input" id="sample5" readonly>
+          <input type="hidden" value="" name="sample5">
+          <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+          <label for="sample5" class="mdl-textfield__label">Country</label>
+          <ul for="sample5" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+              <li class="mdl-menu__item" data-val="BY">Belarus</li>
+              <li class="mdl-menu__item" data-val="BR">Brazil</li>
+              <li class="mdl-menu__item" data-val="ES">Estonia</li>
+              <li class="mdl-menu__item" data-val="FI">Finland</li>
+              <li class="mdl-menu__item" data-val="FR">France</li>
+              <li class="mdl-menu__item" data-val="DE">Germany</li>
+              <li class="mdl-menu__item" data-val="PL">Poland</li>
+              <li class="mdl-menu__item" data-val="RU">Russia</li>
+          </ul>
+      </div>
+      <!-- Pre-selected value -->
+
+</form>
+{% endblock %}

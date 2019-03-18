@@ -26,6 +26,7 @@ urlpatterns = patterns('',
     url(r'^mygroups/', site.mygroups),
     url(r'^accountsettings/', loginsystem.accountsettings_view),
     url(r'^game/(?P<gamename>\w+)/$', game.gamepage_view ),
+    url(r'^test/', site.test),
 )
 
 urlpatterns += staticfiles_urlpatterns()
