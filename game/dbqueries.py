@@ -62,12 +62,13 @@ def processEnterBetForm(request, betForm, gamename):
 
 # method takes request and betForm, processes UpdateBetForm
 def processUpdateBetForm(request, betForm):
-    print type(betForm['bet'])
     newmark = betForm.data['mark']
-    betid = betForm.data['bet']
-    Bet.objects.filter(pk=betid).update(guess_mark=newmark)
+    targetname = betForm.data['bet']
+    targetid = getUserID(targetname)
+    target = User.objects.get(pk=targetid)
+    user = request.user
+    Bet.objects.filter(user=user, target=target).update(guess_mark=newmark)
     return redirect('/')
-
 
 # Returns list of user's group IDs which he is a member of.
 def retrieveUserGroupIds(userId):
