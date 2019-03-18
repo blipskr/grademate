@@ -91,7 +91,7 @@ def accountsettings_view(request):
         else:
             return settingsbadfielderror_view(request, form)
     else:
-        form = AccountEditForm(initial={'first_name': request.user.first_name,
+        form = AccountEditForm(initial={'username': request.user.username,
                                         'last_name': request.user.last_name, 'email': request.user.email})
         return render(request, 'accountsettings.html', {'form': form})
 
@@ -135,7 +135,7 @@ def statistics_view(request):
             exam_name_one = Exam.objects.get(exam_id = int(oneBetColumn.exam_id))
             exam_name_one = exam_name_one.exam_name
             target_user = User.objects.get(id = int(oneBetColumn.target_id))
-            target_user = target_user.first_name
+            target_user = target_user.username
             if oneBetColumn.win == None:
                 raise Exception()
             elif oneBetColumn.win == 1:
@@ -152,14 +152,14 @@ def statistics_view(request):
                 exam_name_one = Exam.objects.get(exam_id = int(oneBetColumn.exam_id))
                 exam_name_one = exam_name_one.exam_name
                 target_user = User.objects.get(id = int(oneBetColumn.target_id))
-                target_user = target_user.first_name
+                target_user = target_user.username
                 oneBet = BetHistory(exam_name_one,target_user, oneBetColumn.guess_mark, resultForTarget1, 'Ongoing')
                 listOfAllBetsForAUser.append(oneBet)
             except:
                 exam_name_one = Exam.objects.get(exam_id = int(oneBetColumn.exam_id))
                 exam_name_one = exam_name_one.exam_name
                 target_user = User.objects.get(id = int(oneBetColumn.target_id))
-                target_user = target_user.first_name
+                target_user = target_user.username
                 oneBet = BetHistory(exam_name_one,target_user, oneBetColumn.guess_mark, 'Ongoing', 'Ongoing')
                 listOfAllBetsForAUser.append(oneBet)
 
