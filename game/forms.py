@@ -108,7 +108,7 @@ class ViewMarksForm(forms.ModelForm):
             self.fields[fieldname].help_text = None
 
 class CreateGroupForm(forms.Form):
-    group_name = forms.CharField(label='Group name', max_length=100)
+    group_name = forms.CharField(label='Group name', max_length=20)
 
     class Meta:
         model = Group
@@ -116,4 +116,15 @@ class CreateGroupForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(CreateGroupForm, self).__init__(*args, **kwargs)
-        self.fields['group_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'group_name'})
+        self.fields['group_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'creategroup'})
+
+class AddExamForm(forms.Form):
+    exam_name = forms.CharField(label='Exam name', max_length=20)
+
+    class Meta:
+        model = Exam
+        fields = ('exam')
+
+    def __init__(self, *args, **kwargs):
+        super(AddExamForm, self).__init__(*args, **kwargs)
+        self.fields['exam_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'addexam'})

@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm, CreateGroupForm
+from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm, CreateGroupForm, AddExamForm
 from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import dbqueries as query
@@ -125,7 +125,6 @@ def userIsAdminOfGroup(userId, groupId):
         return true
     else:
         return false
-
 @login_required(login_url="/login/")
 def creategroup_view(request):
     # if sent a form of creating a group, process it
@@ -134,23 +133,30 @@ def creategroup_view(request):
         # create a new group with given name
         if createGroupForm.is_valid():
             groupName = createGroupForm.data['group_name']
-            query.createNewGroup(groupName)
-            groupId = query.extractGroupId(groupName)
-            # redirect to managegroup.html
-            print "FORM IS VALID"
-            return managegroup_view(request, groupId)
-            #return render(request, 'managegroup.html')
-        # if it is impossible, redirect to the same page
-        else:
-            print "FORM IS INVALID"
-            print(createGroupForm.errors)
-            return render(request, 'creategroup.html', {'form': createGroupForm})
+            if query.extractGroupId(groupName) == None:
+                query.createNewGroup(groupName)
+                # redirect to managegroup.html
+                return managegroup_view(request, groupName)
+            else:
+                createGroupForm = CreateGroupForm()
     #  if we just open the page, give this page
     else:
-        print "METHOD NOT POST"
         createGroupForm = CreateGroupForm()
-        return render(request, 'creategroup.html', {'form': createGroupForm})
+    return render(request, 'creategroup.html', {'form': createGroupForm})
 
 @login_required(login_url="/login/")
-def managegroup_view(request, groupId):
-    return render(request, 'managegroup.html')
+def managegroup_view(request, gamename):
+    # if it is POST, EnterMarksForm has been sent
+    if request.method == 'POST':
+        addExamForm = AddExamForm(request.POST)
+        if addExamForm.is_valid():
+            exam_name = addExamForm.data['exam_name']
+            query.createNewExam(exam_name, gamename)
+            # redirect to clear the form after saving
+            return redirect('/game/' + gamename + '/managegroup/')
+        else:
+            # render to display the error
+            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename})
+    else:
+        addExamForm = AddExamForm()
+        return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename})

@@ -106,11 +106,13 @@ def extractGroupNames(groupIds):
 
 # takes a name of group and returns its id
 
-
 def extractGroupId(groupName):
-    groupObject = Group.objects.get(group_name=groupName)
-    groupId = groupObject.group_id
-    return groupId
+    try:
+        groupObject = Group.objects.get(group_name=groupName)
+        groupId = groupObject.group_id
+        return groupId
+    except Group.DoesNotExist:
+        return None
 
 
 def getUserID(targetname):
@@ -178,3 +180,8 @@ def examIDsinGroup(groupName):
 def createNewGroup(groupName):
     groupObject = Group(group_name = groupName)
     groupObject.save()
+
+# creates new exam with given name for given group
+def createNewExam(examName, groupName):
+    examObject = Exam(group = groupName, exam_name = examName)
+    examObject.save()
