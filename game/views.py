@@ -1,9 +1,8 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm, CreateGroupForm
+from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm, CreateGroupForm, AddExamForm
 from django.contrib.auth import login
-from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm
 from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import dbqueries as query
@@ -108,10 +107,6 @@ def gamepage_view(request, gamename):
         return render(request, 'game.html', {'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
 
 
-@login_required(login_url="/login/")
-
-
-
 def getGroups(request):
     userId = request.user.id
     groups = extractGroupNames(retrieveUserGroupIds(userId))
@@ -126,6 +121,7 @@ def userIsAdminOfGroup(userId, groupId):
         return true
     else:
         return false
+
 @login_required(login_url="/login/")
 def creategroup_view(request):
     # if sent a form of creating a group, process it
@@ -137,7 +133,8 @@ def creategroup_view(request):
             if query.extractGroupId(groupName) == None:
                 query.createNewGroup(groupName)
                 # redirect to managegroup.html
-                return managegroup_view(request, groupName)
+                return redirect('/game/' + groupName + '/managegroup/')
+                #return managegroup_view(request, groupName)
             else:
                 createGroupForm = CreateGroupForm()
     #  if we just open the page, give this page
@@ -162,6 +159,7 @@ def managegroup_view(request, gamename):
         addExamForm = AddExamForm()
         return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename})
 
+@login_required(login_url="/login/")
 def joingroup_view(request):
     if request.method == 'POST':
         form = JoinGroupForm(request.POST)
