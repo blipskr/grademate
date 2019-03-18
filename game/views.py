@@ -1,17 +1,9 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-<<<<<<< HEAD
-from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm, CreateGroupForm, AddExamForm
-=======
-<<<<<<< HEAD
 from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm, CreateGroupForm
-=======
 from django.contrib.auth import login
-from forms import EnterBetForm, UpdateBetForm, JoinGroupForm
 from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm
->>>>>>> First version of the join group
->>>>>>> 981c8ecb8ebfcd2cc8a6937400f37636f0acf85c
 from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import dbqueries as query
