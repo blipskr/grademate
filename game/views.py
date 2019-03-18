@@ -145,17 +145,22 @@ def creategroup_view(request):
 @login_required(login_url="/login/")
 def managegroup_view(request, gamename):
     # if it is POST, EnterMarksForm has been sent
+    print "managegroup"
     if request.method == 'POST':
         addExamForm = AddExamForm(request.POST)
+        print "post"
         if addExamForm.is_valid():
             exam_name = addExamForm.data['exam_name']
             query.createNewExam(exam_name, gamename)
+            print "FOrm is valid"
             # redirect to clear the form after saving
             return redirect('/game/' + gamename + '/managegroup/')
         else:
             # render to display the error
+            print "Form is invalid"
             return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename})
     else:
+        print "Not post"
         addExamForm = AddExamForm()
         return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename})
 

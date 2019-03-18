@@ -183,5 +183,6 @@ def createNewGroup(groupName):
 
 # creates new exam with given name for given group
 def createNewExam(examName, groupName):
-    examObject = Exam(group = groupName, exam_name = examName)
+    groupObject = Group.objects.get(group_name = groupName)
+    examObject = Exam(group = groupObject, exam_name = examName)
     examObject.save()

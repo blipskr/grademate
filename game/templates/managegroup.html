@@ -2,20 +2,32 @@
 {% block content %}
 {% load static %}
 
+    <div class="mdl-cell mdl-cell--4-col">
+    <center><h3>Manage the group {{ groupName }}</h3>
+      <form action="/game/{{ groupName }}/managegroup/" method="post">
+        {% csrf_token %}
+        {% for field in addexam %}
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          {{ field }}
+          <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
+
+        </div>
+        {% endfor %}
+
+<br>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="addexam">
+          Add exam
+        </button>
+      </form></center>
+
+          </div>
+<!--
 <div class="mdl-grid">
 	<div class="mdl-cell mdl-cell--4-col"></div>
 	<div class="mdl-cell mdl-cell--4-col">
-		<!-- Raised button with ripple -->
-		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-			Create Blank Group
-		</button>
 
-		<form action="#">
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="text" id="sample3">
-				<label class="mdl-textfield__label" for="sample3">User ID</label>
-			</div>
-		</form>
+
+
 
 		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
 			Add User
@@ -30,7 +42,7 @@
 
 		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
 			Add Exam To Game
-		</button>
+		</button>-->
 		<br>
 		<br>
 		<br>
@@ -38,7 +50,6 @@
 		<br>
 
 
-		<!-- Simple list -->
 		<style>
 		.demo-list-item {
 			width: 300px;
