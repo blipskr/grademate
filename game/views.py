@@ -1,7 +1,13 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm, CreateGroupForm
+=======
+from django.contrib.auth import login
+from forms import EnterBetForm, UpdateBetForm, JoinGroupForm
+from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm
+>>>>>>> First version of the join group
 from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import dbqueries as query
@@ -107,8 +113,7 @@ def gamepage_view(request, gamename):
 
 
 @login_required(login_url="/login/")
-def joingroup_view(request):
-    return render(request, 'joingroup.html')
+
 
 
 def getGroups(request):
@@ -154,3 +159,29 @@ def creategroup_view(request):
 @login_required(login_url="/login/")
 def managegroup_view(request, groupId):
     return render(request, 'managegroup.html')
+
+def joingroup_view(request):
+    if request.method == 'POST':
+        form = JoinGroupForm(request.POST)
+        group_name = form.data['group_name']
+        group_id = form.data['group_id']
+        print group_name
+        print group_id
+        print query.extractGroupId(group_name)
+        if(int(query.extractGroupId(group_name)) == int(group_id)):
+                print 'fkdjango'
+                group = Group.objects.get(pk=group_id)
+                newGroupMember = GroupMember(group=group, user=request.user, credits=100)
+                print 'ok'
+                newGroupMember.save()
+                return render(request, 'game.html')
+        else:
+                print 'else'
+                return render(request, 'game.html')
+
+
+    else:
+        form = JoinGroupForm(request.POST)
+        return render(request, 'joingroup.html', { 'form': form })
+def  joinGroupError_view(request):
+    return render(request, 'joingroup.html')
