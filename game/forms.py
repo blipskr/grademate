@@ -1,10 +1,25 @@
 from django import forms
-from models import Bet, Result
+from models import Bet, Result, Group
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from models import Exam, Group
 import dbqueries as query
 
 from django.core.exceptions import ValidationError
+
+class JoinGroupForm(forms.Form):
+
+    group_name = forms.CharField()
+    group_id = forms.CharField()
+
+    class Meta:
+
+        fields = ('group_name', 'group_id')
+
+    def __init__(self, *args, **kwargs):
+        super(JoinGroupForm, self).__init__(*args, **kwargs)
+        self.fields['group_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id': 'groupname'})
+        self.fields['group_id'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id': 'groupid'})
 
 
 class EnterBetForm(forms.ModelForm):
