@@ -78,7 +78,6 @@ def gamepage_view(request, gamename):
     if request.method == 'POST' and 'place' in request.POST:
         enterBetForm = EnterBetForm(request.POST, group=gamename, user=request.user)
         query.processEnterBetForm(request, enterBetForm, gamename)
-        print 'test'
         return redirect('/game/' + gamename)
     elif request.method == 'POST' and 'update' in request.POST:
         updatebetform = UpdateBetForm(request.POST, bets=yourBets)
@@ -93,7 +92,6 @@ def gamepage_view(request, gamename):
             currentexam = unprocessedExams[examCount]['exam_id']
             relevantExams.append(currentexam)
             examCount = examCount + 1
-        print relevantExams
         yourBets = Bet.objects.filter(user=request.user.id, exam_id__in=relevantExams)
         updatebetform = UpdateBetForm(bets=yourBets)
         examStatsObject = createExamStats(yourBets)

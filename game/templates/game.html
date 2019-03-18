@@ -12,7 +12,7 @@
 </div>
 
     <div class="mdl-cell mdl-cell--3-col">
-      <center><h3> Place Bet</h3>
+      <center><h3> Make Prediction</h3>
         <form method="post" action="/game/{{ group }}/">
               {% csrf_token %}
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
@@ -47,13 +47,13 @@
 
 
               <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="place">
-                Place a bet
+                Make Prediction
               </button></center></form>
 </center>
     </div>
 
             <div class="demo-charts mdl-cell mdl-cell--3-col" style="position: relative;">
-                  <center><h3>Change Bet</h3>
+                  <center><h3>Change Prediction</h3>
               <div>
                   </div><div>
                   </div><div>
@@ -61,7 +61,7 @@
                   </div><table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
                 <thead>
                   <tr>
-                    <th>Member</th>
+                    <th class="mdl-data-table__cell--non-numeric">Member</th>
                     <th class="mdl-data-table__cell--non-numeric">Exam</th>
 
                     <th>Predicted Mark</th>
@@ -81,7 +81,7 @@
                   {% endfor %}
 
                   {% else %}
-                  <tr>You have not placed any bets yet.</tr>
+                  <tr>You have not made any predictions yet.</tr>
                   {% endif %}
                 </tbody>
               </table>
@@ -111,7 +111,7 @@
 
 </div>
 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="update">
-  Update your bets
+  Update Your Prediction
 </button>
             </div>
 <br>

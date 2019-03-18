@@ -58,7 +58,6 @@ def processEnterBetForm(request, betForm, gamename):
     target = User.objects.get(pk=targetid)
     newBet = Bet(exam=exam, user=request.user, target=target, guess_mark=guessmark)
     newBet.save()
-    print 'ok'
 
 # method takes request and betForm, processes UpdateBetForm
 def processUpdateBetForm(request, betForm):
@@ -91,11 +90,6 @@ def extractGroupNames(groupIds):
 # takes a name of group and returns its id
 def extractGroupId(groupName):
     groupObject = Group.objects.get(group_name=groupName)
-    groupId = groupObject.group_id
-    return groupId
-
-def extractExamID(examname):
-    examObject = Exam.objects.get(e=examname)
     groupId = groupObject.group_id
     return groupId
 
