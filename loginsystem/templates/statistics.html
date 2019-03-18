@@ -67,56 +67,19 @@
         <center><h3>My groups</h3></center>
         <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 200px; position: relative;">
           <ul class="demo-list-item mdl-list" style="display: inline-grid;">
-            <li class="mdl-list__item">
 
-              <span class="mdl-list__item-primary-content">
-                Group ID              </span>
-              </li>
+                  {% csrf_token %}
+                  {% for group in groups %}
+                  <li class="mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <a href="/game/{{ group }}">
+                    {{ group }}
+                    </a>
+                    </span>
+                  </li>
+                  {% endfor %}
 
 
-              <li class="mdl-list__item">
-                <span class="mdl-list__item-primary-content">
-                  Group ID              </span>
-                </li>
-                <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>
-                <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                {{ name }}
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    Group ID
-                  </span>
-                </li>
               </ul>
             </div>
           </div>
@@ -129,7 +92,6 @@
               <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
                 <thead>
                   <tr>
-                    <th class="mdl-data-table__cell--non-numeric">Date</th>
                     <th class="mdl-data-table__cell--non-numeric">Exam</th>
                     <th class="mdl-data-table__cell--non-numeric">Person</th>
                     <th class="mdl-data-table__cell--non-numeric">Bet</th>
@@ -138,38 +100,16 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {% csrf_token %}
+                  {% for oneBetColumn in betObjects %}
                   <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> 21/03/2020</td>
-                    <td>Java</td>
-                    <td>Vlad</td>
-                    <td>90</td>
-                    <td>85</td>
-                    <td>false</td>
+                       <td class="mdl-data-table__cell--non-numeric">{{ oneBetColumn.exam }}</td>
+                       <td>{{ oneBetColumn.target_user }}</td>
+                       <td>{{ oneBetColumn.guess_mark}}</td>
+                       <td>{{ oneBetColumn.resultForTarget}}</td>
+                       <td>{{ oneBetColumn.win}}</td>
                   </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> 21/03/2020</td>
-                    <td>Java</td>
-                    <td>Vlad</td>
-                    <td>90</td>
-                    <td>85</td>
-                    <td>false</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> 21/03/2020</td>
-                    <td>Java</td>
-                    <td>Vlad</td>
-                    <td>90</td>
-                    <td>85</td>
-                    <td>false</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> 21/03/2020</td>
-                    <td>Java</td>
-                    <td>Vlad</td>
-                    <td>90</td>
-                    <td>85</td>
-                    <td>false</td>
-                  </tr>
+                  {% endfor %}
                 </tbody>
               </table>
             </div>

@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, re
 from game.models import Bet, GroupMember, Group, Exam, Result
+from BetHistory import BetHistory
 
 minPasswordLength = 7
 # Create your views here.
@@ -97,14 +98,67 @@ def settingsbadfielderror_view(request, form):
 def statistics_view(request):
     #get the users name
     user = request.user.username
+    # GET THE GROUPS OF THE USER
     #get the users id
-    data = User.objects.filter(username=user)
+    userid = User.objects.filter(username=user)
     # get the users groups
-    groups = GroupMember.objects.filter(user_id = data[0].id)
+    groups = GroupMember.objects.filter(user_id = userid[0].id)
     # get the group name
-    #groupName = Group.objects.filter(group_id in groups)
+    idAllGroups = list()
+    for group in groups:
+        idAllGroups.append(group.group_id)
+    groupName = list()
+    for groupid in idAllGroups:
+        oneGroup = Group.objects.filter(group_id = groupid)
+        groupName.append(oneGroup[0].group_name)
+
+    betObjects = Bet.objects.filter(user_id=userid[0].id)
+    listOfAllBetsForAUser = list()
+    for oneBetColumn in betObjects:
+        try:
+            resultForTarget = Result.objects.get(exam_id  = int(oneBetColumn.exam_id), user_id = int(oneBetColumn.target_id))
+            resultForTarget1 = resultForTarget.mark
+            exam_name_one = Exam.objects.get(exam_id = int(oneBetColumn.exam_id))
+            exam_name_one = exam_name_one.exam_name
+            target_user = User.objects.get(id = int(oneBetColumn.target_id))
+            target_user = target_user.first_name
+            if oneBetColumn.win == None:
+                raise Exception()
+            elif oneBetColumn.win == 1:
+                oneBet = BetHistory(exam_name_one,target_user, oneBetColumn.guess_mark, resultForTarget1, 'Won')
+            elif oneBetColumn.win == 0:
+                oneBet = BetHistory(exam_name_one,target_user, oneBetColumn.guess_mark, resultForTarget1, 'Lose')
+
+
+            listOfAllBetsForAUser.append(oneBet)
+        except:
+            try:
+                resultForTarget = Result.objects.get(exam_id  = int(oneBetColumn.exam_id), user_id = int(oneBetColumn.target_id))
+                resultForTarget1 = resultForTarget.mark
+                exam_name_one = Exam.objects.get(exam_id = int(oneBetColumn.exam_id))
+                exam_name_one = exam_name_one.exam_name
+                target_user = User.objects.get(id = int(oneBetColumn.target_id))
+                target_user = target_user.first_name
+                oneBet = BetHistory(exam_name_one,target_user, oneBetColumn.guess_mark, resultForTarget1, 'Ongoing')
+                listOfAllBetsForAUser.append(oneBet)
+            except:
+                exam_name_one = Exam.objects.get(exam_id = int(oneBetColumn.exam_id))
+                exam_name_one = exam_name_one.exam_name
+                target_user = User.objects.get(id = int(oneBetColumn.target_id))
+                target_user = target_user.first_name
+                oneBet = BetHistory(exam_name_one,target_user, oneBetColumn.guess_mark, 'Ongoing', 'Ongoing')
+                listOfAllBetsForAUser.append(oneBet)
+
+
+
+
+    #for oneBetColumn in betObjects:
+    #    oneBetColumn['exam_id'] = Exam.objects.filter(exam_id = int(oneBetColumn['exam_id'])).values(exam_name)
+    #    oneBetColumn['target_id'] = User.objects.filter(id = int(oneBetColumn['target_id'])).values(first_name)
+
     student_lib = {
     "name": user,
-    "groups" : groups
+    "groups" : groupName,
+    "betObjects" : listOfAllBetsForAUser
     }
     return render(request, 'statistics.html', student_lib)
