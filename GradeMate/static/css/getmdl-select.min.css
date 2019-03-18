@@ -36,6 +36,7 @@
   font-size: 16px
 }
 
+
 .getmdl-select__fix-height .mdl-menu__container .mdl-menu {
   overflow-y: auto;
   max-height: 288px !important

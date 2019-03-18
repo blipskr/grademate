@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from game.models import Bet, GroupMember, Group, Exam, Result
+import re
 
 minPasswordLength = 7
 # Create your views here.

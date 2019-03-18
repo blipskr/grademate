@@ -19,6 +19,10 @@ def retrieveUsersGroups(request):
 # average bet and no of ExamStats
 # on current user for each exam
 
+def examIDtoName(examid):
+    examObject = Exam.objects.get(pk=examid)
+    examName = examObject.exam_name
+    return examName
 
 def createExamStats(betsObject):
     examStatsObject = []
