@@ -1,13 +1,11 @@
-{% extends 'register.html' %}
+{% extends 'joingroup.html' %}
 {% load static %}
 {% block errorcontent %}
 
 <dialog class="mdl-dialog" id="errormessage">
 	<h4 class="mdl-dialog__title">Error!</h4>
 	<div class="mdl-dialog__content">
-		<p>Registration details invalid. That username may have already been used. Please
-			try again with a different username, and ensure no fields are left blank and your
-			password is strong enough.
+		<p>Group not found. Are you sure you have entered the Group ID and Name correctly?
 		</p>
 	</div>
 	<div class="mdl-dialog__actions">
@@ -28,4 +26,5 @@
 <script>
 	error.showModal()
 </script>
+
 {% endblock %}

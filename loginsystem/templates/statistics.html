@@ -36,7 +36,7 @@
         <div class="demo-avatar-dropdown">
           <span>{{ name }}
             {% for group in groups %}
-              {{ group.group_name }}
+            {{ group.group_name }}
             {% endfor %}
           </span>
           <div class="mdl-layout-spacer"></div>
@@ -64,7 +64,9 @@
 
     <main class="mdl-layout__content mdl-color--grey-100">
       <div class="mdl-grid demo-content">
-        <center><h3>My groups</h3></center>
+        <center>
+          <h3>My groups</h3>
+        </center>
         <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 200px; position: relative;">
           <ul class="demo-list-item mdl-list" style="display: inline-grid;">
 
@@ -162,19 +164,21 @@
               <div class="mdl-cell mdl-cell--3-col"></div>
           </div>
 
+  <style type="text/css">
+    .mdl-cell {
+      display: inline-grid;
+      justify-content: center;
+      /* align horizontal */
+      align-items: center;
+      /* align vertical */
+    }
+  </style>
+  <!-- footer -->
 
-        <style type="text/css">
-        .mdl-cell {
-          display: inline-grid;
-          justify-content: center; /* align horizontal */
-          align-items: center; /* align vertical */
-        }
-        </style>
-        <!-- footer -->
 
 
 
+</body>
 
-    </body>
-    </html>
-    {% endblock %}
+</html>
+{% endblock %}

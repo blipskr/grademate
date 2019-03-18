@@ -1,26 +1,29 @@
 {% extends 'standardlayout.html' %}
 {% block content %}
 {% load static %}
-<body>
-<br>
-<br>
-<br>
-<form method="post" action="/accountsettings/">
-  <center><h2>Edit Profile</h2></center>
-{% csrf_token %}
-{% for field in form %}
-  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-<label class="mdl-textfield__label">{{ field.label }}</label>
-  {{ field }}
-</div>
 
-<br>
-{% endfor %}
-<br>
-<center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
-Submit
-</button></center>
-</form>
-{% block errorcontent %}
-{% endblock %}
-{% endblock %}
+<body>
+  <br>
+  <br>
+  <br>
+  <form method="post" action="/accountsettings/">
+    <center>
+      <h2>Edit Profile</h2>
+    </center>
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <label class="mdl-textfield__label">{{ field.label }}</label>
+      {{ field }}
+    </div>
+
+    <br>
+    {% endfor %}
+    <br>
+    <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
+        Submit
+      </button></center>
+  </form>
+  {% block errorcontent %}
+  {% endblock %}
+  {% endblock %}

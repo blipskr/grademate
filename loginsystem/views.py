@@ -6,10 +6,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, re
 from game.models import Bet, GroupMember, Group, Exam, Result
+<<<<<<< HEAD
 from BetHistory import BetHistory
+=======
+import re
+>>>>>>> 4b5dfedbee60a99f215f227821d5bf50e065f75d
 
 minPasswordLength = 7
 # Create your views here.
+
 
 def validatePassword(password):
     if (len(password) < minPasswordLength):
@@ -23,11 +28,12 @@ def validatePassword(password):
     else:
         return False
 
+
 def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            if ( not validatePassword(form.cleaned_data['password1'])):
+            if (not validatePassword(form.cleaned_data['password1'])):
                 return registererror_view(request, form)
             else:
                 form.save()
@@ -36,7 +42,8 @@ def register_view(request):
             return registererror_view(request, form)
     else:
         form = RegisterForm()
-        return render(request, 'register.html', { 'form': form })
+        return render(request, 'register.html', {'form': form})
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -50,17 +57,21 @@ def login_view(request):
             return loginerror_view(request, form)
     else:
         form = LoginForm()
-        return render(request, 'login.html', { 'form': form })
+        return render(request, 'login.html', {'form': form})
+
 
 def registererror_view(request, form):
-    return render(request, 'registererror.html', { 'form': form })
+    return render(request, 'registererror.html', {'form': form})
+
 
 def loginerror_view(request, form):
-    return render(request, 'loginerror.html', { 'form': form })
+    return render(request, 'loginerror.html', {'form': form})
+
 
 def logout_view(request):
     logout(request)
     return redirect('/')
+
 
 @login_required(login_url="/login/")
 def profile_view(request):
@@ -73,7 +84,8 @@ def accountsettings_view(request):
         form = AccountEditForm(data=request.POST, instance=request.user)
         if form.is_valid():
             password = form.cleaned_data['password1']
-            editUser = authenticate(username=request.user.username, password=password)
+            editUser = authenticate(
+                username=request.user.username, password=password)
             if editUser is not None:
                 form.save()
                 return redirect('/profile/')
@@ -82,27 +94,32 @@ def accountsettings_view(request):
         else:
             return settingsbadfielderror_view(request, form)
     else:
-        form = AccountEditForm(initial={'first_name': request.user.first_name, 'last_name': request.user.last_name, 'email': request.user.email })
+        form = AccountEditForm(initial={'first_name': request.user.first_name,
+                                        'last_name': request.user.last_name, 'email': request.user.email})
         return render(request, 'accountsettings.html', {'form': form})
+
 
 @login_required(login_url="/login/")
 def settingsautherror_view(request, form):
-    render(request, 'accountsettingsautherror.html', { 'form': form, })
+    render(request, 'accountsettingsautherror.html', {'form': form, })
+
 
 @login_required(login_url="/login/")
 def settingsbadfielderror_view(request, form):
-    render(request, 'accountsettingswrongfielderror.html', { 'form': form })
+    render(request, 'accountsettingswrongfielderror.html', {'form': form})
 
 
 @login_required(login_url="/login/")
 def statistics_view(request):
-    #get the users name
+    # get the users name
     user = request.user.username
+
     # GET THE GROUPS OF THE USER
     #get the users id
     userid = User.objects.filter(username=user)
     # get the users groups
     groups = GroupMember.objects.filter(user_id = userid[0].id)
+
     # get the group name
     idAllGroups = list()
     for group in groups:
@@ -150,11 +167,6 @@ def statistics_view(request):
                 listOfAllBetsForAUser.append(oneBet)
 
 
-
-
-    #for oneBetColumn in betObjects:
-    #    oneBetColumn['exam_id'] = Exam.objects.filter(exam_id = int(oneBetColumn['exam_id'])).values(exam_name)
-    #    oneBetColumn['target_id'] = User.objects.filter(id = int(oneBetColumn['target_id'])).values(first_name)
 
     student_lib = {
     "name": user,

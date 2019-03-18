@@ -8,7 +8,9 @@
 <br>
 
 
-<h1><center>Enter Your Exam Marks</center></h1>
+<h1>
+  <center>Enter Your Exam Marks</center>
+</h1>
 
 <center>
   <form method="post" action="/game/{{ group }}/entermarks/">
@@ -28,7 +30,7 @@
     <br>
     <center>
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
-      Submit
+        Submit
       </button>
     </center>
     <br>
@@ -37,21 +39,24 @@
   <form method="post" action="/game/{{ group }}/entermarks/">
     {% csrf_token %}
     {% for field in viewMarksForm %}
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <label class="mdl-textfield__label">{{ field.label }}</label>
-        {{ field }}
-      </div>
-      <br>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <label class="mdl-textfield__label">{{ field.label }}</label>
+      {{ field }}
+    </div>
+    <br>
     {% endfor %}
   </form>
   <br>
 
 </center>
- <style>.markEntry{
-  position: relative;
-  top: 25%;
-  }</style>
+<style>
+  .markEntry {
+    position: relative;
+    top: 25%;
+  }
+</style>
 
-	</body>
+</body>
+
 </html>
 {% endblock %}

@@ -4,188 +4,216 @@
 
 <body>
   <div class="mdl-grid center-items">
-      <div class="mdl-cell mdl-cell--3-col">
-        <form action="/mygroups/" method="get">
-          <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" value="Go Back" name="returnButton" id="returnButton1">
-        </form>
-      </div>
+
     <div class="mdl-cell mdl-cell--3-col">
-      <center><h3> Place Bet</h3>
-        <form method="post" action="/game/{{ group }}/">
-              {% csrf_token %}
-              {% for field in betForm %}
-              <div class="mdl-textfield mdl-js-textfield getmdl-select">
-                <label class="mdl-textfield__label">{{ field.label }}</label>
-                {{ field }}
-              </div>
-              <br>
-              {% endfor %}
-              <br>
-              <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="place">
-                Place a bet
-              </button></center></form>
-</center>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="location.href='/mygroups/'">
+        <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">arrow_back</i>
+        Back to my groups</button>
     </div>
 
-            <div class="demo-charts mdl-cell mdl-cell--3-col" style="position: relative;">
-                  <center><h3>Change Bet</h3>
-              <div>
-                  </div><div>
-                  </div><div>
-                  </div><div>
-                  </div><table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
-                <thead>
-                  <tr>
-                    <th>Bet ID</th>
-                    <th class="mdl-data-table__cell--non-numeric">Exam</th>
-                    <th>Member</th>
-                    <th>Predicted Mark</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <form method="post" action="/game/{{ group }}/">
-                  {% csrf_token %}
-                  {% if yourBetsList %}
-                  {% for bet in yourBetsList %}
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">{{ bet.bet_id }}</td>
-                    <td class="mdl-data-table__cell--non-numeric">{{ bet.exam }}</td>
-                    <td class="mdl-data-table__cell--non-numeric">{{ bet.target_id }}</td>
-                    <td>{{ bet.guess_mark }}</td>
-                  </tr>
-                  {% endfor %}
-
-
-                  {% else %}
-                  <tr>You have not placed any bets yet.</tr>
-                  {% endif %}
-                </tbody>
-              </table>
-              <br>
-              {% for field in updatebetform %}
-{{field}}
-{% endfor %}
-<br>
-              <!-- Raised button with ripple -->
-              <br>
-              <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="update">
-                Update your bets
-              </button></center>    </form>
-            </center>
-
-            </div>
-            <div class="mdl-cell mdl-cell--3-col"></div>
-
-</div>
-
-
-<div class="mdl-grid center-items">
-    <div class="mdl-cell mdl-cell--3-col"></div>
-            <div class="mdl-cell mdl-cell--3-col" style="position: relative;">
-                          <center><h3>Current Game Stats</h3>
-              <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
-                <thead>
-                  <tr>
-                    <th class="mdl-data-table__cell--non-numeric">Exam</th>
-                    <th>Average Bet</th>
-                    <th>No of Bets</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% csrf_token %}
-                  {% if betsListOnYou %}
-                  {% for element in betsListOnYou %}
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">{{ element.exam }}</td>
-                    <td>{{ element.average_bet }}</td>
-                    <td>{{ element.no_of_bets }}</td>
-                  </tr>
-                  {% endfor %}
-                  {% else %}
-                  <tr>No one has placed bet on you</tr>
-                  {% endif %}
-                  <!-- ORIGINAL BETS ON YOU TABLE
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> Java</td>
-                    <td>53.7</td>
-                    <td>14</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> Java</td>
-                    <td>53.7</td>
-                    <td>14</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> Java</td>
-                    <td>53.7</td>
-                    <td>14</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> Java</td>
-                    <td>53.7</td>
-                    <td>14</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> Java</td>
-                    <td>53.7</td>
-                    <td>14</td>
-                  </tr>
-                ORIGINAL BETS ON YOU TABLE-->
-                </tbody>
-              </table>
-              </center>
-            </div>
-            <div class="demo-charts mdl-cell mdl-cell--3-col" style="position: relative;">
-                          <center><h3>Leaderboard</h3></center>
-              <p>Updated at the end of each season.</p>
-              <center>
-              <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
-                <thead>
-                  <tr>
-                    <th class="mdl-data-table__cell--non-numeric">User</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </center>
-            </div>
-                            <div class="mdl-cell mdl-cell--3-col">
-                              <form action="/game/{{ group }}/entermarks/" method="get">
-                                <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" value="Enter Marks" name="" id="returnButton1">
-                              </form>
-                            </div>
+    <div class="mdl-cell mdl-cell--3-col">
+      <center>
+        <h3> Make Prediction</h3>
+        <form method="post" action="/game/{{ group }}/">
+          {% csrf_token %}
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+            {{ betForm.exam }}
+            <input type="hidden" value="" name="chooseexam">
+            <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+            <label for="chooseexam" class="mdl-textfield__label">Exam</label>
+            <ul for="chooseexam" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+              {% for examchoice in betForm.fields.exam.queryset %}
+              <li class="mdl-menu__item" value="">{{ examchoice }}</li>
+              {% endfor %}
+            </ul>
           </div>
-        <style type="text/css">
-        .mdl-cell {
-          display: inline-grid;
-          justify-content: center; /* align horizontal */
-          align-items: center; /* align vertical */
-        }
-        </style>
-        <!-- footer -->
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+            {{ betForm.target }}
+            <input type="hidden" value="" name="choosetarget">
+            <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+            <label for="choosetarget" class="mdl-textfield__label">Target</label>
+            <ul for="choosetarget" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+              {% for target in betForm.fields.target.queryset %}
+              <li class="mdl-menu__item" value="{{ target }}">{{ target }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <br>
+          <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col mdl-textfield--floating-label">
+            {{ betForm.guess_mark }}
+            <label class="mdl-textfield__label " for="newmark">Predicted Mark</label>
+          </div>
+          <div class="mdl-cell mdl-cell--2-col"></div>
 
 
-      </div>
+          <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="place">
+              Make Prediction
+            </button></center>
+        </form>
+      </center>
+    </div>
+
+    <div class="demo-charts mdl-cell mdl-cell--3-col" style="position: relative;">
+      <center>
+        <h3>Change Prediction</h3>
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Member</th>
+              <th class="mdl-data-table__cell--non-numeric">Exam</th>
+
+              <th>Predicted Mark</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <form method="post" action="/game/{{ group }}/">
+              {% csrf_token %}
+              {% if yourBetsList %}
+              {% for bet in yourBetsList %}
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">{{ bet.target }}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{ bet.exam }}</td>
+                <td>{{ bet.guess_mark }}</td>
+              </tr>
+              {% endfor %}
+
+              {% else %}
+              <tr>You have not made any predictions yet.</tr>
+              {% endif %}
+          </tbody>
+        </table>
+
+        <br>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--2-col"></div>
+
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select mdl-cell mdl-cell--4-col">
+            {{ updatebetform.bet }}
+            <input type="hidden" value="" name="updatebet">
+            <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+            <label for="updatebet" class="mdl-textfield__label">User</label>
+            <ul for="updatebet" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+              {% for bet in updatebetform.fields.bet.queryset %}
+              <li class="mdl-menu__item" value="{{ bet }}">{{ bet.target }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col mdl-textfield--floating-label">
+            {{ updatebetform.mark }}
+            <label class="mdl-textfield__label " for="newmark">New Mark</label>
+          </div>
+          <div class="mdl-cell mdl-cell--2-col"></div>
+
+
+        </div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="update">
+          Update Your Prediction
+        </button>
+    </div>
+    <br>
+    <!-- Raised button with ripple -->
+    <br>
+    </form>
+    </center>
+
+  </div>
+  <div class="mdl-cell mdl-cell--3-col"></div>
+
+  </div>
+
+
+  <div class="mdl-grid center-items">
+    <div class="mdl-cell mdl-cell--3-col"></div>
+    <div class="mdl-cell mdl-cell--3-col" style="position: relative;">
+      <center>
+        <h3>Current Game Stats</h3>
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Exam</th>
+              <th>Average Bet</th>
+              <th>No of Bets</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% csrf_token %}
+            {% if betsListOnYou %}
+            {% for element in betsListOnYou %}
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">{{ element.exam }}</td>
+              <td>{{ element.average_bet }}</td>
+              <td>{{ element.no_of_bets }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>No one has made any predictions for you yet.</tr>
+            {% endif %}
+
+          </tbody>
+        </table>
+      </center>
+    </div>
+    <div class="demo-charts mdl-cell mdl-cell--3-col" style="position: relative;">
+      <center>
+        <h3>Leaderboard</h3>
+      </center>
+      <p>Updated at the end of each season.</p>
+      <center>
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">User</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
+            </tr>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
+            </tr>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
+            </tr>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
+            </tr>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </center>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col">
+      <form action="/game/{{ group }}/entermarks/" method="get">
+        <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" value="Enter Marks" name="" id="returnButton1">
+      </form>
+    </div>
+  </div>
+
+  <style type="text/css">
+    .mdl-cell {
+      display: inline-grid;
+      justify-content: center;
+      /* align horizontal */
+      align-items: center;
+      /* align vertical */
+    }
+  </style>
+  <!-- footer -->
+
+
+  </div>
 
 
 
-</body></html>
-  {% endblock %}
+</body>
+
+</html>
+{% endblock %}
