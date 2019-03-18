@@ -67,11 +67,9 @@
         <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 200px; position: relative;">
           <ul class="demo-list-item mdl-list" style="display: inline-grid;">
 
-
                   {% csrf_token %}
                   {% for group in groups %}
                   <li class="mdl-list__item">
-
                   <span class="mdl-list__item-primary-content">
                     <a href="/game/{{ group }}">
                     {{ group }}
