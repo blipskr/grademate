@@ -173,3 +173,8 @@ def examIDsinGroup(groupName):
         examID = groupObject['exam_id']
         examIDsList.append(examID)
     return examIDsList
+
+# Creates a new group with given name
+def createNewGroup(groupName):
+    groupObject = Group(group_name = groupName)
+    groupObject.save()

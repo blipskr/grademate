@@ -1,7 +1,7 @@
 from django import forms
 from models import Bet, Result
 from django.contrib.auth.models import User
-from models import Exam
+from models import Exam, Group
 import dbqueries as query
 
 from django.core.exceptions import ValidationError
@@ -106,3 +106,14 @@ class ViewMarksForm(forms.ModelForm):
 
         for fieldname in ['mark', ]:
             self.fields[fieldname].help_text = None
+
+class CreateGroupForm(forms.Form):
+    group_name = forms.CharField(label='Group name', max_length=100)
+
+    class Meta:
+        model = Group
+        fields = ('group_name')
+
+    def __init__(self, *args, **kwargs):
+        super(CreateGroupForm, self).__init__(*args, **kwargs)
+        self.fields['group_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'group_name'})
