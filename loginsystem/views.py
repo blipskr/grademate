@@ -4,7 +4,7 @@ from forms import RegisterForm, LoginForm, AccountEditForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, re
 from game.models import Bet, GroupMember, Group, Exam, Result
 
 minPasswordLength = 7
