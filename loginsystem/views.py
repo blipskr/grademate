@@ -6,11 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, re
 from game.models import Bet, GroupMember, Group, Exam, Result
-<<<<<<< HEAD
 from BetHistory import BetHistory
-=======
-import re
->>>>>>> 4b5dfedbee60a99f215f227821d5bf50e065f75d
+
 
 minPasswordLength = 7
 # Create your views here.
