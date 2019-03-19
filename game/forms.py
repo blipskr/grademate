@@ -117,3 +117,10 @@ class AddUserToGroupForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(AddUserToGroupForm, self).__init__(*args, **kwargs)
         self.fields['user_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'adduser'})
+
+class RemoveUserFromGroupForm(forms.Form):
+    user_name = forms.CharField(label='User name', max_length=20)
+
+    def __init__(self, *args, **kwargs):
+        super(RemoveUserFromGroupForm, self).__init__(*args, **kwargs)
+        self.fields['user_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'removeuser'})
