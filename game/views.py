@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm, CreateGroupForm, AddExamForm, JoinGroupForm, AddUserToGroupForm
+from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, CreateGroupForm, AddExamForm, JoinGroupForm, AddUserToGroupForm
 from django.contrib.auth import login
 from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
@@ -52,15 +52,16 @@ def createExamStats(betsObject):
 def entermarks_view(request, gamename):
     userId = request.user.id
     groupId = Group.objects.get(group_name=gamename)
-    groupExams = query.retrieveGroupExams(groupId)
+    groupExamIds = query.examIDsinGroup(gamename)
+    userResults = Result.objects.filter(
+        user=request.user.id, exam_id__in=groupExamIds)
     # if it is POST, EnterMarksForm has been sent
     if request.method == 'POST':
         enterMarksForm = EnterMarksForm(request.POST, group=groupId)
         return query.processEnterMarksForm(request, enterMarksForm, gamename)
     else:
         enterMarksForm = EnterMarksForm(group=groupId)
-        viewMarksForm = ViewMarksForm(group=gamename)
-        return render(request, 'entermarks.html', {'EnterMarksForm': enterMarksForm, 'ViewMarksForm': viewMarksForm, 'group': gamename})
+        return render(request, 'entermarks.html', {'EnterMarksForm': enterMarksForm, 'group': gamename, 'userResultsList' : userResults})
 
 
 @login_required(login_url="/login/")

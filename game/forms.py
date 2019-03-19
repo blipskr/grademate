@@ -88,26 +88,6 @@ class EnterMarksForm(forms.Form):
             attrs={'class': 'mdl-textfield__input', 'id': 'mark'})
 
 
-class ViewMarksForm(forms.ModelForm):
-    exam = forms.CharField(label='Exam', max_length=100)
-    mark = forms.IntegerField(label='Mark Estimate',
-                              max_value=100, min_value=0)
-
-    class Meta:
-        model = Result
-        fields = ('exam', 'mark')
-
-    def __init__(self, *args, **kwargs):
-        self.group = kwargs.pop('group')
-        super(ViewMarksForm, self).__init__(*args, **kwargs)
-        self.fields['mark'].widget = forms.TextInput(
-            attrs={'class': 'mdl-textfield__input', 'id': 'markShow'})
-        groupexams = query.examIDsinGroup(self.group)
-        self.fields['exam'].queryset = Exam.objects.filter(pk__in=groupexams)
-
-        for fieldname in ['mark', ]:
-            self.fields[fieldname].help_text = None
-
 class CreateGroupForm(forms.Form):
     group_name = forms.CharField(label='Group name', max_length=20)
 

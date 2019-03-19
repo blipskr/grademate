@@ -41,20 +41,44 @@
     </center>
     <br>
   </form>
-  <br>
-  <form method="post" action="/game/{{ group }}/entermarks/">
-    {% csrf_token %}
-    {% for field in viewMarksForm %}
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <label class="mdl-textfield__label">{{ field.label }}</label>
-      {{ field }}
-    </div>
-    <br>
-    {% endfor %}
-  </form>
-  <br>
-
 </center>
+
+
+<center>
+  <div class="demo-charts mdl-cell mdl-cell--3-col" style="position: relative;">
+      <h3>Your Entered Results</h3>
+  <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+    <thead>
+      <tr>
+        <th class="mdl-data-table__cell--non-numeric">Exam</th>
+        <th class="mdl-data-table__cell--non-numeric">Mark</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <form method="post" action="/game/{{ group }}/">
+        {% csrf_token %}
+        {% if userResultsList %}
+        {% for result in userResultsList %}
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">{{ result.exam }}</td>
+          <td class="mdl-data-table__cell--non-numeric">{{ result.mark }}</td>
+        </tr>
+        {% endfor %}
+
+        {% else %}
+        <tr>
+          <td>You have not entered any marks yet.</td>
+        </tr>
+        {% endif %}
+    </tbody>
+  </table>
+
+  <br>
+</div>
+</center>
+
+
 <style>
   .markEntry {
     position: relative;

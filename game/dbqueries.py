@@ -82,8 +82,11 @@ def processEnterMarksForm(request, enterMarksForm, gamename):
     exam = Exam.objects.get(pk=examid)
     enteredMark = enterMarksForm.data['mark']
     groupid = extractGroupId(gamename)
+    groupExamIds = examIDsinGroup(gamename)
+    userResults = Result.objects.filter(
+        user=request.user.id, exam_id__in=groupExamIds)
     if not (int(enteredMark) >= 0 and int(enteredMark) <= 100):
-        return render(request, 'invalidmark.html', {'EnterMarksForm' : EnterMarksForm(group=groupid), 'group' : gamename})
+        return render(request, 'invalidmark.html', {'EnterMarksForm' : EnterMarksForm(group=groupid), 'group' : gamename, 'userResultsList' : userResults})
     else:
         newResult = Result(exam=exam, user=request.user, mark=enteredMark)
         newResult.save()
@@ -203,12 +206,12 @@ def userIDsinGroup(groupName):
         userIdsList.append(userId)
     return userIdsList
 
-
+# Takes a name of group and returns all esxams associated with it
 def examIDsinGroup(groupName):
     groupId = Group.objects.get(group_name=groupName).group_id
-    groupMemberObjects = Exam.objects.filter(group=groupId).values('exam_id')
+    examObjects = Exam.objects.filter(group=groupId).values('exam_id')
     examIDsList = []
-    for groupObject in groupMemberObjects:
+    for groupObject in examObjects:
         examID = groupObject['exam_id']
         examIDsList.append(examID)
     return examIDsList
