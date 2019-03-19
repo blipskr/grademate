@@ -76,6 +76,7 @@ def processJoinGroupForm(request):
             return render(request, 'alreadyingrouperror.html', {'form': form} )
     except:
         return render(request, 'groupnotfounderror.html', {'form': form})
+
 def processEnterMarksForm(request, enterMarksForm, gamename):
     groupid = extractGroupId(gamename)
     groupExamIds = examIDsinGroup(gamename)
@@ -149,8 +150,7 @@ def retrieveUserGroupIds(userId):
 def extractGroupNames(groupIds):
     listOfGroupNames = []
     for groupId in groupIds:
-        groupObject = Group.objects.filter(
-            group_id=groupId).values('group_name')
+        groupObject = Group.objects.filter(group_id=groupId).values('group_name')
         groupName = groupObject[0]['group_name']
         listOfGroupNames.append(groupName)
     return listOfGroupNames
@@ -216,6 +216,19 @@ def userIDsinGroup(groupName):
         uid = User.objects.get(pk=userId)
         userIdsList.append(userId)
     return userIdsList
+
+def usernamesInGroup(groupName):
+    groupId = Group.objects.get(group_name=groupName).group_id
+    groupMemberObjects = GroupMember.objects.filter(
+        group=groupId).values('user_id')
+    usernameList = []
+    for groupObject in groupMemberObjects:
+        uid = groupObject['user_id']
+        user = User.objects.get(pk=uid)
+        username = user.username
+
+        usernameList.append(username)
+    return usernameList
 
 # Takes a name of group and returns all esxams associated with it
 def examIDsinGroup(groupName):

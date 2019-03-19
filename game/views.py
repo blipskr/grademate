@@ -154,6 +154,8 @@ def creategroup_view(request):
 def managegroup_view(request, gamename):
     groupid = query.extractGroupId(gamename)
     # if user is not admin, redirect to gamepage
+    examlist = query.retrieveGroupExams(groupid)
+    usernamelist = query.usernamesInGroup(gamename)
     currentUser = User.objects.get(id = request.user.id)
     if request.method == 'POST' and 'addexam' in request.POST:
         addExamForm = AddExamForm(request.POST)
@@ -164,7 +166,7 @@ def managegroup_view(request, gamename):
             return redirect('/game/' + gamename + '/managegroup/')
         else:
             # render to display the error
-            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm})
+            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist})
     elif request.method == 'POST' and 'adduser' in request.POST:
         addUserForm = AddUserToGroupForm(request.POST)
         if addUserForm.is_valid():
@@ -172,11 +174,11 @@ def managegroup_view(request, gamename):
             query.addUserToGroup(user_name, gamename)
             return redirect('/game/' + gamename + '/managegroup/')
         else:
-            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm})
+            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist})
     else:
         addExamForm = AddExamForm()
         addUserForm = AddUserToGroupForm()
-        return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm})
+        return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist})
 
 @login_required(login_url="/login/")
 def joingroup_view(request):
