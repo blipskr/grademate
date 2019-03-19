@@ -91,7 +91,7 @@ def accountsettings_view(request):
         else:
             return settingsbadfielderror_view(request, form)
     else:
-        form = AccountEditForm(initial={'username': request.user.username,
+        form = AccountEditForm(initial={'username': request.user.username, 'first_name': request.user.first_name,
                                         'last_name': request.user.last_name, 'email': request.user.email})
         return render(request, 'accountsettings.html', {'form': form})
 
