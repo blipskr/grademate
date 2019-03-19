@@ -3,6 +3,7 @@
 {% load static %}
 
 <body>
+
   <div class="mdl-grid center-items">
 
     <div class="mdl-cell mdl-cell--3-col">
@@ -15,6 +16,7 @@
           <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">add</i> Enter Marks</button>
         {% block managebutton %}
         {% endblock %}
+
     </div>
 
     <div class="mdl-cell mdl-cell--3-col">
@@ -214,8 +216,8 @@
 
   </div>
 
-
-
+  {% block errorcontent %}
+  {% endblock %}
 </body>
 
 </html>

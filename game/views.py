@@ -97,6 +97,28 @@ def gamepage_view(request, gamename):
         else:
             return render(request, 'game.html', {'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
 
+@login_required(login_url="/login/")
+def gameinputerror_view(request, gamename):
+    groupid = query.extractGroupId(gamename)
+    yourBets = ''
+    enterBetForm = EnterBetForm(group=gamename, user=request.user)
+    relevantExams = []
+    unprocessedExams = Exam.objects.filter(
+        group_id=groupid).values('exam_id')
+    examCount = 0
+    for exam in unprocessedExams:
+        currentexam = unprocessedExams[examCount]['exam_id']
+        relevantExams.append(currentexam)
+        examCount = examCount + 1
+    yourBets = Bet.objects.filter(
+        user=request.user.id, exam_id__in=relevantExams)
+    updatebetform = UpdateBetForm(bets=yourBets)
+    examStatsObject = createExamStats(yourBets)
+    if query.userIsAdminOfGroup(request.user, groupid):
+        return render(request, 'gamewithadmin.html', {'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
+    else:
+        return render(request, 'gameinputerror.html', {'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
+
 
 @login_required(login_url="/login/")
 

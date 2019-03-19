@@ -5,6 +5,7 @@ from ExamStats import ExamStats
 import math
 import unicodedata
 from django.shortcuts import render, render_to_response, redirect
+import views as v
 
 # method takes as an input request
 # returns a list of current users groups
@@ -75,7 +76,6 @@ def processJoinGroupForm(request):
             return render(request, 'alreadyingrouperror.html', {'form': form} )
     except:
         return render(request, 'groupnotfounderror.html', {'form': form})
-
 def processEnterMarksForm(request, enterMarksForm, gamename):
     groupid = extractGroupId(gamename)
     groupExamIds = examIDsinGroup(gamename)
@@ -105,17 +105,19 @@ def processEnterMarksForm(request, enterMarksForm, gamename):
 
 
 def processEnterBetForm(request, betForm, gamename):
-    examinstance = Exam.objects.get
-    targetname = betForm.data['target']
-    examname = betForm.data['exam']
-    examid = extractExamIDgivenGroup(examname, gamename)
-    targetid = getUserID(targetname)
-    guessmark = betForm.data['guess_mark']
-    exam = Exam.objects.get(pk=examid)
-    target = User.objects.get(pk=targetid)
-    newBet = Bet(exam=exam, user=request.user,
+    try:
+        targetname = betForm.data['target']
+        examname = betForm.data['exam']
+        examid = extractExamIDgivenGroup(examname, gamename)
+        targetid = getUserID(targetname)
+        guessmark = betForm.data['guess_mark']
+        exam = Exam.objects.get(pk=examid)
+        target = User.objects.get(pk=targetid)
+        newBet = Bet(exam=exam, user=request.user,
                  target=target, guess_mark=guessmark)
-    newBet.save()
+        newBet.save()
+    except:
+        return v.gameinputerror_view(request, gamename)
 
 # method takes request and betForm, processes UpdateBetForm
 

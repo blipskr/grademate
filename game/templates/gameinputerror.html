@@ -1,0 +1,30 @@
+{% extends 'game.html' %}
+{% load static %}
+{% block errorcontent %}
+
+<dialog class="mdl-dialog" id="errormessage">
+	<h4 class="mdl-dialog__title">Error!</h4>
+	<div class="mdl-dialog__content">
+		<p>There was an error with your input data. Please try again.
+		</p>
+	</div>
+	<div class="mdl-dialog__actions">
+		<button type="button" class="mdl-button close">Close</button>
+	</div>
+</dialog>
+<script src="javascript/dialog-polyfill.js"></script>
+<script>
+	var error = document.querySelector('#errormessage');
+	var showErrorButton = document.querySelector('#test');
+	if (!error.showModal) {
+		dialogPolyfill.registerDialog(error);
+	}
+	error.querySelector('.close').addEventListener('click', function() {
+		error.close();
+	});
+</script>
+<script>
+	error.showModal()
+</script>
+
+{% endblock %}

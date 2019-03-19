@@ -8,7 +8,7 @@
       <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">arrow_back</i>
       {{ groupName }}</button>
   </div>
-    <div class="mdl-cell mdl-cell--11-col">
+    <div class="mdl-cell mdl-cell--10-col">
     <center><h3>Manage the group {{ groupName }}</h3>
       <br>Please enter exam name you wish to add to the game.<br>
       <form action="/game/{{ groupName }}/managegroup/" method="post">
@@ -48,8 +48,137 @@
                 </form></center>
 
                     </div>
-                    <div class="mdl-cell mdl-cell--3-col"
+                    <div class="mdl-cell mdl-cell--1-col"
 </div>
+<!--
+<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--4-col"></div>
+	<div class="mdl-cell mdl-cell--4-col">
+
+
+
+
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+			Add User
+		</button>
+
+		<form action="#">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="text" id="sample3">
+				<label class="mdl-textfield__label" for="sample3">Exam ID</label>
+			</div>
+		</form>
+
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+			Add Exam To Game
+		</button>-->
+
+    <!--
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+
+
+		<style>
+		.demo-list-item {
+			width: 300px;
+		}
+		</style>
+		<div  style="overflow: auto; height: 200px; position: relative;">
+			<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+				<div class="mdl-tabs__tab-bar">
+					<a href="#users" class="mdl-tabs__tab is-active">Users</a>
+					<a href="#exams" class="mdl-tabs__tab">Exams</a>
+				</div>
+
+				<div class="mdl-tabs__panel is-active" id="users">
+					<div style="display: grid;">
+						<span class="mdl-chip mdl-chip--deletable">
+							<span class="mdl-chip__text">Deletable User</span>
+							<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+						</span>
+
+						<span class="mdl-chip mdl-chip--deletable">
+							<span class="mdl-chip__text">Deletable Chip</span>
+							<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+						</span>
+
+						<span class="mdl-chip mdl-chip--deletable">
+							<span class="mdl-chip__text">Deletable Chip</span>
+							<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+						</span>
+
+						<span class="mdl-chip mdl-chip--deletable">
+							<span class="mdl-chip__text">Deletable Chip</span>
+							<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+						</span>
+
+						<span class="mdl-chip mdl-chip--deletable">
+							<span class="mdl-chip__text">Deletable Chip</span>
+							<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+						</span>
+
+						<span class="mdl-chip mdl-chip--deletable">
+							<span class="mdl-chip__text">Deletable Chip</span>
+							<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+						</span>
+					</div>
+				</div>
+				<div class="mdl-tabs__panel" id="exams">
+
+						<div style="display: grid;">
+							<span class="mdl-chip mdl-chip--deletable">
+								<span class="mdl-chip__text">Deletable Exam</span>
+								<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+							</span>
+
+							<span class="mdl-chip mdl-chip--deletable">
+								<span class="mdl-chip__text">Deletable Chip</span>
+								<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+							</span>
+
+							<span class="mdl-chip mdl-chip--deletable">
+								<span class="mdl-chip__text">Deletable Chip</span>
+								<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+							</span>
+
+							<span class="mdl-chip mdl-chip--deletable">
+								<span class="mdl-chip__text">Deletable Chip</span>
+								<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+							</span>
+
+							<span class="mdl-chip mdl-chip--deletable">
+								<span class="mdl-chip__text">Deletable Chip</span>
+								<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+							</span>
+
+							<span class="mdl-chip mdl-chip--deletable">
+								<span class="mdl-chip__text">Deletable Chip</span>
+								<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+							</span>
+						</div>
+				</div>
+			</div>
+		</ul>
+	</div>
+<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style = "background-color: #81D4FA; color: white;">
+	Done
+</button>
+
+</div>
+<div class="mdl-cell mdl-cell--4-col"></div>
+</div>
+
+<style>
+.mdl-cell {
+	display: inline-grid;
+	align-items: center;
+	justify-content: center;
+}
+</style>-->
+<!-- _________________________________ footer section________________________-->
 </body>
 </html>
 {% endblock %}
