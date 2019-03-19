@@ -77,7 +77,7 @@ def gamepage_view(request, gamename):
         relevantExams.append(currentexam)
         examCount = examCount + 1
     yourBets = Bet.objects.filter(
-        user=request.user.id, exam_id__in=relevantExams)
+        user=request.user.id, exam_id__in=relevantExams).order_by('exam')
     updatebetform = UpdateBetForm(bets=yourBets)
     examStatsObject = createExamStats(yourBets)
     # if it is POST, either EnterBetForm or UpdateBetForm has been sent
@@ -87,14 +87,14 @@ def gamepage_view(request, gamename):
         error = query.processEnterBetForm(request, enterBetForm, gamename)
         enterBetForm = EnterBetForm(group=gamename, user=request.user)
         yourBets = Bet.objects.filter(
-            user=request.user.id, exam_id__in=relevantExams)
+            user=request.user.id, exam_id__in=relevantExams).order_by('exam')
         updatebetform = UpdateBetForm(bets=yourBets)
     elif request.method == 'POST' and 'update' in request.POST:
         updatebetform = UpdateBetForm(request.POST, bets=yourBets)
         error =  query.processUpdateBetForm(request, updatebetform)
         enterBetForm = EnterBetForm(group=gamename, user=request.user)
         yourBets = Bet.objects.filter(
-            user=request.user.id, exam_id__in=relevantExams)
+            user=request.user.id, exam_id__in=relevantExams).order_by('exam')
         updatebetform = UpdateBetForm(bets=yourBets)
     else:
         enterBetForm = EnterBetForm(group=gamename, user=request.user)
@@ -107,7 +107,7 @@ def gamepage_view(request, gamename):
             relevantExams.append(currentexam)
             examCount = examCount + 1
         yourBets = Bet.objects.filter(
-            user=request.user.id, exam_id__in=relevantExams)
+            user=request.user.id, exam_id__in=relevantExams).order_by('exam')
         updatebetform = UpdateBetForm(bets=yourBets)
         examStatsObject = createExamStats(yourBets)
         error = False

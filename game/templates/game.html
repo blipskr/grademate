@@ -72,9 +72,8 @@
         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
           <thead>
             <tr>
-              <th class="mdl-data-table__cell--non-numeric">Member</th>
               <th class="mdl-data-table__cell--non-numeric">Exam</th>
-
+              <th class="mdl-data-table__cell--non-numeric">Member</th>
               <th>Predicted Mark</th>
             </tr>
           </thead>
@@ -85,8 +84,8 @@
               {% if yourBetsList %}
               {% for bet in yourBetsList %}
               <tr>
-                <td class="mdl-data-table__cell--non-numeric">{{ bet.target }}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ bet.exam }}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{ bet.target }}</td>
                 <td>{{ bet.guess_mark }}</td>
               </tr>
               {% endfor %}
