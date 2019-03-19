@@ -106,19 +106,21 @@ def processEnterMarksForm(request, enterMarksForm, gamename):
 
 
 def processEnterBetForm(request, betForm, gamename):
-    try:
         targetname = betForm.data['target']
         examname = betForm.data['exam']
+        guessmark = betForm.data['guess_mark']
+        if (str(targetname) == "" or str(examname) == "" or str(guessmark) == ""):
+            return 'The Exam, Target and Predicted Mark fields of Make Prediction Form cannot be left empty!'
         examid = extractExamIDgivenGroup(examname, gamename)
         targetid = getUserID(targetname)
-        guessmark = betForm.data['guess_mark']
+        if not (int(guessmark) >= 0 and int(guessmark) <= 100):
+            return 'The Predicted Mark is invalid!'
         exam = Exam.objects.get(pk=examid)
         target = User.objects.get(pk=targetid)
         newBet = Bet(exam=exam, user=request.user,
                  target=target, guess_mark=guessmark)
         newBet.save()
-    except:
-        return v.gameinputerror_view(request, gamename)
+        return False
 
 # method takes request and betForm, processes UpdateBetForm
 
@@ -126,11 +128,15 @@ def processEnterBetForm(request, betForm, gamename):
 def processUpdateBetForm(request, betForm):
     newmark = betForm.data['mark']
     targetname = betForm.data['bet']
+    if str(newmark) == "" or str(targetname) == "":
+        return 'The User and New Mark fields of Change Prediction Form cannot be left empty!'
+    elif not (int(newmark) >= 0 and int(newmark) <= 100):
+        return 'The New Mark entered is invalid!'
     targetid = getUserID(targetname)
     target = User.objects.get(pk=targetid)
     user = request.user
     Bet.objects.filter(user=user, target=target).update(guess_mark=newmark)
-    return redirect('/')
+    return False
 
 # Returns list of user's group IDs which he is a member of.
 
@@ -150,7 +156,8 @@ def retrieveUserGroupIds(userId):
 def extractGroupNames(groupIds):
     listOfGroupNames = []
     for groupId in groupIds:
-        groupObject = Group.objects.filter(group_id=groupId).values('group_name')
+        groupObject = Group.objects.filter(
+            group_id=groupId).values('group_name')
         groupName = groupObject[0]['group_name']
         listOfGroupNames.append(groupName)
     return listOfGroupNames
@@ -216,19 +223,6 @@ def userIDsinGroup(groupName):
         uid = User.objects.get(pk=userId)
         userIdsList.append(userId)
     return userIdsList
-
-def usernamesInGroup(groupName):
-    groupId = Group.objects.get(group_name=groupName).group_id
-    groupMemberObjects = GroupMember.objects.filter(
-        group=groupId).values('user_id')
-    usernameList = []
-    for groupObject in groupMemberObjects:
-        uid = groupObject['user_id']
-        user = User.objects.get(pk=uid)
-        username = user.username
-
-        usernameList.append(username)
-    return usernameList
 
 # Takes a name of group and returns all esxams associated with it
 def examIDsinGroup(groupName):

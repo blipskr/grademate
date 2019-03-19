@@ -14,9 +14,12 @@
         <br>
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="location.href='entermarks'">
           <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">add</i> Enter Marks</button>
-        {% block managebutton %}
-        {% endblock %}
-
+          {% if admin %}
+          <br>
+          <br>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="location.href='managegroup'">
+            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">settings</i> Manage Group</button>
+          {% endif %}
     </div>
 
     <div class="mdl-cell mdl-cell--3-col">
@@ -216,8 +219,34 @@
 
   </div>
 
-  {% block errorcontent %}
-  {% endblock %}
+{% if error %}
+
+  <dialog class="mdl-dialog" id="errormessage">
+    <h4 class="mdl-dialog__title">Error!</h4>
+    <div class="mdl-dialog__content">
+      <p>{{ error }}</p>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button close">Close</button>
+    </div>
+  </dialog>
+  <script src="javascript/dialog-polyfill.js"></script>
+  <script>
+    var error = document.querySelector('#errormessage');
+    var showErrorButton = document.querySelector('#test');
+    if (!error.showModal) {
+      dialogPolyfill.registerDialog(error);
+    }
+    error.querySelector('.close').addEventListener('click', function() {
+      error.close();
+    });
+  </script>
+  <script>
+    error.showModal()
+  </script>
+
+{% endif %}
+
 </body>
 
 </html>
