@@ -38,7 +38,8 @@ class EnterBetForm(forms.ModelForm):
             attrs={'class': 'mdl-textfield__input', 'id': 'guess_mark'})
         groupusers = query.userIDsinGroup(self.group)
         groupexams = query.examIDsinGroup(self.group)
-        self.fields['target'].queryset = User.objects.filter(pk__in=groupusers)
+        user = self.user.id
+        self.fields['target'].queryset = User.objects.filter(pk__in=groupusers).exclude(pk=user)
         self.fields['exam'].queryset = Exam.objects.filter(pk__in=groupexams)
         self.fields['exam'].widget = forms.TextInput(
             attrs={'class': 'mdl-textfield__input', 'id': 'chooseexam'})
