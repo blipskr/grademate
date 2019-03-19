@@ -39,14 +39,7 @@ class EnterBetForm(forms.ModelForm):
         groupusers = query.userIDsinGroup(self.group)
         groupexams = query.examIDsinGroup(self.group)
         user = self.user.id
-        usersalreadybeton = Bet.objects.filter(user=user).values('target_id')
-        userIdsList = []
-        userIdsList.append(user)
-        for user in usersalreadybeton:
-            userid = user['target_id']
-            userIdsList.append(userid)
-        user = self.user.id
-        self.fields['target'].queryset = User.objects.filter(pk__in=groupusers).exclude(pk__in=userIdsList)
+        self.fields['target'].queryset = User.objects.filter(pk__in=groupusers).exclude(pk=user)
         self.fields['exam'].queryset = Exam.objects.filter(pk__in=groupexams)
         self.fields['exam'].widget = forms.TextInput(
             attrs={'class': 'mdl-textfield__input', 'id': 'chooseexam'})

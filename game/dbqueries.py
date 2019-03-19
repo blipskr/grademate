@@ -102,10 +102,23 @@ def processEnterMarksForm(request, enterMarksForm, gamename):
         newResult.save()
         return redirect('/game/' + gamename + '/entermarks/')
 
+def usernamesInGroup(groupName):
+    groupId = Group.objects.get(group_name=groupName).group_id
+    groupMemberObjects = GroupMember.objects.filter(
+        group=groupId).values('user_id')
+    usernameList = []
+    for groupObject in groupMemberObjects:
+        uid = groupObject['user_id']
+        user = User.objects.get(pk=uid)
+        username = user.username
+
+        usernameList.append(username)
+    return usernameList
 
 
 
 def processEnterBetForm(request, betForm, gamename):
+        user = request.user
         targetname = betForm.data['target']
         examname = betForm.data['exam']
         guessmark = betForm.data['guess_mark']
@@ -117,6 +130,8 @@ def processEnterBetForm(request, betForm, gamename):
             return 'The Predicted Mark is invalid!'
         exam = Exam.objects.get(pk=examid)
         target = User.objects.get(pk=targetid)
+        if Bet.objects.filter(user=user, target=target, exam=exam).count() != 0:
+            return 'You have aleady made a bet on that user for this exam.'
         newBet = Bet(exam=exam, user=request.user,
                  target=target, guess_mark=guessmark)
         newBet.save()

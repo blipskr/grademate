@@ -67,35 +67,17 @@ def entermarks_view(request, gamename):
 @login_required(login_url="/login/")
 def gamepage_view(request, gamename):
     groupid = query.extractGroupId(gamename)
-    enterBetForm = EnterBetForm(group=gamename, user=request.user)
-    relevantExams = []
-    unprocessedExams = Exam.objects.filter(
-        group_id=groupid).values('exam_id')
-    examCount = 0
-    for exam in unprocessedExams:
-        currentexam = unprocessedExams[examCount]['exam_id']
-        relevantExams.append(currentexam)
-        examCount = examCount + 1
-    yourBets = Bet.objects.filter(
-        user=request.user.id, exam_id__in=relevantExams)
-    updatebetform = UpdateBetForm(bets=yourBets)
-    examStatsObject = createExamStats(yourBets)
+    yourBets = ''
     # if it is POST, either EnterBetForm or UpdateBetForm has been sent
     if request.method == 'POST' and 'place' in request.POST:
         enterBetForm = EnterBetForm(
             request.POST, group=gamename, user=request.user)
-        error = query.processEnterBetForm(request, enterBetForm, gamename)
-        enterBetForm = EnterBetForm(group=gamename, user=request.user)
-        yourBets = Bet.objects.filter(
-            user=request.user.id, exam_id__in=relevantExams)
-        updatebetform = UpdateBetForm(bets=yourBets)
+        query.processEnterBetForm(request, enterBetForm, gamename)
+        return redirect('/game/' + gamename)
     elif request.method == 'POST' and 'update' in request.POST:
         updatebetform = UpdateBetForm(request.POST, bets=yourBets)
-        error =  query.processUpdateBetForm(request, updatebetform)
-        enterBetForm = EnterBetForm(group=gamename, user=request.user)
-        yourBets = Bet.objects.filter(
-            user=request.user.id, exam_id__in=relevantExams)
-        updatebetform = UpdateBetForm(bets=yourBets)
+        query.processUpdateBetForm(request, updatebetform)
+        return redirect('/game/' + gamename)
     else:
         enterBetForm = EnterBetForm(group=gamename, user=request.user)
         relevantExams = []
@@ -110,8 +92,10 @@ def gamepage_view(request, gamename):
             user=request.user.id, exam_id__in=relevantExams)
         updatebetform = UpdateBetForm(bets=yourBets)
         examStatsObject = createExamStats(yourBets)
-        error = False
-    return render(request, 'game.html', {'error' : error, 'admin' : query.userIsAdminOfGroup(request.user, groupid), 'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
+        if query.userIsAdminOfGroup(request.user, groupid):
+            return render(request, 'gamewithadmin.html', {'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
+        else:
+            return render(request, 'game.html', {'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
 
 @login_required(login_url="/login/")
 def gameinputerror_view(request, gamename):
@@ -170,6 +154,8 @@ def creategroup_view(request):
 def managegroup_view(request, gamename):
     groupid = query.extractGroupId(gamename)
     # if user is not admin, redirect to gamepage
+    examlist = query.retrieveGroupExams(groupid)
+    usernamelist = query.usernamesInGroup(gamename)
     currentUser = User.objects.get(id = request.user.id)
     if request.method == 'POST' and 'addexam' in request.POST:
         addExamForm = AddExamForm(request.POST)
@@ -180,7 +166,7 @@ def managegroup_view(request, gamename):
             return redirect('/game/' + gamename + '/managegroup/')
         else:
             # render to display the error
-            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm})
+            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist})
     elif request.method == 'POST' and 'adduser' in request.POST:
         addUserForm = AddUserToGroupForm(request.POST)
         if addUserForm.is_valid():
@@ -188,11 +174,11 @@ def managegroup_view(request, gamename):
             query.addUserToGroup(user_name, gamename)
             return redirect('/game/' + gamename + '/managegroup/')
         else:
-            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm})
+            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist})
     else:
         addExamForm = AddExamForm()
         addUserForm = AddUserToGroupForm()
-        return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm})
+        return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist})
 
 @login_required(login_url="/login/")
 def joingroup_view(request):
