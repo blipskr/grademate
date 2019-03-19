@@ -207,3 +207,10 @@ def createNewExam(examName, groupName):
     groupObject = Group.objects.get(group_name = groupName)
     examObject = Exam(group = groupObject, exam_name = examName)
     examObject.save()
+
+# adds given user to the given group by name
+def addUserToGroup(user_name, groupName):
+    groupObject = Group.objects.get(group_name = groupName)
+    userObject = User.objects.get(username = user_name)
+    groupMemberObject = GroupMember(group = groupObject, user = userObject, credits = 100)
+    groupMemberObject.save()

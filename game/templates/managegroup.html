@@ -1,9 +1,10 @@
 {% extends 'standardlayout.html' %}
 {% block content %}
 {% load static %}
-
+<!-- ADD EXAM TO GROUP -->
     <div class="mdl-cell mdl-cell--4-col">
     <center><h3>Manage the group {{ groupName }}</h3>
+      <br>Please enter exam name you wish to add to the game.<br>
       <form action="/game/{{ groupName }}/managegroup/" method="post">
         {% csrf_token %}
         {% for field in addexam %}
@@ -18,9 +19,29 @@
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="addexam">
           Add exam
         </button>
-      </form></center>
+      </form>
 
-          </div>
+
+
+          <!-- ADD USER TO GROUP -->
+          <br>Please enter user name you wish to add to the game.<br>
+                <form action="/game/{{ groupName }}/managegroup/" method="post">
+                  {% csrf_token %}
+                  {% for field in adduser %}
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    {{ field }}
+                    <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
+
+                  </div>
+                  {% endfor %}
+
+          <br>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="adduser">
+                    Add user
+                  </button>
+                </form></center>
+
+                    </div>
 <!--
 <div class="mdl-grid">
 	<div class="mdl-cell mdl-cell--4-col"></div>

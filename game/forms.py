@@ -143,3 +143,10 @@ class AddExamForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(AddExamForm, self).__init__(*args, **kwargs)
         self.fields['exam_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'addexam'})
+
+class AddUserToGroupForm(forms.Form):
+    user_name = forms.CharField(label='User name', max_length=20)
+
+    def __init__(self, *args, **kwargs):
+        super(AddUserToGroupForm, self).__init__(*args, **kwargs)
+        self.fields['user_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'adduser'})

@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm, CreateGroupForm, AddExamForm, JoinGroupForm
+from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, ViewMarksForm, CreateGroupForm, AddExamForm, JoinGroupForm, AddUserToGroupForm
 from django.contrib.auth import login
 from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
@@ -144,7 +144,7 @@ def creategroup_view(request):
 def managegroup_view(request, gamename):
     # if it is POST, EnterMarksForm has been sent
     print "managegroup"
-    if request.method == 'POST':
+    if request.method == 'POST' and 'addexam' in request.POST:
         addExamForm = AddExamForm(request.POST)
         print "post"
         if addExamForm.is_valid():
@@ -156,11 +156,20 @@ def managegroup_view(request, gamename):
         else:
             # render to display the error
             print "Form is invalid"
-            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename})
+            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm})
+    elif request.method == 'POST' and 'adduser' in request.POST:
+        addUserForm = AddUserToGroupForm(request.POST)
+        if addUserForm.is_valid():
+            user_name = addUserForm.data['user_name']
+            query.addUserToGroup(user_name, gamename)
+            return redirect('/game/' + gamename + '/managegroup/')
+        else:
+            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm})
     else:
         print "Not post"
         addExamForm = AddExamForm()
-        return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename})
+        addUserForm = AddUserToGroupForm()
+        return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm})
 
 @login_required(login_url="/login/")
 def joingroup_view(request):
