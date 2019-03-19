@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from forms import EnterBetForm, UpdateBetForm, EnterMarksForm
+from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, JoinGroupForm
 from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import math
@@ -19,6 +19,10 @@ def retrieveUsersGroups(request):
 # average bet and no of ExamStats
 # on current user for each exam
 
+def examIDtoName(examid):
+    examObject = Exam.objects.get(pk=examid)
+    examName = examObject.exam_name
+    return examName
 
 def createExamStats(betsObject):
     examStatsObject = []
@@ -54,6 +58,23 @@ def createExamStats(betsObject):
 
 # method takes request and betForm, processes betForm
 
+def processJoinGroupForm(request):
+    form = JoinGroupForm(request.POST)
+    group_name = form.data['group_name']
+    group_id = form.data['group_id']
+    try:
+        group = Group.objects.get(pk=group_id)
+        if (GroupMember.objects.filter(user=request.user, group=group).count() == 0):
+            if (int(extractGroupId(group_name)) == int(group_id)):
+                    newGroupMember = GroupMember(group=group, user=request.user, credits=100)
+                    newGroupMember.save()
+                    return redirect('/game/' + group_name)
+            else:
+                    return render(request, 'groupnotfounderror.html', {'form': form})
+        else:
+            return render(request, 'alreadyingrouperror.html', {'form': form} )
+    except:
+        return render(request, 'groupnotfounderror.html', {'form': form})
 
 def processEnterBetForm(request, betForm, gamename):
     examinstance = Exam.objects.get

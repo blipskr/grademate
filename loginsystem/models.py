@@ -1,2 +1,2 @@
 from django.contrib.auth.models import User
-# Create your models here.
+from game.models import Bet, GroupMember, Group, Exam, Result
