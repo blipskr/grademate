@@ -72,6 +72,7 @@
         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
           <thead>
             <tr>
+                    <th class="mdl-data-table__cell--non-numeric">Bet ID</th>
               <th class="mdl-data-table__cell--non-numeric">Exam</th>
               <th class="mdl-data-table__cell--non-numeric">Member</th>
               <th>Predicted Mark</th>
@@ -84,6 +85,7 @@
               {% if yourBetsList %}
               {% for bet in yourBetsList %}
               <tr>
+                <td class="mdl-data-table__cell--non-numeric">{{ bet }}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ bet.exam }}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ bet.target }}</td>
                 <td>{{ bet.guess_mark }}</td>
@@ -105,10 +107,10 @@
             {{ updatebetform.bet }}
             <input type="hidden" value="" name="updatebet">
             <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
-            <label for="updatebet" class="mdl-textfield__label">User</label>
+            <label for="updatebet" class="mdl-textfield__label">Bet ID</label>
             <ul for="updatebet" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
               {% for bet in updatebetform.fields.bet.queryset %}
-              <li class="mdl-menu__item" value="{{ bet }}">{{ bet.target }}</li>
+              <li class="mdl-menu__item" value="{{ bet }}">{{ bet }}</li>
               {% endfor %}
             </ul>
           </div>
