@@ -284,13 +284,13 @@ def removeExamFromGroup(examName, groupName):
 
 # method to check if given user is creator (admin) of the group
 # returns true if he is
-def userIsAdminOfGroup(userObject, groupName):
+def userIsAdminOfGroup(userObject, groupid):
     #userObject = User.objects.get(username = userName)
-    groupObject = Group.objects.get(group_name = groupName)
+    groupObject = Group.objects.get(pk=groupid)
     groupMemberObjects = GroupMember.objects.filter(group = groupObject)
     groupAdminObject = groupMemberObjects[0]
     groupMemberObject = GroupMember.objects.get(group = groupObject, user = userObject)
-    if groupAdminObject is groupMemberObject:
+    if groupAdminObject == groupMemberObject:
         return True
     else:
         return False
