@@ -3,15 +3,18 @@
 {% load static %}
 
 <!-- select exam -->
-<br>
-<br>
-<br>
-
+<div class="mdl-grid center-items">
+  <div class="mdl-cell mdl-cell--3-col">    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="location.href='/game/{{ group }}/'">
+        <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">arrow_back</i>
+        {{ group }}</button></div>
+  <div class="mdl-cell mdl-cell--6-col">
 
 <h1>
   <center>Enter Your Exam Marks</center>
 </h1>
-
+</div>
+  <div class="mdl-cell mdl-cell--3-col"></div>
+</div>
 <center>
   <form method="post" action="/game/{{ group }}/entermarks/">
     {% csrf_token %}

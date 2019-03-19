@@ -130,7 +130,7 @@ def creategroup_view(request):
         if createGroupForm.is_valid():
             groupName = createGroupForm.data['group_name']
             if query.extractGroupId(groupName) == None:
-                query.createNewGroup(groupName)
+                query.createNewGroup(request.user.username, groupName)
                 username = User.objects.get(id = request.user.id)
                 query.addUserToGroup(username, groupName)
                 # redirect to managegroup.html

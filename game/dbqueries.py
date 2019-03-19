@@ -250,27 +250,28 @@ def examIDsinGroup(groupName):
     return examIDsList
 
 # Creates a new group with given name
-def createNewGroup(groupName):
-    groupObject = Group(group_name = groupName)
-    groupObject.save()
+def createNewGroup(username, groupName):
+    try:
+        examObject = Group.objects.get(exam_name = groupName)
+    except:
+        groupObject = Group(group_name = groupName)
+        groupObject.save()
+        addUserToGroup(username, groupName)
 
 # creates new exam with given name for given group
 def createNewExam(examName, groupName):
-    try:
-        examObject = Exam.objects.get(exam_name = examName)
-    # if exam does not exist, create it
-    except Exam.DoesNotExist:
-        groupObject = Group.objects.get(group_name = groupName)
-        examObject = Exam(group = groupObject, exam_name = examName)
-        examObject.save()
+    groupObject = Group.objects.get(group_name = groupName)
+    examObject = Exam(group = groupObject, exam_name = examName)
+    examObject.save()
 
 # adds given user to the given group by name
 def addUserToGroup(user_name, groupName):
     try:
         userObject = User.objects.get(username = user_name)
-        groupMemberObject = GroupMember.objects.get(user = userObject)
+        groupObject = Group.objects.get(group_name=groupName)
+        groupMemberObject = GroupMember.objects.get(user = userObject, group=groupObject)
     # if GroupMember does not exist, create it
-    except GroupMember.DoesNotExist:
+    except:
         groupObject = Group.objects.get(group_name = groupName)
         userObject = User.objects.get(username = user_name)
         groupMemberObject = GroupMember(group = groupObject, user = userObject, credits = 100)
