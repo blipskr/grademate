@@ -67,7 +67,6 @@ def entermarks_view(request, gamename):
 @login_required(login_url="/login/")
 def gamepage_view(request, gamename):
     groupid = query.extractGroupId(gamename)
-    print str(groupid) + 'ok'
     yourBets = ''
     # if it is POST, either EnterBetForm or UpdateBetForm has been sent
     if request.method == 'POST' and 'place' in request.POST:
@@ -93,7 +92,6 @@ def gamepage_view(request, gamename):
             user=request.user.id, exam_id__in=relevantExams)
         updatebetform = UpdateBetForm(bets=yourBets)
         examStatsObject = createExamStats(yourBets)
-        print str(groupid) + '2'
         if query.userIsAdminOfGroup(request.user, groupid):
             return render(request, 'gamewithadmin.html', {'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
         else:

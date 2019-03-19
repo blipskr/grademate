@@ -242,20 +242,15 @@ def createNewExam(examName, groupName):
 
 # adds given user to the given group by name
 def addUserToGroup(user_name, groupName):
-    print "addUserToGroup1"
     try:
-        print "try"
         userObject = User.objects.get(username = user_name)
         groupMemberObject = GroupMember.objects.get(user = userObject)
-        print "try succeeded"
     # if GroupMember does not exist, create it
     except GroupMember.DoesNotExist:
-        print "except processing"
         groupObject = Group.objects.get(group_name = groupName)
         userObject = User.objects.get(username = user_name)
         groupMemberObject = GroupMember(group = groupObject, user = userObject, credits = 100)
         groupMemberObject.save()
-        print "except succeeded"
 
 # method to delete user from the group
 def removeUserFromGroup(userName, groupName):
