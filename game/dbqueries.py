@@ -204,13 +204,75 @@ def createNewGroup(groupName):
 
 # creates new exam with given name for given group
 def createNewExam(examName, groupName):
-    groupObject = Group.objects.get(group_name = groupName)
-    examObject = Exam(group = groupObject, exam_name = examName)
-    examObject.save()
+    try:
+        examObject = Exam.objects.get(exam_name = examName)
+    # if exam does not exist, create it
+    except Exam.DoesNotExist:
+        groupObject = Group.objects.get(group_name = groupName)
+        examObject = Exam(group = groupObject, exam_name = examName)
+        examObject.save()
 
 # adds given user to the given group by name
 def addUserToGroup(user_name, groupName):
+    print "addUserToGroup1"
+    try:
+        print "try"
+        userObject = User.objects.get(username = user_name)
+        groupMemberObject = GroupMember.objects.get(user = userObject)
+        print "try succeeded"
+    # if GroupMember does not exist, create it
+    except GroupMember.DoesNotExist:
+        print "except processing"
+        groupObject = Group.objects.get(group_name = groupName)
+        userObject = User.objects.get(username = user_name)
+        groupMemberObject = GroupMember(group = groupObject, user = userObject, credits = 100)
+        groupMemberObject.save()
+        print "except succeeded"
+
+# method to delete user from the group
+def removeUserFromGroup(userName, groupName):
+    # determine groupObject, userObject, betObjects, resultObjects, groupMemberObject
+    userObject = User.objects.get(username = userName)
     groupObject = Group.objects.get(group_name = groupName)
-    userObject = User.objects.get(username = user_name)
-    groupMemberObject = GroupMember(group = groupObject, user = userObject, credits = 100)
-    groupMemberObject.save()
+    groupMemberObject = GroupMember.objects.get(group = groupObject, user = userObject)
+    betObjects1 = Bet.objects.filter(target = userObject)
+    betObjects2 = Bet.objects.filter(user = userObject)
+    # delete it
+    groupMemberObject.delete()
+    betObjects1.delete()
+    betObjects2.delete()
+
+# method to delete exam from the group
+def removeExamFromGroup(examName, groupName):
+    # determine groupObject, examObject, betObjects and resultObjects
+    groupObject = Group.objects.get(group_name = groupName)
+    examObject = Exam.objects.get(exam_name = examName, group = groupObject)
+    betObjects = Bet.objects.filter(exam = examObject)
+    resultObjects = Result.objects.filter(exam = examObject)
+    # delete it
+    betObjects.delete()
+    examObject.delete()
+    resultObjects.delete()
+
+# method to check if given user is creator (admin) of the group
+# returns true if he is
+def userIsAdminOfGroup(userObject, groupName):
+    #userObject = User.objects.get(username = userName)
+    groupObject = Group.objects.get(group_name = groupName)
+    groupMemberObjects = GroupMember.objects.filter(group = groupObject)
+    groupAdminObject = groupMemberObjects[0]
+    groupMemberObject = GroupMember.objects.get(group = groupObject, user = userObject)
+    if groupAdminObject is groupMemberObject:
+        return True
+    else:
+        return False
+
+# method to check if given user is a member of given group
+def userIsMemberOfGroup(userName, groupName):
+    userObject = User.objects.get(username = userName)
+    groupObject = Group.objects.get(group_name = groupName)
+    try:
+        groupMemberObject = GroupMember.objects.get(group = groupObject, user = userObject)
+        return True
+    except GroupMember.DoesNotExist:
+        return False

@@ -130,6 +130,8 @@ def creategroup_view(request):
             groupName = createGroupForm.data['group_name']
             if query.extractGroupId(groupName) == None:
                 query.createNewGroup(groupName)
+                username = User.objects.get(id = request.user.id)
+                query.addUserToGroup(username, groupName)
                 # redirect to managegroup.html
                 return redirect('/game/' + groupName + '/managegroup/')
                 #return managegroup_view(request, groupName)
@@ -142,6 +144,10 @@ def creategroup_view(request):
 
 @login_required(login_url="/login/")
 def managegroup_view(request, gamename):
+    # if user is not admin, redirect to gamepage
+    currentUser = User.objects.get(id = request.user.id)
+    if query.userIsAdminOfGroup(currentUser, gamename):
+        return redirect('/game/' + gamename)
     # if it is POST, EnterMarksForm has been sent
     print "managegroup"
     if request.method == 'POST' and 'addexam' in request.POST:
