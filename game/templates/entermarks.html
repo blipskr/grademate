@@ -15,19 +15,25 @@
 <center>
   <form method="post" action="/game/{{ group }}/entermarks/">
     {% csrf_token %}
-    {{ form.non_field_errors }}
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <label class="mdl-textfield__label">{{ EnterMarksForm.exam.label }}</label>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
       {{ EnterMarksForm.exam }}
+      <input type="hidden" value="" name="chooseexam">
+      <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+      <label for="chooseexam" class="mdl-textfield__label">Exam</label>
+      <ul for="chooseexam" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+        {% for examchoice in EnterMarksForm.fields.exam.queryset %}
+        <li class="mdl-menu__item" value="">{{ examchoice }}</li>
+        {% endfor %}
+      </ul>
     </div>
-    <br>
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <label class="mdl-textfield__label">{{ EnterMarksForm.mark.label }}</label>
+
+<br>
+    <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--2-col mdl-textfield--floating-label">
       {{ EnterMarksForm.mark }}
-      {{ EnterMarksForm.mark.errors }}
+      <label class="mdl-textfield__label " for="mark">Mark</label>
     </div>
-    <br>
-    <br>
+
+</div>
     <center>
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
         Submit

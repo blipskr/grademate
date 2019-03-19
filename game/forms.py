@@ -49,10 +49,6 @@ class EnterBetForm(forms.ModelForm):
         self.fields['user'] = self.user
         self.fields['user'].widget = forms.HiddenInput()
 
-    def clean(self, value):
-        cleaned_data = self.cleaned_data
-        print 'ok'
-        return cleaned_data
 
 
 class UpdateBetForm(forms.Form):
@@ -73,26 +69,23 @@ class UpdateBetForm(forms.Form):
         self.fields['bet'].widget.attrs['readonly'] = True
 
 
-class EnterMarksForm(forms.ModelForm):
-    exam = forms.ModelChoiceField(queryset=User.objects.filter(pk=1))
-    mark = forms.IntegerField(label='Mark Estimate',
-                              max_value=100, min_value=0)
 
+class EnterMarksForm(forms.Form):
+    exam = forms.ModelChoiceField(queryset=User.objects.filter(pk=1))
+    mark = forms.CharField()
     class Meta:
-        model = Result
-        fields = ('exam', 'mark')
+        fields = ('exam', 'mark', 'user')
 
     def __init__(self, *args, **kwargs):
         self.group = kwargs.pop('group')
         super(EnterMarksForm, self).__init__(*args, **kwargs)
-
-        groupexams = query.examIDsinGroup(self.group)
-        self.fields['exam'].queryset = Exam.objects.filter(pk__in=groupexams)
+        exams = query.retrieveGroupExams(self.group)
+        self.fields['exam'].queryset = exams
+        self.fields['exam'].widget = forms.TextInput(
+            attrs={'class': 'mdl-textfield__input', 'id': 'chooseexam'})
+        self.fields['exam'].widget.attrs['readonly'] = True
         self.fields['mark'].widget = forms.TextInput(
-            attrs={'class': 'mdl-textfield__input', 'id': 'markInput'})
-
-        for fieldname in ['exam', 'mark', ]:
-            self.fields[fieldname].help_text = None
+            attrs={'class': 'mdl-textfield__input', 'id': 'mark'})
 
 
 class ViewMarksForm(forms.ModelForm):

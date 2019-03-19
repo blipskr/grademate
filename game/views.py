@@ -54,14 +54,11 @@ def entermarks_view(request, gamename):
     groupId = Group.objects.get(group_name=gamename)
     groupExams = query.retrieveGroupExams(groupId)
     # if it is POST, EnterMarksForm has been sent
-    print 'start'
     if request.method == 'POST':
-        print 'if'
-        enterMarksForm = EnterMarksForm(request.POST, group=gamename)
+        enterMarksForm = EnterMarksForm(request.POST, group=groupId)
         return query.processEnterMarksForm(request, enterMarksForm, gamename)
     else:
-        print 'else'
-        enterMarksForm = EnterMarksForm(group=gamename)
+        enterMarksForm = EnterMarksForm(group=groupId)
         viewMarksForm = ViewMarksForm(group=gamename)
         return render(request, 'entermarks.html', {'EnterMarksForm': enterMarksForm, 'ViewMarksForm': viewMarksForm, 'group': gamename})
 

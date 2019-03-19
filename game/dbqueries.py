@@ -77,15 +77,14 @@ def processJoinGroupForm(request):
         return render(request, 'groupnotfounderror.html', {'form': form})
 
 def processEnterMarksForm(request, enterMarksForm, gamename):
-    print 'sth'
-    examId = enterMarksForm.data['exam']
-    exam = Exam.objects.get(pk=examId)
+    examname = enterMarksForm.data['exam']
+    examid = extractExamIDgivenGroup(examname, gamename)
+    exam = Exam.objects.get(pk=examid)
     enteredMark = enterMarksForm.data['mark']
+    groupid = extractGroupId(gamename)
     if not (int(enteredMark) >= 0 and int(enteredMark) <= 100):
-        print 'notsaved'
-        return render(request, 'invalidmark.html', {'EnterMarksForm' : EnterMarksForm(group=gamename), 'group' : gamename})
+        return render(request, 'invalidmark.html', {'EnterMarksForm' : EnterMarksForm(group=groupid), 'group' : gamename})
     else:
-        print 'saved'
         newResult = Result(exam=exam, user=request.user, mark=enteredMark)
         newResult.save()
         return redirect('/game/' + gamename + '/entermarks/')
@@ -293,3 +292,9 @@ def userIsMemberOfGroup(userName, groupName):
         return True
     except GroupMember.DoesNotExist:
         return False
+
+def fetchUserExamsInGroup(username, groupname):
+    userObject = User.objects.get(username = username)
+    groupObject = Group.objects.get(group_name = groupname)
+    exams = Exam.objects.filter(group=groupObject)
+    return exams
