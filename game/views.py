@@ -67,17 +67,35 @@ def entermarks_view(request, gamename):
 @login_required(login_url="/login/")
 def gamepage_view(request, gamename):
     groupid = query.extractGroupId(gamename)
-    yourBets = ''
+    enterBetForm = EnterBetForm(group=gamename, user=request.user)
+    relevantExams = []
+    unprocessedExams = Exam.objects.filter(
+        group_id=groupid).values('exam_id')
+    examCount = 0
+    for exam in unprocessedExams:
+        currentexam = unprocessedExams[examCount]['exam_id']
+        relevantExams.append(currentexam)
+        examCount = examCount + 1
+    yourBets = Bet.objects.filter(
+        user=request.user.id, exam_id__in=relevantExams)
+    updatebetform = UpdateBetForm(bets=yourBets)
+    examStatsObject = createExamStats(yourBets)
     # if it is POST, either EnterBetForm or UpdateBetForm has been sent
     if request.method == 'POST' and 'place' in request.POST:
         enterBetForm = EnterBetForm(
             request.POST, group=gamename, user=request.user)
-        query.processEnterBetForm(request, enterBetForm, gamename)
-        return redirect('/game/' + gamename)
+        error = query.processEnterBetForm(request, enterBetForm, gamename)
+        enterBetForm = EnterBetForm(group=gamename, user=request.user)
+        yourBets = Bet.objects.filter(
+            user=request.user.id, exam_id__in=relevantExams)
+        updatebetform = UpdateBetForm(bets=yourBets)
     elif request.method == 'POST' and 'update' in request.POST:
         updatebetform = UpdateBetForm(request.POST, bets=yourBets)
-        query.processUpdateBetForm(request, updatebetform)
-        return redirect('/game/' + gamename)
+        error =  query.processUpdateBetForm(request, updatebetform)
+        enterBetForm = EnterBetForm(group=gamename, user=request.user)
+        yourBets = Bet.objects.filter(
+            user=request.user.id, exam_id__in=relevantExams)
+        updatebetform = UpdateBetForm(bets=yourBets)
     else:
         enterBetForm = EnterBetForm(group=gamename, user=request.user)
         relevantExams = []
@@ -92,36 +110,11 @@ def gamepage_view(request, gamename):
             user=request.user.id, exam_id__in=relevantExams)
         updatebetform = UpdateBetForm(bets=yourBets)
         examStatsObject = createExamStats(yourBets)
-        if query.userIsAdminOfGroup(request.user, groupid):
-            return render(request, 'gamewithadmin.html', {'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
-        else:
-            return render(request, 'game.html', {'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
-
-@login_required(login_url="/login/")
-def gameinputerror_view(request, gamename):
-    groupid = query.extractGroupId(gamename)
-    yourBets = ''
-    enterBetForm = EnterBetForm(group=gamename, user=request.user)
-    relevantExams = []
-    unprocessedExams = Exam.objects.filter(
-        group_id=groupid).values('exam_id')
-    examCount = 0
-    for exam in unprocessedExams:
-        currentexam = unprocessedExams[examCount]['exam_id']
-        relevantExams.append(currentexam)
-        examCount = examCount + 1
-    yourBets = Bet.objects.filter(
-        user=request.user.id, exam_id__in=relevantExams)
-    updatebetform = UpdateBetForm(bets=yourBets)
-    examStatsObject = createExamStats(yourBets)
-    if query.userIsAdminOfGroup(request.user, groupid):
-        return render(request, 'gamewithadmin.html', {'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
-    else:
-        return render(request, 'gameinputerror.html', {'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
+        error = False
+    return render(request, 'game.html', {'error' : error, 'admin' : query.userIsAdminOfGroup(request.user, groupid), 'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
 
 
 @login_required(login_url="/login/")
-
 def getGroups(request):
     userId = request.user.id
     groups = extractGroupNames(retrieveUserGroupIds(userId))
@@ -153,9 +146,10 @@ def creategroup_view(request):
 @login_required(login_url="/login/")
 def managegroup_view(request, gamename):
     groupid = query.extractGroupId(gamename)
-    # if user is not admin, redirect to gamepage
     examlist = query.retrieveGroupExams(groupid)
     usernamelist = query.usernamesInGroup(gamename)
+
+    # if user is not admin, redirect to gamepage
     currentUser = User.objects.get(id = request.user.id)
     if request.method == 'POST' and 'addexam' in request.POST:
         addExamForm = AddExamForm(request.POST)
