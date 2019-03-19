@@ -128,6 +128,8 @@ def statistics_view(request):
 
     betObjects = Bet.objects.filter(user_id=userid[0].id)
     listOfAllBetsForAUser = list()
+    noOfWins = 0
+    noOfLosses = 0
     for oneBetColumn in betObjects:
         try:
             resultForTarget = Result.objects.get(exam_id  = int(oneBetColumn.exam_id), user_id = int(oneBetColumn.target_id))
@@ -139,8 +141,10 @@ def statistics_view(request):
             if oneBetColumn.win == None:
                 raise Exception()
             elif oneBetColumn.win == 1:
+                noOfWins = noOfWins + 1
                 oneBet = BetHistory(exam_name_one,target_user, oneBetColumn.guess_mark, resultForTarget1, 'Won')
             elif oneBetColumn.win == 0:
+                noOfLosses = noOfLosses + 1
                 oneBet = BetHistory(exam_name_one,target_user, oneBetColumn.guess_mark, resultForTarget1, 'Lose')
 
 
@@ -164,10 +168,20 @@ def statistics_view(request):
                 listOfAllBetsForAUser.append(oneBet)
 
 
+    noOfBets = noOfWins + noOfLosses
+    if noOfBets != 0:
+        accuracy = float(noOfWins * 100) / noOfBets
+        accuracy = "%.2f" % round(accuracy,2)
 
+    else:
+        accuracy = 0
     student_lib = {
     "name": user,
     "groups" : groupName,
-    "betObjects" : listOfAllBetsForAUser
+    "betObjects" : listOfAllBetsForAUser,
+    "noOfWins" : noOfWins,
+    "noOfLosses" : noOfLosses,
+    "noOfBets" : noOfBets,
+    "accuracy" : accuracy
     }
     return render(request, 'statistics.html', student_lib)
