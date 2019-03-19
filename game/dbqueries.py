@@ -77,14 +77,23 @@ def processJoinGroupForm(request):
         return render(request, 'groupnotfounderror.html', {'form': form})
 
 def processEnterMarksForm(request, enterMarksForm, gamename):
-    examname = enterMarksForm.data['exam']
-    examid = extractExamIDgivenGroup(examname, gamename)
-    exam = Exam.objects.get(pk=examid)
-    enteredMark = enterMarksForm.data['mark']
     groupid = extractGroupId(gamename)
     groupExamIds = examIDsinGroup(gamename)
     userResults = Result.objects.filter(
         user=request.user.id, exam_id__in=groupExamIds)
+    examname = enterMarksForm.data['exam']
+    enteredMark = enterMarksForm.data['mark']
+    if str(examname) == "":
+        return render(request, 'invalidexam.html', {'EnterMarksForm' : EnterMarksForm(group=groupid), 'group' : gamename, 'userResultsList' : userResults})
+    elif str(enteredMark) == "":
+        return render(request, 'invalidmark.html', {'EnterMarksForm' : EnterMarksForm(group=groupid), 'group' : gamename, 'userResultsList' : userResults})
+    examid = extractExamIDgivenGroup(examname, gamename)
+    alreadyEnteredExams = []
+    for result in userResults.values():
+        alreadyEnteredExams.append(result['exam_id'])
+    if examid in alreadyEnteredExams:
+        return render(request, 'duplicateresultentry.html', {'EnterMarksForm' : EnterMarksForm(group=groupid), 'group' : gamename, 'userResultsList' : userResults})
+    exam = Exam.objects.get(pk=examid)
     if not (int(enteredMark) >= 0 and int(enteredMark) <= 100):
         return render(request, 'invalidmark.html', {'EnterMarksForm' : EnterMarksForm(group=groupid), 'group' : gamename, 'userResultsList' : userResults})
     else:
