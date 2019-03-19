@@ -54,18 +54,13 @@ def entermarks_view(request, gamename):
     groupId = Group.objects.get(group_name=gamename)
     groupExams = query.retrieveGroupExams(groupId)
     # if it is POST, EnterMarksForm has been sent
+    print 'start'
     if request.method == 'POST':
+        print 'if'
         enterMarksForm = EnterMarksForm(request.POST, group=gamename)
-        if enterMarksForm.is_valid():
-            resultsObject = enterMarksForm.save(commit=False)
-            resultsObject.user = request.user
-            resultsObject.save()
-            # redirect to clear the form after saving
-            return redirect('/game/' + gamename + '/entermarks/')
-        else:
-            # render to display the error
-            return render(request, 'entermarks.html', {'EnterMarksForm': enterMarksForm, 'group': gamename})
+        return query.processEnterMarksForm(request, enterMarksForm, gamename)
     else:
+        print 'else'
         enterMarksForm = EnterMarksForm(group=gamename)
         viewMarksForm = ViewMarksForm(group=gamename)
         return render(request, 'entermarks.html', {'EnterMarksForm': enterMarksForm, 'ViewMarksForm': viewMarksForm, 'group': gamename})
@@ -150,7 +145,7 @@ def managegroup_view(request, gamename):
         if addExamForm.is_valid():
             exam_name = addExamForm.data['exam_name']
             query.createNewExam(exam_name, gamename)
-            print "FOrm is valid"
+            print "Form is valid"
             # redirect to clear the form after saving
             return redirect('/game/' + gamename + '/managegroup/')
         else:

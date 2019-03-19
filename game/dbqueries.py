@@ -76,6 +76,23 @@ def processJoinGroupForm(request):
     except:
         return render(request, 'groupnotfounderror.html', {'form': form})
 
+def processEnterMarksForm(request, enterMarksForm, gamename):
+    print 'sth'
+    examId = enterMarksForm.data['exam']
+    exam = Exam.objects.get(pk=examId)
+    enteredMark = enterMarksForm.data['mark']
+    if not (int(enteredMark) >= 0 and int(enteredMark) <= 100):
+        print 'notsaved'
+        return render(request, 'invalidmark.html', {'EnterMarksForm' : EnterMarksForm(group=gamename), 'group' : gamename})
+    else:
+        print 'saved'
+        newResult = Result(exam=exam, user=request.user, mark=enteredMark)
+        newResult.save()
+        return redirect('/game/' + gamename + '/entermarks/')
+
+
+
+
 def processEnterBetForm(request, betForm, gamename):
     examinstance = Exam.objects.get
     targetname = betForm.data['target']
