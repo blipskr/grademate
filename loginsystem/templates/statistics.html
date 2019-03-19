@@ -6,35 +6,35 @@
           <div class="demo-charts mdl-cell mdl-cell--6-col">-->
 
 <body>
-<main class="mdl-layout__content mdl-color--grey-100">
-      <div class="mdl-grid demo-content">
-        <center>
-          <h3>My groups</h3>
-        </center>
-        <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 200px; position: relative;">
-          <ul class="demo-list-item mdl-list" style="display: inline-grid;">
 
-                  {% csrf_token %}
-                  {% for group in groups %}
-                  <li class="mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    <a href="/game/{{ group }}">
-                    {{ group }}
-                    </a>
-                    </span>
-                  </li>
-                  {% endfor %}
-
-
-              </ul>
-            </div>
-          </div>
-        </main>
 
 
 <div class="mdl-grid center-items">
   <div class="mdl-cell mdl-cell--2-col"></div>
+
         <div class=" mdl-cell mdl-cell--8-col">
+          <center>
+            <h3>My groups</h3>
+          </center>
+          <center>
+          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; height: 200px; position: relative;">
+            <ul class="demo-list-item mdl-list" style="display: inline-grid;">
+
+                    {% csrf_token %}
+                    {% for group in groups %}
+                    <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                      <a href="/game/{{ group }}">
+                      {{ group }}
+                      </a>
+                      </span>
+                    </li>
+                    {% endfor %}
+
+
+                </ul>
+              </div>
+            </center>
           <div><center><h3>Bet History</h3></center></div>
 
             <center>  <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
@@ -60,11 +60,8 @@
                        <td class="mdl-data-table__cell--non-numeric">{{ oneBetColumn.win}}</td>
                   </tr>
                   {% endfor %}
-
                 </tbody>
-
               </table>
-
             </center>
             </div>
   <div class="mdl-cell mdl-cell--2-col"></div>
