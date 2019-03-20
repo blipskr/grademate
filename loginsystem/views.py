@@ -112,10 +112,10 @@ def statistics_view(request):
     user = request.user.username
 
     # GET THE GROUPS OF THE USER
-    #get the users id
+    # get the users id
     userid = User.objects.filter(username=user)
     # get the users groups
-    groups = GroupMember.objects.filter(user_id = userid[0].id)
+    groups = GroupMember.objects.filter(user_id=userid[0].id)
 
     # get the group name
     idAllGroups = list()
@@ -123,7 +123,7 @@ def statistics_view(request):
         idAllGroups.append(group.group_id)
     groupName = list()
     for groupid in idAllGroups:
-        oneGroup = Group.objects.filter(group_id = groupid)
+        oneGroup = Group.objects.filter(group_id=groupid)
         groupName.append(oneGroup[0].group_name)
 
     betObjects = Bet.objects.filter(user_id=userid[0].id)
@@ -132,56 +132,62 @@ def statistics_view(request):
     noOfLosses = 0
     for oneBetColumn in betObjects:
         try:
-            resultForTarget = Result.objects.get(exam_id  = int(oneBetColumn.exam_id), user_id = int(oneBetColumn.target_id))
+            resultForTarget = Result.objects.get(exam_id=int(
+                oneBetColumn.exam_id), user_id=int(oneBetColumn.target_id))
             resultForTarget1 = resultForTarget.mark
-            exam_name_one = Exam.objects.get(exam_id = int(oneBetColumn.exam_id))
+            exam_name_one = Exam.objects.get(exam_id=int(oneBetColumn.exam_id))
             exam_name_one = exam_name_one.exam_name
-            target_user = User.objects.get(id = int(oneBetColumn.target_id))
+            target_user = User.objects.get(id=int(oneBetColumn.target_id))
             target_user = target_user.username
             if oneBetColumn.win == None:
                 raise Exception()
             elif oneBetColumn.win == 1:
                 noOfWins = noOfWins + 1
-                oneBet = BetHistory(exam_name_one,target_user, oneBetColumn.guess_mark, resultForTarget1, 'Won')
+                oneBet = BetHistory(
+                    exam_name_one, target_user, oneBetColumn.guess_mark, resultForTarget1, 'Won')
             elif oneBetColumn.win == 0:
                 noOfLosses = noOfLosses + 1
-                oneBet = BetHistory(exam_name_one,target_user, oneBetColumn.guess_mark, resultForTarget1, 'Lose')
-
+                oneBet = BetHistory(
+                    exam_name_one, target_user, oneBetColumn.guess_mark, resultForTarget1, 'Lose')
 
             listOfAllBetsForAUser.append(oneBet)
         except:
             try:
-                resultForTarget = Result.objects.get(exam_id  = int(oneBetColumn.exam_id), user_id = int(oneBetColumn.target_id))
+                resultForTarget = Result.objects.get(exam_id=int(
+                    oneBetColumn.exam_id), user_id=int(oneBetColumn.target_id))
                 resultForTarget1 = resultForTarget.mark
-                exam_name_one = Exam.objects.get(exam_id = int(oneBetColumn.exam_id))
+                exam_name_one = Exam.objects.get(
+                    exam_id=int(oneBetColumn.exam_id))
                 exam_name_one = exam_name_one.exam_name
-                target_user = User.objects.get(id = int(oneBetColumn.target_id))
+                target_user = User.objects.get(id=int(oneBetColumn.target_id))
                 target_user = target_user.username
-                oneBet = BetHistory(exam_name_one,target_user, oneBetColumn.guess_mark, resultForTarget1, 'Ongoing')
+                oneBet = BetHistory(
+                    exam_name_one, target_user, oneBetColumn.guess_mark, resultForTarget1, 'Ongoing')
                 listOfAllBetsForAUser.append(oneBet)
             except:
-                exam_name_one = Exam.objects.get(exam_id = int(oneBetColumn.exam_id))
+                exam_name_one = Exam.objects.get(
+                    exam_id=int(oneBetColumn.exam_id))
                 exam_name_one = exam_name_one.exam_name
-                target_user = User.objects.get(id = int(oneBetColumn.target_id))
+                target_user = User.objects.get(id=int(oneBetColumn.target_id))
                 target_user = target_user.username
-                oneBet = BetHistory(exam_name_one,target_user, oneBetColumn.guess_mark, 'Ongoing', 'Ongoing')
+                oneBet = BetHistory(exam_name_one, target_user,
+                                    oneBetColumn.guess_mark, 'Ongoing', 'Ongoing')
                 listOfAllBetsForAUser.append(oneBet)
-
 
     noOfBets = noOfWins + noOfLosses
     if noOfBets != 0:
         accuracy = float(noOfWins * 100) / noOfBets
-        accuracy = "%.2f" % round(accuracy,2)
+        accuracy = "%.2f" % round(accuracy, 2)
 
     else:
         accuracy = 0
     student_lib = {
-    "name": user,
-    "groups" : groupName,
-    "betObjects" : listOfAllBetsForAUser,
-    "noOfWins" : noOfWins,
-    "noOfLosses" : noOfLosses,
-    "noOfBets" : noOfBets,
-    "accuracy" : accuracy
+        "name": user,
+        "groups": groupName,
+        "betObjects": listOfAllBetsForAUser,
+        "noOfWins": noOfWins,
+        "noOfLosses": noOfLosses,
+        "noOfBets": noOfBets,
+        "accuracy": accuracy
     }
     return render(request, 'statistics.html', student_lib)

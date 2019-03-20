@@ -20,10 +20,12 @@ def retrieveUsersGroups(request):
 # average bet and no of ExamStats
 # on current user for each exam
 
+
 def examIDtoName(examid):
     examObject = Exam.objects.get(pk=examid)
     examName = examObject.exam_name
     return examName
+
 
 def createExamStats(betsObject):
     examStatsObject = []
@@ -59,6 +61,7 @@ def createExamStats(betsObject):
 
 # method takes request and betForm, processes betForm
 
+
 def processJoinGroupForm(request):
     form = JoinGroupForm(request.POST)
     group_name = form.data['group_name']
@@ -67,15 +70,17 @@ def processJoinGroupForm(request):
         group = Group.objects.get(pk=group_id)
         if (GroupMember.objects.filter(user=request.user, group=group).count() == 0):
             if (int(extractGroupId(group_name)) == int(group_id)):
-                    newGroupMember = GroupMember(group=group, user=request.user, credits=100)
-                    newGroupMember.save()
-                    return redirect('/game/' + group_name)
+                newGroupMember = GroupMember(
+                    group=group, user=request.user, credits=100)
+                newGroupMember.save()
+                return redirect('/game/' + group_name)
             else:
-                    return render(request, 'groupnotfounderror.html', {'form': form})
+                return render(request, 'groupnotfounderror.html', {'form': form})
         else:
-            return render(request, 'alreadyingrouperror.html', {'form': form} )
+            return render(request, 'alreadyingrouperror.html', {'form': form})
     except:
         return render(request, 'groupnotfounderror.html', {'form': form})
+
 
 def processEnterMarksForm(request, enterMarksForm, gamename):
     groupid = extractGroupId(gamename)
@@ -85,22 +90,23 @@ def processEnterMarksForm(request, enterMarksForm, gamename):
     examname = enterMarksForm.data['exam']
     enteredMark = enterMarksForm.data['mark']
     if str(examname) == "":
-        return render(request, 'invalidexam.html', {'EnterMarksForm' : EnterMarksForm(group=groupid), 'group' : gamename, 'userResultsList' : userResults})
+        return render(request, 'invalidexam.html', {'EnterMarksForm': EnterMarksForm(group=groupid), 'group': gamename, 'userResultsList': userResults})
     elif str(enteredMark) == "":
-        return render(request, 'invalidmark.html', {'EnterMarksForm' : EnterMarksForm(group=groupid), 'group' : gamename, 'userResultsList' : userResults})
+        return render(request, 'invalidmark.html', {'EnterMarksForm': EnterMarksForm(group=groupid), 'group': gamename, 'userResultsList': userResults})
     examid = extractExamIDgivenGroup(examname, gamename)
     alreadyEnteredExams = []
     for result in userResults.values():
         alreadyEnteredExams.append(result['exam_id'])
     if examid in alreadyEnteredExams:
-        return render(request, 'duplicateresultentry.html', {'EnterMarksForm' : EnterMarksForm(group=groupid), 'group' : gamename, 'userResultsList' : userResults})
+        return render(request, 'duplicateresultentry.html', {'EnterMarksForm': EnterMarksForm(group=groupid), 'group': gamename, 'userResultsList': userResults})
     exam = Exam.objects.get(pk=examid)
     if not (int(enteredMark) >= 0 and int(enteredMark) <= 100):
-        return render(request, 'invalidmark.html', {'EnterMarksForm' : EnterMarksForm(group=groupid), 'group' : gamename, 'userResultsList' : userResults})
+        return render(request, 'invalidmark.html', {'EnterMarksForm': EnterMarksForm(group=groupid), 'group': gamename, 'userResultsList': userResults})
     else:
         newResult = Result(exam=exam, user=request.user, mark=enteredMark)
         newResult.save()
         return redirect('/game/' + gamename + '/entermarks/')
+
 
 def usernamesInGroup(groupName):
     groupId = Group.objects.get(group_name=groupName).group_id
@@ -116,26 +122,25 @@ def usernamesInGroup(groupName):
     return usernameList
 
 
-
 def processEnterBetForm(request, betForm, gamename):
-        user = request.user
-        targetname = betForm.data['target']
-        examname = betForm.data['exam']
-        guessmark = betForm.data['guess_mark']
-        if (str(targetname) == "" or str(examname) == "" or str(guessmark) == ""):
-            return 'Make sure you have chosen an exam, a target and a mark!'
-        examid = extractExamIDgivenGroup(examname, gamename)
-        targetid = getUserID(targetname)
-        if not (int(guessmark) >= 0 and int(guessmark) <= 100):
-            return 'Predicted mark invalid. Make sure it is between 0 and 100!'
-        exam = Exam.objects.get(pk=examid)
-        target = User.objects.get(pk=targetid)
-        if Bet.objects.filter(user=user, target=target, exam=exam).count() != 0:
-            return 'You have aleady made a bet on that user for this exam.'
-        newBet = Bet(exam=exam, user=request.user,
+    user = request.user
+    targetname = betForm.data['target']
+    examname = betForm.data['exam']
+    guessmark = betForm.data['guess_mark']
+    if (str(targetname) == "" or str(examname) == "" or str(guessmark) == ""):
+        return 'Make sure you have chosen an exam, a target and a mark!'
+    examid = extractExamIDgivenGroup(examname, gamename)
+    targetid = getUserID(targetname)
+    if not (int(guessmark) >= 0 and int(guessmark) <= 100):
+        return 'Predicted mark invalid. Make sure it is between 0 and 100!'
+    exam = Exam.objects.get(pk=examid)
+    target = User.objects.get(pk=targetid)
+    if Bet.objects.filter(user=user, target=target, exam=exam).count() != 0:
+        return 'You have aleady made a bet on that user for this exam.'
+    newBet = Bet(exam=exam, user=request.user,
                  target=target, guess_mark=guessmark)
-        newBet.save()
-        return False
+    newBet.save()
+    return False
 
 # method takes request and betForm, processes UpdateBetForm
 
@@ -176,6 +181,7 @@ def extractGroupNames(groupIds):
     return listOfGroupNames
 
 # takes a name of group and returns its id
+
 
 def extractGroupId(groupName):
     try:
@@ -238,6 +244,8 @@ def userIDsinGroup(groupName):
     return userIdsList
 
 # Takes a name of group and returns all esxams associated with it
+
+
 def examIDsinGroup(groupName):
     groupId = Group.objects.get(group_name=groupName).group_id
     examObjects = Exam.objects.filter(group=groupId).values('exam_id')
@@ -248,53 +256,66 @@ def examIDsinGroup(groupName):
     return examIDsList
 
 # Creates a new group with given name
+
+
 def createNewGroup(username, groupName):
     try:
-        examObject = Group.objects.get(exam_name = groupName)
+        examObject = Group.objects.get(exam_name=groupName)
     except:
-        groupObject = Group(group_name = groupName)
+        groupObject = Group(group_name=groupName)
         groupObject.save()
         addUserToGroup(username, groupName)
 
 # creates new exam with given name for given group
+
+
 def createNewExam(examName, groupName):
-    groupObject = Group.objects.get(group_name = groupName)
-    examObject = Exam(group = groupObject, exam_name = examName)
+    groupObject = Group.objects.get(group_name=groupName)
+    examObject = Exam(group=groupObject, exam_name=examName)
     examObject.save()
 
 # adds given user to the given group by name
+
+
 def addUserToGroup(user_name, groupName):
     try:
-        userObject = User.objects.get(username = user_name)
+        userObject = User.objects.get(username=user_name)
         groupObject = Group.objects.get(group_name=groupName)
-        groupMemberObject = GroupMember.objects.get(user = userObject, group=groupObject)
+        groupMemberObject = GroupMember.objects.get(
+            user=userObject, group=groupObject)
     # if GroupMember does not exist, create it
     except:
-        groupObject = Group.objects.get(group_name = groupName)
-        userObject = User.objects.get(username = user_name)
-        groupMemberObject = GroupMember(group = groupObject, user = userObject, credits = 100)
+        groupObject = Group.objects.get(group_name=groupName)
+        userObject = User.objects.get(username=user_name)
+        groupMemberObject = GroupMember(
+            group=groupObject, user=userObject, credits=100)
         groupMemberObject.save()
 
 # method to delete user from the group
+
+
 def removeUserFromGroup(userName, groupName):
     # determine groupObject, userObject, betObjects, resultObjects, groupMemberObject
-    userObject = User.objects.get(username = userName)
-    groupObject = Group.objects.get(group_name = groupName)
-    groupMemberObject = GroupMember.objects.get(group = groupObject, user = userObject)
-    betObjects1 = Bet.objects.filter(target = userObject)
-    betObjects2 = Bet.objects.filter(user = userObject)
+    userObject = User.objects.get(username=userName)
+    groupObject = Group.objects.get(group_name=groupName)
+    groupMemberObject = GroupMember.objects.get(
+        group=groupObject, user=userObject)
+    betObjects1 = Bet.objects.filter(target=userObject)
+    betObjects2 = Bet.objects.filter(user=userObject)
     # delete it
     groupMemberObject.delete()
     betObjects1.delete()
     betObjects2.delete()
 
 # method to delete exam from the group
+
+
 def removeExamFromGroup(examName, groupName):
     # determine groupObject, examObject, betObjects and resultObjects
-    groupObject = Group.objects.get(group_name = groupName)
-    examObject = Exam.objects.get(exam_name = examName, group = groupObject)
-    betObjects = Bet.objects.filter(exam = examObject)
-    resultObjects = Result.objects.filter(exam = examObject)
+    groupObject = Group.objects.get(group_name=groupName)
+    examObject = Exam.objects.get(exam_name=examName, group=groupObject)
+    betObjects = Bet.objects.filter(exam=examObject)
+    resultObjects = Result.objects.filter(exam=examObject)
     # delete it
     betObjects.delete()
     examObject.delete()
@@ -302,29 +323,36 @@ def removeExamFromGroup(examName, groupName):
 
 # method to check if given user is creator (admin) of the group
 # returns true if he is
+
+
 def userIsAdminOfGroup(userObject, groupid):
     #userObject = User.objects.get(username = userName)
     groupObject = Group.objects.get(pk=groupid)
-    groupMemberObjects = GroupMember.objects.filter(group = groupObject)
+    groupMemberObjects = GroupMember.objects.filter(group=groupObject)
     groupAdminObject = groupMemberObjects[0]
-    groupMemberObject = GroupMember.objects.get(group = groupObject, user = userObject)
+    groupMemberObject = GroupMember.objects.get(
+        group=groupObject, user=userObject)
     if groupAdminObject == groupMemberObject:
         return True
     else:
         return False
 
 # method to check if given user is a member of given group
+
+
 def userIsMemberOfGroup(userName, groupName):
-    userObject = User.objects.get(username = userName)
-    groupObject = Group.objects.get(group_name = groupName)
+    userObject = User.objects.get(username=userName)
+    groupObject = Group.objects.get(group_name=groupName)
     try:
-        groupMemberObject = GroupMember.objects.get(group = groupObject, user = userObject)
+        groupMemberObject = GroupMember.objects.get(
+            group=groupObject, user=userObject)
         return True
     except GroupMember.DoesNotExist:
         return False
 
+
 def fetchUserExamsInGroup(username, groupname):
-    userObject = User.objects.get(username = username)
-    groupObject = Group.objects.get(group_name = groupname)
+    userObject = User.objects.get(username=username)
+    groupObject = Group.objects.get(group_name=groupname)
     exams = Exam.objects.filter(group=groupObject)
     return exams

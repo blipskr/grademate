@@ -7,6 +7,7 @@ import dbqueries as query
 
 from django.core.exceptions import ValidationError
 
+
 class JoinGroupForm(forms.Form):
 
     group_name = forms.CharField()
@@ -18,8 +19,10 @@ class JoinGroupForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(JoinGroupForm, self).__init__(*args, **kwargs)
-        self.fields['group_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id': 'groupname'})
-        self.fields['group_id'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id': 'groupid'})
+        self.fields['group_name'].widget = forms.TextInput(
+            attrs={'class': 'mdl-textfield__input', 'id': 'groupname'})
+        self.fields['group_id'].widget = forms.TextInput(
+            attrs={'class': 'mdl-textfield__input', 'id': 'groupid'})
 
 
 class EnterBetForm(forms.ModelForm):
@@ -39,8 +42,10 @@ class EnterBetForm(forms.ModelForm):
         groupusers = query.userIDsinGroup(self.group)
         groupexams = query.examIDsinGroup(self.group)
         user = self.user.id
-        self.fields['target'].queryset = User.objects.filter(pk__in=groupusers).exclude(pk=user).order_by('username')
-        self.fields['exam'].queryset = Exam.objects.filter(pk__in=groupexams).order_by('exam_id')
+        self.fields['target'].queryset = User.objects.filter(
+            pk__in=groupusers).exclude(pk=user).order_by('username')
+        self.fields['exam'].queryset = Exam.objects.filter(
+            pk__in=groupexams).order_by('exam_id')
         self.fields['exam'].widget = forms.TextInput(
             attrs={'class': 'mdl-textfield__input', 'id': 'chooseexam'})
         self.fields['exam'].widget.attrs['readonly'] = True
@@ -49,7 +54,6 @@ class EnterBetForm(forms.ModelForm):
         self.fields['target'].widget.attrs['readonly'] = True
         self.fields['user'] = self.user
         self.fields['user'].widget = forms.HiddenInput()
-
 
 
 class UpdateBetForm(forms.Form):
@@ -70,10 +74,10 @@ class UpdateBetForm(forms.Form):
         self.fields['bet'].widget.attrs['readonly'] = True
 
 
-
 class EnterMarksForm(forms.Form):
     exam = forms.ModelChoiceField(queryset=User.objects.filter(pk=1))
     mark = forms.CharField()
+
     class Meta:
         fields = ('exam', 'mark', 'user')
 
@@ -98,7 +102,9 @@ class CreateGroupForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(CreateGroupForm, self).__init__(*args, **kwargs)
-        self.fields['group_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'creategroup'})
+        self.fields['group_name'].widget = forms.TextInput(
+            attrs={'class': 'mdl-textfield__input', 'id': 'creategroup'})
+
 
 class AddExamForm(forms.Form):
     exam_name = forms.CharField(label='Exam name', max_length=20)
@@ -109,18 +115,23 @@ class AddExamForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(AddExamForm, self).__init__(*args, **kwargs)
-        self.fields['exam_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'addexam'})
+        self.fields['exam_name'].widget = forms.TextInput(
+            attrs={'class': 'mdl-textfield__input', 'id': 'addexam'})
+
 
 class AddUserToGroupForm(forms.Form):
     user_name = forms.CharField(label='User name', max_length=20)
 
     def __init__(self, *args, **kwargs):
         super(AddUserToGroupForm, self).__init__(*args, **kwargs)
-        self.fields['user_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'adduser'})
+        self.fields['user_name'].widget = forms.TextInput(
+            attrs={'class': 'mdl-textfield__input', 'id': 'adduser'})
+
 
 class RemoveUserFromGroupForm(forms.Form):
     user_name = forms.CharField(label='User name', max_length=20)
 
     def __init__(self, *args, **kwargs):
         super(RemoveUserFromGroupForm, self).__init__(*args, **kwargs)
-        self.fields['user_name'].widget = forms.TextInput(attrs={'class' : 'mdl-textfield__input', 'id' : 'removeuser'})
+        self.fields['user_name'].widget = forms.TextInput(
+            attrs={'class': 'mdl-textfield__input', 'id': 'removeuser'})

@@ -8,70 +8,80 @@
       <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">arrow_back</i>
       {{ groupName }}</button>
   </div>
-    <div class="mdl-cell mdl-cell--10-col">
-    <center><h3>Group Management</h3>
+  <div class="mdl-cell mdl-cell--10-col">
+    <center>
+      <h3>Group Management</h3>
       <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
-        <th><center>Exams</center></th>
+        <th>
+          <center>Exams</center>
+        </th>
         {% for exam in examlist %}
         <tr>
-    <td class="mdl-data-table__cell--non-numeric"><center>  {{ exam }} </center></td>
-  </tr>
-    {% endfor %}
-  </table>
-              <div class="mdl-grid center-items">
-                <div class="mdl-cell mdl-cell--5-col"></div>
-      <form action="/game/{{ groupName }}/managegroup/" method="post">
-        {% csrf_token %}
-        {% for field in addexam %}
-
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--8-col">
-          {{ field }}
-          <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
-
-        </div>
+          <td class="mdl-data-table__cell--non-numeric">
+            <center> {{ exam }} </center>
+          </td>
+        </tr>
         {% endfor %}
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-cell mdl-cell--1-col" type="submit" name="addexam">
-          Add exam
-        </button>
-      </form>
+      </table>
+      <div class="mdl-grid center-items">
+        <div class="mdl-cell mdl-cell--5-col"></div>
+        <form action="/game/{{ groupName }}/managegroup/" method="post">
+          {% csrf_token %}
+          {% for field in addexam %}
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--8-col">
+            {{ field }}
+            <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
+
+          </div>
+          {% endfor %}
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-cell mdl-cell--1-col" type="submit" name="addexam">
+            Add exam
+          </button>
+        </form>
 
 
-      <div class="mdl-cell mdl-cell--3-col"></div>
-</div>
+        <div class="mdl-cell mdl-cell--3-col"></div>
+      </div>
 
       <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
-        <th><center>Members</center></th>
+        <th>
+          <center>Members</center>
+        </th>
         {% for member in usernamelist %}
         <tr>
-    <td class="mdl-data-table__cell--non-numeric"><center>  {{ member }} </center></td>
-  </tr>
-    {% endfor %}
-  </table>
+          <td class="mdl-data-table__cell--non-numeric">
+            <center> {{ member }} </center>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
 
-  <div class="mdl-grid center-items">
-    <div class="mdl-cell mdl-cell--5-col"></div>
-  <form action="/game/{{ groupName }}/managegroup/" method="post">
-  {% csrf_token %}
-  {% for field in adduser %}
+      <div class="mdl-grid center-items">
+        <div class="mdl-cell mdl-cell--5-col"></div>
+        <form action="/game/{{ groupName }}/managegroup/" method="post">
+          {% csrf_token %}
+          {% for field in adduser %}
 
-  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--8-col">
-  {{ field }}
-  <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--8-col">
+            {{ field }}
+            <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
+
+          </div>
+          {% endfor %}
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-cell mdl-cell--1-col" type="submit" name="addexam">
+            Add user
+          </button>
+        </form>
+
+
+        <div class="mdl-cell mdl-cell--3-col"></div>
+      </div>
 
   </div>
-  {% endfor %}
-  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-cell mdl-cell--1-col" type="submit" name="addexam">
-Add user
-  </button>
-  </form>
-
-
-  <div class="mdl-cell mdl-cell--3-col"></div>
+  <div class="mdl-cell mdl-cell--1-col">
   </div>
+  </body>
 
-                    </div>
-                    <div class="mdl-cell mdl-cell--1-col">
-</div>
-</body>
-</html>
-{% endblock %}
+  </html>
+  {% endblock %}

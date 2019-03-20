@@ -10,16 +10,16 @@
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="location.href='/mygroups/'">
         <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">arrow_back</i>
         Back to my groups</button>
-        <br>
-        <br>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="location.href='entermarks'">
-          <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">add</i> Enter Marks</button>
-          {% if admin %}
-          <br>
-          <br>
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="location.href='managegroup'">
-            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">settings</i> Manage Group</button>
-          {% endif %}
+      <br>
+      <br>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="location.href='entermarks'">
+        <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">add</i> Enter Marks</button>
+      {% if admin %}
+      <br>
+      <br>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="location.href='managegroup'">
+        <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">settings</i> Manage Group</button>
+      {% endif %}
     </div>
 
     <div class="mdl-cell mdl-cell--3-col">
@@ -72,7 +72,7 @@
         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
           <thead>
             <tr>
-                    <th class="mdl-data-table__cell--non-numeric">Bet ID</th>
+              <th class="mdl-data-table__cell--non-numeric">Bet ID</th>
               <th class="mdl-data-table__cell--non-numeric">Exam</th>
               <th class="mdl-data-table__cell--non-numeric">Member</th>
               <th>Predicted Mark</th>
@@ -220,7 +220,7 @@
 
   </div>
 
-{% if error %}
+  {% if error %}
 
   <dialog class="mdl-dialog" id="errormessage">
     <h4 class="mdl-dialog__title">Error!</h4>
@@ -246,7 +246,7 @@
     error.showModal()
   </script>
 
-{% endif %}
+  {% endif %}
 
 </body>
 
