@@ -32,8 +32,9 @@ def createExamStats(betsObject):
     tempId = 0
     # create an ExamStats object for each Bet object
     for element in betsObject:
+        exam_name = examIDtoName(element.exam_id)
         examStatsTemp = ExamStats(
-            id=tempId, exam=element.exam_id, average_bet=element.guess_mark, no_of_bets=1)
+            id=tempId, exam_id=element.exam_id, average_bet=element.guess_mark, no_of_bets=1, exam_name=exam_name)
         examStatsObject.append(examStatsTemp)
         tempId += 1
     # calculate sums and numbers of elements
@@ -58,7 +59,6 @@ def createExamStats(betsObject):
             float(element.average_bet) / element.no_of_bets)
     # return ExamStats object
     return examStatsObjects
-
 # method takes request and betForm, processes betForm
 
 
