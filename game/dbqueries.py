@@ -18,7 +18,7 @@ def calculateWinner(userid, examid, finalscore):
     winner = ''
     closest = 99
     winBetID = ''
-    if listOfBets.count() = 1:
+    if listOfBets.count() == 1:
         winner = Bet.objects.get(target=userObject, exam=examObject).user
         winBetID = Bet.objects.get(target=userObject, exam=examObject).bet_id
     elif listOfBets.count() > 1:
@@ -30,8 +30,8 @@ def calculateWinner(userid, examid, finalscore):
                 Bet.objects.filter(pk=winBetID).update(win=True)
                 listOfBets.exclude(pk=winBetID).update(win=False)
                 closest = closeness
-                print winner.username
-                print closest
+    print winner.username
+    print closest
 
 
 def retrieveUsersGroups(request):
@@ -132,6 +132,8 @@ def processEnterMarksForm(request, enterMarksForm, gamename):
     else:
         newResult = Result(exam=exam, user=request.user, mark=enteredMark)
         newResult.save()
+        calculateWinner(request.user.id, examid, enteredMark)
+        print 'ok'
         return redirect('/game/' + gamename + '/entermarks/')
 
 
