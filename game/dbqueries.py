@@ -160,9 +160,26 @@ def processUpdateBetForm(request, betForm):
     Bet.objects.filter(pk=betid).update(guess_mark=newmark)
     return False
 
+def processAddExamForm(addExamForm, gamename):
+    exam_name = addExamForm.data['exam_name']
+    if str(exam_name) == "":
+        return 'The Exam Name field in the Add Exam Form must not be empty'
+    else:
+        createNewExam(exam_name, gamename)
+        return False
+
+def processAddUserForm(addUserForm, gamename):
+    user_name = addUserForm.data['user_name']
+    if str(user_name) == "":
+        return "The Username Field of Add User Form cannot be left empty!"
+    elif not User.objects.filter(username=user_name):
+        return "The user you tried to add does not exist!"
+    else:
+        addUserToGroup(user_name, gamename)
+        return False
+
+
 # Returns list of user's group IDs which he is a member of.
-
-
 def retrieveUserGroupIds(userId):
     userGroupsObject = GroupMember.objects.filter(
         user=userId).values('group_id')

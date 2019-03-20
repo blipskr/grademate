@@ -120,43 +120,58 @@ def managegroup_view(request, gamename):
     currentUser = User.objects.get(id=request.user.id)
     if request.method == 'POST' and 'addexam' in request.POST:
         addExamForm = AddExamForm(request.POST)
-        if addExamForm.is_valid():
-            exam_name = addExamForm.data['exam_name']
-            query.createNewExam(exam_name, gamename)
-            # redirect to clear the form after saving
-            return redirect('/game/' + gamename + '/managegroup/')
-        else:
-            # render to display the error
-            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
+        error = query.processAddExamForm(addExamForm, gamename)
+        addExamForm = AddExamForm()
+        addUserForm = AddUserToGroupForm()
+        deleteExamForm = DeleteExamForm()
+        deleteUserForm = DeleteUserForm()
+        examlist = query.retrieveGroupExams(groupid)
+        return render(request, 'managegroup.html', {'error' : error,'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
     elif request.method == 'POST' and 'adduser' in request.POST:
         addUserForm = AddUserToGroupForm(request.POST)
-        if addUserForm.is_valid():
-            user_name = addUserForm.data['user_name']
-            query.addUserToGroup(user_name, gamename)
-            return redirect('/game/' + gamename + '/managegroup/')
+        error = query.processAddUserForm(addUserForm, gamename)
+        addExamForm = AddExamForm()
+        addUserForm = AddUserToGroupForm()
+        deleteExamForm = DeleteExamForm()
+        deleteUserForm = DeleteUserForm()
+        usernamelist = query.usernamesInGroup(gamename)
+        return render(request, 'managegroup.html', {'error' : error,'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
     elif request.method == 'POST' and 'removeuser' in request.POST:
         deleteUserForm = DeleteUserForm(request.POST)
-        if deleteUserForm.is_valid():
-            username = deleteUserForm.data['user_name']
+        username = deleteUserForm.data['user_name']
+        if str(username) == "":
+            error = 'The Username field of Remove User Form cannot be empty!'
+        else:
             query.removeUserFromGroup(username, gamename)
-            return redirect('/game/' + gamename + '/managegroup/')
+            error = False
+        addExamForm = AddExamForm()
+        addUserForm = AddUserToGroupForm()
+        deleteExamForm = DeleteExamForm()
+        deleteUserForm = DeleteUserForm()
+        usernamelist = query.usernamesInGroup(gamename)
+        return render(request, 'managegroup.html', {'error' : error,'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
     elif request.method == 'POST' and 'removexam' in request.POST:
         deleteExamForm = DeleteExamForm(request.POST)
-        if deleteExamForm.is_valid():
-            examname = deleteExamForm.data['exam_name']
-            examid = query.examNametoID(examname, gamename)
-            print 'beforequery'
-            query.removeExamFromGroup(examid, gamename)
-            return redirect('/game/' + gamename + '/managegroup/')
+        examname = deleteExamForm.data['exam_name']
+        if str(examname) == "":
+            error = 'The Exam Name field of Delete Exam Form cannot be empty!'
         else:
-            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
-
+            examid = query.examNametoID(examname, gamename)
+            query.removeExamFromGroup(examid, gamename)
+            error = False
+        addExamForm = AddExamForm()
+        addUserForm = AddUserToGroupForm()
+        deleteExamForm = DeleteExamForm()
+        deleteUserForm = DeleteUserForm()
+        examlist = query.retrieveGroupExams(groupid)
+        return render(request, 'managegroup.html', {'error' : error,'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
     else:
         addExamForm = AddExamForm()
         addUserForm = AddUserToGroupForm()
         deleteExamForm = DeleteExamForm()
         deleteUserForm = DeleteUserForm()
-        return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
+        error = False
+        return render(request, 'managegroup.html', {'error' : error, 'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
 
 
 @login_required(login_url="/login/")
