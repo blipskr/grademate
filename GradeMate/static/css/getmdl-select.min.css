@@ -34,6 +34,7 @@
 
 .getmdl-select .mdl-menu__container .mdl-menu .mdl-menu__item {
   font-size: 16px
+  text-align: center !important;
 }
 
 

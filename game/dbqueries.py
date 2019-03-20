@@ -11,25 +11,32 @@ import views as v
 # returns a list of current users groups
 
 
-def calculateWinner(userid, examid, finalscore):
+def calculateWinner(userid, examid, finalscore, groupname):
+    groupid = extractGroupId(groupname)
+    groupObject = Group.objects.get(pk=groupid)
     examObject = Exam.objects.get(exam_id=examid)
     userObject = User.objects.get(pk=userid)
     listOfBets = Bet.objects.filter(target=userObject, exam=examObject)
     winner = ''
     closest = 99
     winBetID = ''
-    if listOfBets.count() == 1:
+    numOfBets = listOfBets.count()
+    if numOfBets == 1:
         winner = Bet.objects.get(target=userObject, exam=examObject).user
         winBetID = Bet.objects.get(target=userObject, exam=examObject).bet_id
-    elif listOfBets.count() > 1:
+    elif numOfBets > 1:
         for bet in listOfBets:
             closeness = abs(100 - bet.guess_mark)
             if closeness < closest:
                 winner = bet.user
                 winBetID = bet.bet_id
-                Bet.objects.filter(pk=winBetID).update(win=True)
-                listOfBets.exclude(pk=winBetID).update(win=False)
                 closest = closeness
+
+        Bet.objects.filter(pk=winBetID).update(win=True)
+        listOfBets.exclude(pk=winBetID).update(win=False)
+        currentCredits = GroupMember.objects.get(group=groupObject, user=winner).credits
+        newCredits = currentCredits + (numOfBets * 5)
+        GroupMember.objects.filter(group=groupObject, user=winner).update(credits=newCredits)
 
 def retrieveUsersGroups(request):
     usersGroups = GroupMember.objects.filter(user=request.user.id)
@@ -129,7 +136,7 @@ def processEnterMarksForm(request, enterMarksForm, gamename):
     else:
         newResult = Result(exam=exam, user=request.user, mark=enteredMark)
         newResult.save()
-        calculateWinner(request.user.id, examid, enteredMark)
+        calculateWinner(request.user.id, examid, enteredMark, gamename)
         return redirect('/game/' + gamename + '/entermarks/')
 
 
@@ -167,7 +174,7 @@ def processEnterBetForm(request, betForm, gamename):
     newBet.save()
     groupid = extractGroupId(gamename)
     credits = GroupMember.objects.get(group_id = groupid, user_id= getUserID(user))
-    credits.credits = credits.credits - 10
+    credits.credits = credits.credits - 5
     credits.save()
     return False
 # method takes request and betForm, processes UpdateBetForm
