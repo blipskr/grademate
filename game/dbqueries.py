@@ -30,9 +30,6 @@ def calculateWinner(userid, examid, finalscore):
                 Bet.objects.filter(pk=winBetID).update(win=True)
                 listOfBets.exclude(pk=winBetID).update(win=False)
                 closest = closeness
-    print winner.username
-    print closest
-
 
 def retrieveUsersGroups(request):
     usersGroups = GroupMember.objects.filter(user=request.user.id)
@@ -133,7 +130,6 @@ def processEnterMarksForm(request, enterMarksForm, gamename):
         newResult = Result(exam=exam, user=request.user, mark=enteredMark)
         newResult.save()
         calculateWinner(request.user.id, examid, enteredMark)
-        print 'ok'
         return redirect('/game/' + gamename + '/entermarks/')
 
 
