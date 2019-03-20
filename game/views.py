@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, CreateGroupForm, AddExamForm, JoinGroupForm, AddUserToGroupForm
+from forms import EnterBetForm, UpdateBetForm, EnterMarksForm, CreateGroupForm, AddExamForm, JoinGroupForm, AddUserToGroupForm, DeleteExamForm, DeleteUserForm
 from django.contrib.auth import login
 from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
@@ -127,19 +127,36 @@ def managegroup_view(request, gamename):
             return redirect('/game/' + gamename + '/managegroup/')
         else:
             # render to display the error
-            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist})
+            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
     elif request.method == 'POST' and 'adduser' in request.POST:
         addUserForm = AddUserToGroupForm(request.POST)
         if addUserForm.is_valid():
             user_name = addUserForm.data['user_name']
             query.addUserToGroup(user_name, gamename)
             return redirect('/game/' + gamename + '/managegroup/')
+    elif request.method == 'POST' and 'removeuser' in request.POST:
+        deleteUserForm = DeleteUserForm(request.POST)
+        if deleteUserForm.is_valid():
+            username = deleteUserForm.data['user_name']
+            query.removeUserFromGroup(username, gamename)
+            return redirect('/game/' + gamename + '/managegroup/')
+    elif request.method == 'POST' and 'removexam' in request.POST:
+        deleteExamForm = DeleteExamForm(request.POST)
+        if deleteExamForm.is_valid():
+            examname = deleteExamForm.data['exam_name']
+            examid = query.examNametoID(examname, gamename)
+            print 'beforequery'
+            query.removeExamFromGroup(examid, gamename)
+            return redirect('/game/' + gamename + '/managegroup/')
         else:
-            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist})
+            return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
+
     else:
         addExamForm = AddExamForm()
         addUserForm = AddUserToGroupForm()
-        return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist})
+        deleteExamForm = DeleteExamForm()
+        deleteUserForm = DeleteUserForm()
+        return render(request, 'managegroup.html', {'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
 
 
 @login_required(login_url="/login/")

@@ -26,6 +26,10 @@ def examIDtoName(examid):
     examName = examObject.exam_name
     return examName
 
+def examNametoID(examname, groupname):
+    groupObject = Group.objects.get(group_name=groupname)
+    examObject = Exam.objects.get(exam_name=examname)
+    return examObject.exam_id
 
 def createExamStats(betsObject):
     examStatsObject = []
@@ -310,10 +314,10 @@ def removeUserFromGroup(userName, groupName):
 # method to delete exam from the group
 
 
-def removeExamFromGroup(examName, groupName):
+def removeExamFromGroup(examid, groupName):
     # determine groupObject, examObject, betObjects and resultObjects
     groupObject = Group.objects.get(group_name=groupName)
-    examObject = Exam.objects.get(exam_name=examName, group=groupObject)
+    examObject = Exam.objects.get(exam_id=examid, group=groupObject)
     betObjects = Bet.objects.filter(exam=examObject)
     resultObjects = Result.objects.filter(exam=examObject)
     # delete it

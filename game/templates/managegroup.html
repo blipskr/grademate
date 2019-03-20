@@ -11,7 +11,16 @@
   <div class="mdl-cell mdl-cell--10-col">
     <center>
       <h3>Group Management</h3>
-      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+  </div>
+  <div class="mdl-cell mdl-cell--1-col"></div>
+</div>
+
+
+<center>
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col"></div>
+    <div class="mdl-cell mdl-cell--2-col">
+  <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
         <th>
           <center>Exams</center>
         </th>
@@ -23,65 +32,127 @@
         </tr>
         {% endfor %}
       </table>
-      <div class="mdl-grid center-items">
-        <div class="mdl-cell mdl-cell--5-col"></div>
-        <form action="/game/{{ groupName }}/managegroup/" method="post">
-          {% csrf_token %}
-          {% for field in addexam %}
+</div>
+<div class="mdl-cell mdl-cell--2-col">
+      <form action="/game/{{ groupName }}/managegroup/" method="post">
+    {% csrf_token %}
+    {% for field in addexam %}
 
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--8-col">
-            {{ field }}
-            <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--8-col">
+      {{ field }}
+      <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
 
-          </div>
-          {% endfor %}
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-cell mdl-cell--1-col" type="submit" name="addexam">
-            Add exam
-          </button>
-        </form>
+    </div>
+    {% endfor %}
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="addexam">
+      Add exam
+    </button>
+  </form>
 
+  <form action="/game/{{ groupName }}/managegroup/" method="post">
+  {% csrf_token %}
 
-        <div class="mdl-cell mdl-cell--3-col"></div>
-      </div>
-
-      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
-        <th>
-          <center>Members</center>
-        </th>
-        {% for member in usernamelist %}
-        <tr>
-          <td class="mdl-data-table__cell--non-numeric">
-            <center> {{ member }} </center>
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
-
-      <div class="mdl-grid center-items">
-        <div class="mdl-cell mdl-cell--5-col"></div>
-        <form action="/game/{{ groupName }}/managegroup/" method="post">
-          {% csrf_token %}
-          {% for field in adduser %}
-
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--8-col">
-            {{ field }}
-            <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
-
-          </div>
-          {% endfor %}
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-cell mdl-cell--1-col" type="submit" name="addexam">
-            Add user
-          </button>
-        </form>
-
-
-        <div class="mdl-cell mdl-cell--3-col"></div>
-      </div>
-
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select mdl-cell mdl-cell--8-col">
+    {{ deleteexam.exam_name }}
+    <input type="hidden" value="" name="removeexam">
+    <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+    <label for="removeexam" class="mdl-textfield__label">Exam</label>
+    <ul for="removeexam" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" style="max-height: 200px; overflow-x: hidden; overflow-y: auto;">
+      {% for examchoice in examlist %}
+      <li class="mdl-menu__item" value="">{{ examchoice }}</li>
+      {% endfor %}
+    </ul>
   </div>
-  <div class="mdl-cell mdl-cell--1-col">
-  </div>
-  </body>
+  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="removexam">
+  Delete Exam
+  </button>
+  </form>
+</div>
+<div class="mdl-cell mdl-cell--4-col"></div>
+</div>
+</center>
+<br>
+<center>
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--4-col"></div>
+  <div class="mdl-cell mdl-cell--2-col">
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+           <th>
+             <center>Members</center>
+           </th>
+           {% for member in usernamelist %}
+           <tr>
+             <td class="mdl-data-table__cell--non-numeric">
+               <center> {{ member }} </center>
+             </td>
+           </tr>
+           {% endfor %}
+         </table>
+</div>
+<div class="mdl-cell mdl-cell--2-col">
+  <form action="/game/{{ groupName }}/managegroup/" method="post">
+    {% csrf_token %}
+    {% for field in adduser %}
 
-  </html>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--9-col">
+      {{ field }}
+      <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
+
+    </div>
+    {% endfor %}
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="adduser">
+      Add user
+    </button>
+  </form>
+
+<form action="/game/{{ groupName }}/managegroup/" method="post">
+{% csrf_token %}
+
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select mdl-cell mdl-cell--8-col">
+  {{ deleteuser.user_name }}
+  <input type="hidden" value="" name="removeuser">
+  <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+  <label for="removeuser" class="mdl-textfield__label">Username</label>
+  <ul for="removeuser" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" style="max-height: 200px; overflow-x: hidden; overflow-y: auto;">
+    {% for user in usernamelist %}
+    <li class="mdl-menu__item" value="">{{ user }}</li>
+    {% endfor %}
+  </ul>
+</div>
+<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="deleteuser">
+Delete User
+</button>
+</form></center>
+</div>
+<div class="mdl-cell mdl-cell--4-col"></div>
+
+</div>
+</center>
+  <!-- <center>            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+          <th>
+            <center>Members</center>
+          </th>
+          {% for member in usernamelist %}
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric">
+              <center> {{ member }} </center>
+            </td>
+          </tr>
+          {% endfor %}
+        </table></center>
+  <center> <form action="/game/{{ groupName }}/managegroup/" method="post">
+    {% csrf_token %}
+    {% for field in adduser %}
+
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col">
+      {{ field }}
+      <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
+
+    </div>
+    {% endfor %}
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="adduser">
+      Add user
+    </button>
+  </form></center>
+-->
   {% endblock %}

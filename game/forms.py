@@ -118,9 +118,16 @@ class AddExamForm(forms.Form):
         self.fields['exam_name'].widget = forms.TextInput(
             attrs={'class': 'mdl-textfield__input', 'id': 'addexam'})
 
+class DeleteExamForm(forms.Form):
+    exam_name = forms.CharField(label='Exam name', max_length=20)
+
+    def __init__(self, *args, **kwargs):
+        super(DeleteExamForm, self).__init__(*args, **kwargs)
+        self.fields['exam_name'].widget = forms.TextInput(
+            attrs={'class': 'mdl-textfield__input', 'id': 'removeexam'})
 
 class AddUserToGroupForm(forms.Form):
-    user_name = forms.CharField(label='User name', max_length=20)
+    user_name = forms.CharField(label='Username', max_length=20)
 
     def __init__(self, *args, **kwargs):
         super(AddUserToGroupForm, self).__init__(*args, **kwargs)
@@ -128,10 +135,10 @@ class AddUserToGroupForm(forms.Form):
             attrs={'class': 'mdl-textfield__input', 'id': 'adduser'})
 
 
-class RemoveUserFromGroupForm(forms.Form):
-    user_name = forms.CharField(label='User name', max_length=20)
+class DeleteUserForm(forms.Form):
+    user_name = forms.CharField(label='Username', max_length=20)
 
     def __init__(self, *args, **kwargs):
-        super(RemoveUserFromGroupForm, self).__init__(*args, **kwargs)
+        super(DeleteUserForm, self).__init__(*args, **kwargs)
         self.fields['user_name'].widget = forms.TextInput(
             attrs={'class': 'mdl-textfield__input', 'id': 'removeuser'})
