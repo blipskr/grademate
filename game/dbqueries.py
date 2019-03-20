@@ -11,6 +11,29 @@ import views as v
 # returns a list of current users groups
 
 
+def calculateWinner(userid, examid, finalscore):
+    examObject = Exam.objects.get(exam_id=examid)
+    userObject = User.objects.get(pk=userid)
+    listOfBets = Bet.objects.filter(target=userObject, exam=examObject)
+    winner = ''
+    closest = 99
+    winBetID = ''
+    if listOfBets.count() = 1:
+        winner = Bet.objects.get(target=userObject, exam=examObject).user
+        winBetID = Bet.objects.get(target=userObject, exam=examObject).bet_id
+    elif listOfBets.count() > 1:
+        for bet in listOfBets:
+            closeness = abs(100 - bet.guess_mark)
+            if closeness < closest:
+                winner = bet.user
+                winBetID = bet.bet_id
+                Bet.objects.filter(pk=winBetID).update(win=True)
+                listOfBets.exclude(pk=winBetID).update(win=False)
+                closest = closeness
+                print winner.username
+                print closest
+
+
 def retrieveUsersGroups(request):
     usersGroups = GroupMember.objects.filter(user=request.user.id)
     return usersGroups
