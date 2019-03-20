@@ -83,10 +83,3 @@ li {
 .errorlist {
   text-align: left !important;
 }
-
-
-#dropdown {
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  max-height: 100px !important;
-}
