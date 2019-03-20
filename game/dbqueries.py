@@ -144,8 +144,11 @@ def processEnterBetForm(request, betForm, gamename):
     newBet = Bet(exam=exam, user=request.user,
                  target=target, guess_mark=guessmark)
     newBet.save()
+    groupid = extractGroupId(gamename)
+    credits = GroupMember.objects.get(group_id = groupid, user_id= getUserID(user))
+    credits.credits = credits.credits - 10
+    credits.save()
     return False
-
 # method takes request and betForm, processes UpdateBetForm
 
 

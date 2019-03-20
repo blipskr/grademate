@@ -77,7 +77,8 @@ def gamepage_view(request, gamename):
             target=request.user.id, exam_id__in=relevantExams).order_by('exam')
         examStatsObject = query.createExamStats(betsOnYou)
         error = False
-    return render(request, 'game.html', {'error': error, 'admin': query.userIsAdminOfGroup(request.user, groupid), 'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename})
+    credits = GroupMember.objects.get(group_id = groupid, user_id= query.getUserID(request.user))
+    return render(request, 'game.html', {'error': error, 'admin': query.userIsAdminOfGroup(request.user, groupid), 'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename, 'credits': credits.credits})
 
 
 @login_required(login_url="/login/")
