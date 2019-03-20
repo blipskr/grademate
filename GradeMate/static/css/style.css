@@ -76,8 +76,8 @@ th {
 }
 
 li {
-  width: 100px !important;
-  text-align: center !important;
+  width: 100px;
+  text-align: center;
 }
 
 .errorlist {
