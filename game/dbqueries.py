@@ -123,11 +123,11 @@ def processEnterBetForm(request, betForm, gamename):
         examname = betForm.data['exam']
         guessmark = betForm.data['guess_mark']
         if (str(targetname) == "" or str(examname) == "" or str(guessmark) == ""):
-            return 'The Exam, Target and Predicted Mark fields of Make Prediction Form cannot be left empty!'
+            return 'Make sure you have chosen an exam, a target and a mark!'
         examid = extractExamIDgivenGroup(examname, gamename)
         targetid = getUserID(targetname)
         if not (int(guessmark) >= 0 and int(guessmark) <= 100):
-            return 'The Predicted Mark is invalid!'
+            return 'Predicted mark invalid. Make sure it is between 0 and 100!'
         exam = Exam.objects.get(pk=examid)
         target = User.objects.get(pk=targetid)
         if Bet.objects.filter(user=user, target=target, exam=exam).count() != 0:
@@ -142,15 +142,13 @@ def processEnterBetForm(request, betForm, gamename):
 
 def processUpdateBetForm(request, betForm):
     newmark = betForm.data['mark']
-    targetname = betForm.data['bet']
-    if str(newmark) == "" or str(targetname) == "":
+    betid = betForm.data['bet']
+    betObject = Bet.objects.get(pk=betid)
+    if str(newmark) == "" or str(betid) == "":
         return 'The User and New Mark fields of Change Prediction Form cannot be left empty!'
     elif not (int(newmark) >= 0 and int(newmark) <= 100):
         return 'The New Mark entered is invalid!'
-    targetid = getUserID(targetname)
-    target = User.objects.get(pk=targetid)
-    user = request.user
-    Bet.objects.filter(user=user, target=target).update(guess_mark=newmark)
+    Bet.objects.filter(pk=betid).update(guess_mark=newmark)
     return False
 
 # Returns list of user's group IDs which he is a member of.

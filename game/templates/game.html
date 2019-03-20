@@ -32,19 +32,18 @@
             <input type="hidden" value="" name="chooseexam">
             <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
             <label for="chooseexam" class="mdl-textfield__label">Exam</label>
-            <ul for="chooseexam" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+            <ul for="chooseexam" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" style="max-height: 200px; overflow-x: hidden; overflow-y: auto;">
               {% for examchoice in betForm.fields.exam.queryset %}
               <li class="mdl-menu__item" value="">{{ examchoice }}</li>
               {% endfor %}
             </ul>
           </div>
-
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
             {{ betForm.target }}
             <input type="hidden" value="" name="choosetarget">
             <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
             <label for="choosetarget" class="mdl-textfield__label">Target</label>
-            <ul for="choosetarget" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+            <ul for="choosetarget" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" style="max-height: 200px; overflow-x: hidden; overflow-y: auto;">
               {% for target in betForm.fields.target.queryset %}
               <li class="mdl-menu__item" value="{{ target }}">{{ target }}</li>
               {% endfor %}
@@ -64,6 +63,7 @@
         </form>
       </center>
     </div>
+
 
     <div class="demo-charts mdl-cell mdl-cell--3-col" style="position: relative;">
       <center>
@@ -108,7 +108,7 @@
             <input type="hidden" value="" name="updatebet">
             <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
             <label for="updatebet" class="mdl-textfield__label">Bet ID</label>
-            <ul for="updatebet" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+            <ul for="updatebet" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" style="overflow-y: auto; overflow-x: hidden; max-height: 288px">
               {% for bet in updatebetform.fields.bet.queryset %}
               <li class="mdl-menu__item" value="{{ bet }}">{{ bet }}</li>
               {% endfor %}

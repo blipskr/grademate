@@ -23,7 +23,7 @@
       <input type="hidden" value="" name="chooseexam">
       <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
       <label for="chooseexam" class="mdl-textfield__label">Exam</label>
-      <ul for="chooseexam" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+      <ul for="chooseexam" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" style="max-height: 200px; overflow-x: hidden; overflow-y: auto;">
         {% for examchoice in EnterMarksForm.fields.exam.queryset %}
         <li class="mdl-menu__item" value="">{{ examchoice }}</li>
         {% endfor %}
