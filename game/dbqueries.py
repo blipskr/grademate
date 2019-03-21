@@ -10,6 +10,7 @@ import views as v
 # method takes as an input request
 # returns a list of current users groups
 
+
 def calculateWinner(userid, examid, finalscore, groupname):
     groupid = extractGroupId(groupname)
     groupObject = Group.objects.get(pk=groupid)
@@ -187,25 +188,32 @@ def processEnterBetForm(request, betForm, gamename):
     examname = betForm.data['exam']
     guessmark = betForm.data['guess_mark']
     guesscredits =  betForm.data['guess_credits']
+    try:
+        int(guessmark)
+    except:
+        return "Your prediction must be a whole number from 0 to 100."
+    try:
+        int(guesscredits)
+    except:
+        return "You cannot use decimal credits."
     if (str(targetname) == "" or str(examname) == "" or str(guessmark) == "" or str(guesscredits) == ""):
         return 'Make sure you have chosen an exam, a target,a mark and an amount of credits!'
     examid = extractExamIDgivenGroup(examname, gamename)
     targetid = getUserID(targetname)
     if not (int(guessmark) >= 0 and int(guessmark) <= 100):
         return 'Predicted mark invalid. Make sure it is between 0 and 100!'
+    groupid = extractGroupId(gamename)
+    credits = GroupMember.objects.get(group_id = groupid, user_id= getUserID(user))
+    if int(credits.credits) < int(guesscredits):
+        return 'You do not have enough credits.'
+    elif int(guesscredits) <= 0:
+        return 'You must use at least 1 credit.'
     exam = Exam.objects.get(pk=examid)
     target = User.objects.get(pk=targetid)
     if Bet.objects.filter(user=user, target=target, exam=exam).count() != 0:
         return 'You have aleady made a bet on that user for this exam.'
     newBet = Bet(exam=exam, user=request.user,
                  target=target, guess_mark=guessmark, guess_credits = guesscredits)
-    newBet.save()
-    groupid = extractGroupId(gamename)
-    credits = GroupMember.objects.get(group_id = groupid, user_id= getUserID(user))
-    if int(credits.credits) < int(guesscredits):
-        return 'Not enough credits!'
-    elif int(guesscredits) <= 0:
-        return 'Minimum amount of credits to bet is 1!'
     newBet.save()
     credits.credits = int(credits.credits) - int(guesscredits)
     credits.save()
@@ -216,10 +224,15 @@ def processEnterBetForm(request, betForm, gamename):
 def processUpdateBetForm(request, betForm):
     newmark = betForm.data['mark']
     betid = betForm.data['bet']
-    betObject = Bet.objects.get(pk=betid)
     if str(newmark) == "" or str(betid) == "":
         return 'The User and New Mark fields of Change Prediction Form cannot be left empty!'
-    elif not (int(newmark) >= 0 and int(newmark) <= 100):
+    betObject = Bet.objects.get(pk=betid)
+    try:
+        int(newmark)
+    except:
+        return "Your new prediction must be a whole number from 0 to 100."
+
+    if not (int(newmark) >= 0 and int(newmark) <= 100):
         return 'The New Mark entered is invalid!'
     Bet.objects.filter(pk=betid).update(guess_mark=newmark)
     return False
