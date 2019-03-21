@@ -128,33 +128,6 @@ Delete User
 
 </div>
 </center>
-  <!-- <center>            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
-          <th>
-            <center>Members</center>
-          </th>
-          {% for member in usernamelist %}
-          <tr>
-            <td class="mdl-data-table__cell--non-numeric">
-              <center> {{ member }} </center>
-            </td>
-          </tr>
-          {% endfor %}
-        </table></center>
-  <center> <form action="/game/{{ groupName }}/managegroup/" method="post">
-    {% csrf_token %}
-    {% for field in adduser %}
-
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col">
-      {{ field }}
-      <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
-
-    </div>
-    {% endfor %}
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="adduser">
-      Add user
-    </button>
-  </form></center>
--->
 
 {% if error %}
 

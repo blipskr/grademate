@@ -1,13 +1,19 @@
-{% extends 'standardlayout.html' %}
-{% block content %}
+{% extends 'header.html' %}
+{% block stuffbelowheader %}
 {% load static %}
 
-<!-- select exam -->
-
-<div class="markEntry">
-  <h1>
-    <center>Join Group</center>
-  </h1>
+<div class="mdl-grid center-items">
+  <div class="mdl-cell mdl-cell--1-col">
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="location.href='/mygames/'">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">arrow_back</i>
+      Back</button>
+  </div>
+  <div class="mdl-cell mdl-cell--10-col">
+    <center>
+      <h3>Join Game</h3>
+  </div>
+  <div class="mdl-cell mdl-cell--1-col"></div>
+</div>
 
     {% if form %}
     <form method="post" action="/joingame/"><center>
@@ -21,7 +27,7 @@
         <label class="mdl-textfield__label" for="groupid">Group ID</label></div>
         <br>
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" id="submit">
-        Join
+        Join Game
         </button></center></form>
     {% endif %}
 
