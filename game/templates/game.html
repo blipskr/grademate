@@ -64,6 +64,11 @@
             {{ betForm.guess_mark }}
             <label class="mdl-textfield__label " for="newmark">Predicted Mark</label>
           </div>
+          <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col mdl-textfield--floating-label">
+            {{ betForm.guess_credits }}
+            <label class="mdl-textfield__label " for="newmark">Amount of Credits</label>
+          </div>
+
           <div class="mdl-cell mdl-cell--2-col"></div>
 
 
@@ -86,6 +91,7 @@
               <th class="mdl-data-table__cell--non-numeric">Exam</th>
               <th class="mdl-data-table__cell--non-numeric">Member</th>
               <th>Predicted Mark</th>
+              <th>Amount of Credits</th>
             </tr>
           </thead>
           <tbody>
@@ -99,6 +105,7 @@
                 <td class="mdl-data-table__cell--non-numeric">{{ bet.exam }}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ bet.target }}</td>
                 <td>{{ bet.guess_mark }}</td>
+                <td>{{ bet.guess_credits }}</td>
               </tr>
               {% endfor %}
 

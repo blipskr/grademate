@@ -159,8 +159,9 @@ def processEnterBetForm(request, betForm, gamename):
     targetname = betForm.data['target']
     examname = betForm.data['exam']
     guessmark = betForm.data['guess_mark']
-    if (str(targetname) == "" or str(examname) == "" or str(guessmark) == ""):
-        return 'Make sure you have chosen an exam, a target and a mark!'
+    guesscredits =  betForm.data['guess_credits']
+    if (str(targetname) == "" or str(examname) == "" or str(guessmark) == "" or str(guesscredits) == ""):
+        return 'Make sure you have chosen an exam, a target,a mark and an amount of credits!'
     examid = extractExamIDgivenGroup(examname, gamename)
     targetid = getUserID(targetname)
     if not (int(guessmark) >= 0 and int(guessmark) <= 100):
@@ -170,12 +171,15 @@ def processEnterBetForm(request, betForm, gamename):
     if Bet.objects.filter(user=user, target=target, exam=exam).count() != 0:
         return 'You have aleady made a bet on that user for this exam.'
     newBet = Bet(exam=exam, user=request.user,
-                 target=target, guess_mark=guessmark)
+                 target=target, guess_mark=guessmark, guess_credits = guesscredits)
     newBet.save()
     groupid = extractGroupId(gamename)
     credits = GroupMember.objects.get(group_id = groupid, user_id= getUserID(user))
-    credits.credits = credits.credits - 5
-    credits.save()
+    if credits.credits < guesscredits:
+        return 'Not enough credits'
+    else:
+        credits.credits = credits.credits - int(guesscredits)
+        credits.save()
     return False
 # method takes request and betForm, processes UpdateBetForm
 
