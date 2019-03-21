@@ -16,6 +16,7 @@ def calculateWinner(userid, examid, finalscore, groupname):
     examObject = Exam.objects.get(exam_id=examid)
     userObject = User.objects.get(pk=userid)
     listOfBets = Bet.objects.filter(target=userObject, exam=examObject)
+    print "number of bets is " + str(listOfBets.count())
     if listOfBets.count() == 0:
         return
     closestguess = 100
@@ -23,25 +24,31 @@ def calculateWinner(userid, examid, finalscore, groupname):
     # find closest guess
     for bet in listOfBets:
         if abs(finalscore - bet.guess_mark) < closestguess:
-            closestguess = bet.guess_mark
+            closestguess = abs(finalscore - bet.guess_mark)
+    print "closest guess is " + str(closestguess)
     # find average bet ammount on user+exam
-    averageAmmount = averageBetOnUserExam(userObject.username, examObject.exam_id)
+    averageAmmount = averageBetOnUserExam(userObject, examObject)
+    print "average ammount on user+Exam is " + str(averageAmmount)
     # iterate through all users and make them winners/losers
     for bet in listOfBets:
         # if it is winner
-        if abs(finalscore - bet.guessmark) == closestguess:
+        if abs(finalscore - bet.guess_mark) == closestguess:
             # set the bet as win
-            bet.update(win=True)
+            bet.win = True
+            bet.save()
         # if it is loser
-        elif abs(finalscore - bet.guessmark) > closestguess:
-            bet.update(win=True)
+        elif abs(finalscore - bet.guess_mark) > closestguess:
+            bet.win = False
+            bet.save()
+    print "set winners and losers"
     # list of win bets
     listOfWinBets = listOfBets.exclude(win=False)
     # calculate number of winners
     noOfWinners = listOfWinBets.count()
     # credits from pot of each winner
-    eachWinsCredits = math.trunc(float(sumBetOnUserExam(userObject.username, examObject.exam_id)) / noOfWinners)
+    eachWinsCredits = math.trunc(float(sumBetOnUserExam(userObject, examObject)) / noOfWinners)
     # reward all winners
+    print "starting to reward winners with credits"
     for bet in listOfWinBets:
         # get the winner
         userObjectFromBet = bet.user
@@ -49,11 +56,14 @@ def calculateWinner(userid, examid, finalscore, groupname):
         # get winners current credits
         oldCredits = groupMemberObjectFromBet.credits
         # get credits to add
-        multiplier = calculateMultiplier(averageAmmount, bet.credits)
+        multiplier = calculateMultiplier(averageAmmount, bet.guess_credits)
         addCredits = multiplier * eachWinsCredits
         # calculate new credits and update them
         newCredits = oldCredits + addCredits
-        groupMemberObjectFromBet.update(credits = newCredits)
+        groupMemberObjectFromBet.credits = newCredits
+        groupMemberObjectFromBet.save()
+        print str(groupMemberObjectFromBet.user)
+    print "rewarded winners with credits"
 
 def retrieveUsersGroups(request):
     usersGroups = GroupMember.objects.filter(user=request.user.id)
@@ -442,26 +452,22 @@ def changeUserCredits(username, groupname, ammount):
     GroupMember.objects.get(group = groupObject, user = userObject).update(credits = newCredits)
 
 # function for calculating average bet on GroupMember + Exam
-def averageBetOnUserExam(username, examid):
+def averageBetOnUserExam(userObject, examObject):
     sum = 0
     number = 0
-    userObject = User.objects.get(username = username)
-    examObject = Exam.objects.get(exam_id = examid)
-    betsObjects = Bet.objects.filter(user = userObject, exam = examObject)
+    betsObjects = Bet.objects.filter(target = userObject, exam = examObject)
     for bet in betsObjects:
-        sum += bet.credits
+        sum += bet.guess_credits
         number += 1
     average = math.trunc(float(sum) / number)
     return average
 
 # function for calculating pot on the user+exam
-def sumBetOnUserExam(username, examid):
+def sumBetOnUserExam(userObject, examObject):
     sum = 0
-    userObject = User.objects.get(username = username)
-    examObject = Exam.objects.get(exam_id = examid)
-    betsObjects = Bet.objects.filter(user = userObject, exam = examObject)
+    betsObjects = Bet.objects.filter(target = userObject, exam = examObject)
     for bet in betsObjects:
-        sum += bet.credits
+        sum += bet.guess_credits
     return sum
 
 # function for calculating multiplier given guess mark and exam mark
