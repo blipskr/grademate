@@ -2,37 +2,28 @@
 {% block content %}
 {% load static %}
 
-<div class="mdl-grid">
-	<div class="mdl-cell mdl-cell--4-col"></div>
-	<div class="mdl-cell mdl-cell--4-col">
-<center><h3>Create a group</h3>
-		<form action="creategroup.html" method="post">
+
+<center><h3>Create a Game</h3>
+	<center>
+		<form action="/creategame/" method="post">
       {% csrf_token %}
       {% for field in form %}
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="name">
         {{ field }}
-				<label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
+				<label class="mdl-textfield__label" for="name">Name</label>
 
 			</div>
       {% endfor %}
-
+<div>
       <!-- Raised button with ripple -->
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="place">
-        Create a group
-      </button>
+        Create a game
+      </button></div>
     </form></center>
 
 
-</div>
-</div>
 
-<style>
-	.mdl-cell {
-		display: inline-grid;
-		align-items: center;
-		justify-content: center;
-	}
-</style>
+
 <!-- _________________________________ footer section________________________-->
 </body>
 

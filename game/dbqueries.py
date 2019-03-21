@@ -10,7 +10,6 @@ import views as v
 # method takes as an input request
 # returns a list of current users groups
 
-
 def calculateWinner(userid, examid, finalscore, groupname):
     groupid = extractGroupId(groupname)
     groupObject = Group.objects.get(pk=groupid)
@@ -65,28 +64,6 @@ def calculateWinner(userid, examid, finalscore, groupname):
         groupMemberObjectFromBet.save()
         print str(groupMemberObjectFromBet.user)
     print "rewarded winners with credits"
-'''
-    winner = ''
-    closest = 99
-    winBetID = ''
-    numOfBets = listOfBets.count()
-    if numOfBets == 1:
-        winner = Bet.objects.get(target=userObject, exam=examObject).user
-        winBetID = Bet.objects.get(target=userObject, exam=examObject).bet_id
-    elif numOfBets > 1:
-        for bet in listOfBets:
-            closeness = abs(100 - bet.guess_mark)
-            if closeness < closest:
-                winner = bet.user
-                winBetID = bet.bet_id
-                closest = closeness
-
-        Bet.objects.filter(pk=winBetID).update(win=True)
-        listOfBets.exclude(pk=winBetID).update(win=False)
-        currentCredits = GroupMember.objects.get(group=groupObject, user=winner).credits
-        newCredits = currentCredits + (numOfBets * 5)
-        GroupMember.objects.filter(group=groupObject, user=winner).update(credits=newCredits)
-'''
 
 def retrieveUsersGroups(request):
     usersGroups = GroupMember.objects.filter(user=request.user.id)
@@ -210,8 +187,6 @@ def processEnterBetForm(request, betForm, gamename):
     examname = betForm.data['exam']
     guessmark = betForm.data['guess_mark']
     guesscredits =  betForm.data['guess_credits']
-    if (str(targetname) == "" or str(examname) == "" or str(guessmark) == "" or str(guesscredits) == ""):
-        return 'Make sure you have chosen an exam, a target,a mark and an amount of credits!'
     try:
         int(guessmark)
     except:
@@ -220,6 +195,8 @@ def processEnterBetForm(request, betForm, gamename):
         int(guesscredits)
     except:
         return "You cannot use decimal credits."
+    if (str(targetname) == "" or str(examname) == "" or str(guessmark) == "" or str(guesscredits) == ""):
+        return 'Make sure you have chosen an exam, a target,a mark and an amount of credits!'
     examid = extractExamIDgivenGroup(examname, gamename)
     targetid = getUserID(targetname)
     if not (int(guessmark) >= 0 and int(guessmark) <= 100):

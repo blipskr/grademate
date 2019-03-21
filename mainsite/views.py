@@ -12,7 +12,8 @@ def agreement(request):
 
 
 def mygroups(request):
-    return render(request, 'mygroups.html', {'groupIDs': query.retrieveUserGroupIds(request.user.id), 'groupNames': query.getGroups(request)})
+    groups = query.retrieveUsersGroups(request)
+    return render(request, 'mygroups.html', {'groups': groups})
 
 
 def test(request):

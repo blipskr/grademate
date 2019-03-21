@@ -59,6 +59,10 @@ button:hover {
   color: white;
 }
 
+h2 {
+  color: black;
+}
+
 .mdl-navigation__link {
   color: white !important;
 }
@@ -76,8 +80,8 @@ th {
 }
 
 li {
-  width: 100px;
-  text-align: center;
+  width: 100px !important;
+  text-align: center !important;
 }
 
 .errorlist {

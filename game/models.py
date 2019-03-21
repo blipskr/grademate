@@ -17,7 +17,7 @@ class GroupMember(models.Model):
     credits = models.PositiveIntegerField('Group Credits')
 
     def __unicode__(self):
-        return self.user
+        return self.group
 
 
 class Exam(models.Model):

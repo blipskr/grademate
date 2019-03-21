@@ -8,31 +8,56 @@
     <div class="mdl-cell mdl-cell--3-col"></div>
     <div class="demo-charts mdl-cell mdl-cell--6-col" style="position: relative; text-align: center;" id="stats">
       <center>
-        <h3>My groups</h3>
+        <h3>My Games</h3>
       </center>
       <br>
-      {% for group in groupNames %}
+      <center>
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+        <th class="mdl-data-table__cell--non-numeric"><h6>Group</h6></th>
+        <th><h6>Credits</h6></th>
+                <th></th>
+      {% for group in groups %}
 
-      <a href="/game/{{ group }}">
-        <h6>{{ group }}</h6>
-      </a>
+      <tr>
+
+        <td class="mdl-data-table__cell--non-numeric"><center><h6>{{ group }}</h6></center></td>
+        <td><center><h6>{{ group.credits }}</h6></center></td>
+        <td class="mdl-data-table__cell--non-numeric">  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="window.location='/game/{{ group }}'">
+              <i class="mdl-color-text--blue-grey-400 material-icons">play_arrow</i> Play
+            </button></td>
+      </tr>
 
       {% endfor %}
-      </ul>
+    </table>
+  </center>
     </div>
     <div class="mdl-cell mdl-cell--3-col"></div>
   </div>
 
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--5-col"></div>
-  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell mdl-cell--1-col" onClick="window.location='/creategroup/'">
-      Create Group
-    </button><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell mdl-cell--1-col" onClick="window.location='/joingroup/'">
-      Join Group
+  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell mdl-cell--1-col" onClick="window.location='/creategame/'">
+      Create Game
+    </button><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell mdl-cell--1-col" onClick="window.location='/joingame/'">
+      Join Game
     </button>
     <div class="mdl-cell mdl-cell--5-col"></div>
 
   </div>
+
+
+<script>
+$(document).ready(function() {
+
+    $('#example tr').click(function() {
+        var href = $(this).find("a").attr("href");
+        if(href) {
+            window.location = href;
+        }
+    });
+
+});
+</script>
 </body>
 
 {% endblock %}
