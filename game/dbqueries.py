@@ -151,6 +151,10 @@ def processEnterMarksForm(request, enterMarksForm, gamename):
         return "The Exam field in Enter Marks Form cannot be left empty!"
     elif str(enteredMark) == "":
         return "The Mark field in Enter Marks Form cannot be left empty!"
+    try:
+        int(enteredMark)
+    except:
+        return "Your mark must be a whole number from 0 to 100."
     examid = extractExamIDgivenGroup(examname, gamename)
     alreadyEnteredExams = []
     for result in userResults.values():
