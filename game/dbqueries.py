@@ -408,3 +408,30 @@ def fetchUserExamsInGroup(username, groupname):
     groupObject = Group.objects.get(group_name=groupname)
     exams = Exam.objects.filter(group=groupObject)
     return exams
+
+# function for changing ammount of users credits
+def changeUserCredits(username, groupname, ammount):
+    groupObject = Group.objects.get(group_name = groupname)
+    userObject = User.objects.get(username = username)
+    groupMemberObject = GroupMember.objects.get(group = groupObject, user = userObject)
+    currentCredits = groupMemberObject.credits
+    newCredits = currentCredits + ammount
+    GroupMember.objects.get(group = groupObject, user = userObject).update(credits = newCredits)
+
+# function for calculating average bet on GroupMember + Exam
+def averageBetOnUserExam(username, examname):
+    sum = 0
+    number = 0
+    userObject = User.objects.get(username = username)
+    examObject = Exam.objects.get(exam = examname)
+    betsObjects = Bet.objects.filter(user = userObject, exam = examObject)
+    for bet in betsObjects:
+        sum += bet.credits
+        number += 1
+    average = (float) sum / number
+    return average
+
+# function for calculating difference of given bet from real mark
+# given bet object and result object
+def calculateDifferenceFromMark(bet, result):
+    return abs(bet.guess_mark - result.mark)
