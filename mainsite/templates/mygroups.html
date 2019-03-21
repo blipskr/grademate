@@ -1,23 +1,6 @@
 {% extends 'header.html' %}
 {% load static %}
 {% block stuffbelowheader %}
-
-<!-- #### VANTA JS PLUGIN ### -->
-<!-- A. vanta js assets -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/100/three.min.js"></script>
-<script src="https://www.vantajs.com/dist/vanta.waves.min.js"></script>
-<!-- B. Instilize vanta js by #id selector -->
-<body id="vantajs">
-  <script>
-  VANTA.WAVES({
-  el: "#vantajs",
-  shininess: 28.00,
-  waveHeight: 14.50,
-  waveSpeed: 0.95,
-  zoom: 0.94
-})
-  </script>
-
   <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--3-col"></div>
     <div class="demo-charts mdl-cell mdl-cell--6-col" style="position: relative; text-align: center;" id="stats">
