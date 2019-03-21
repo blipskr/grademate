@@ -172,12 +172,13 @@ def processEnterBetForm(request, betForm, gamename):
         return 'You have aleady made a bet on that user for this exam.'
     newBet = Bet(exam=exam, user=request.user,
                  target=target, guess_mark=guessmark, guess_credits = guesscredits)
-    newBet.save()
+
     groupid = extractGroupId(gamename)
     credits = GroupMember.objects.get(group_id = groupid, user_id= getUserID(user))
     if credits.credits < guesscredits:
         return 'Not enough credits'
     else:
+        newBet.save()
         credits.credits = credits.credits - int(guesscredits)
         credits.save()
     return False
