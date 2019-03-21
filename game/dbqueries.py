@@ -176,9 +176,11 @@ def processEnterBetForm(request, betForm, gamename):
     groupid = extractGroupId(gamename)
     credits = GroupMember.objects.get(group_id = groupid, user_id= getUserID(user))
     if int(credits.credits) < int(guesscredits):
-        return 'Not enough credits'
+        return 'Not enough credits!'
+    elif int(guesscredits) <= 0:
+        return 'Minimum amount of credits to bet is 1!'
     newBet.save()
-    credits.credits = credits.credits - int(guesscredits)
+    credits.credits = int(credits.credits) - int(guesscredits)
     credits.save()
     return False
 # method takes request and betForm, processes UpdateBetForm
