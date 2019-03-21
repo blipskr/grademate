@@ -64,7 +64,7 @@
             {{ betForm.guess_mark }}
             <label class="mdl-textfield__label " for="newmark">Mark</label>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col mdl-textfield--floating-label">
+          <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-coExamStatsl mdl-textfield--floating-label">
             {{ betForm.guess_credits }}
             <label class="mdl-textfield__label " for="newmark">Credits</label>
           </div>
@@ -189,32 +189,27 @@
     <div class="demo-charts mdl-cell mdl-cell--3-col" style="position: relative;">
       <center>
         <h3>Leaderboard</h3>
-      </center>
-      <p>Updated at the end of each season.</p>
-      <center>
         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
           <thead>
             <tr>
-              <th class="mdl-data-table__cell--non-numeric">User</th>
+              <th class="mdl-data-table__cell--non-numeric">Position</th>
+              <th class="mdl-data-table__cell--non-numeric">Username</th>
+              <th class="mdl-data-table__cell--non-numeric">Credits</th>
+              <th class="mdl-data-table__cell--non-numeric">Number of Wins</th>
             </tr>
           </thead>
           <tbody>
+            {% csrf_token %}
+            {% if leaderBoard %}
+            {% for oneLeaderBoardColumn in leaderBoard %}
             <tr>
-              <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
+              <td class="mdl-data-table__cell--non-numeric"> {{oneLeaderBoardColumn.position}}</td>
+              <td class="mdl-data-table__cell--non-numeric"> {{oneLeaderBoardColumn.user_name}}</td>
+              <td class="mdl-data-table__cell--non-numeric"> {{oneLeaderBoardColumn.credits}}</td>
+              <td class="mdl-data-table__cell--non-numeric"> {{oneLeaderBoardColumn.noOfWins}}</td>
             </tr>
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
-            </tr>
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
-            </tr>
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
-            </tr>
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric"> Username/Name</td>
-            </tr>
-
+            {% endfor %}
+            {% endif %}
           </tbody>
         </table>
       </center>

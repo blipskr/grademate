@@ -65,6 +65,28 @@ def calculateWinner(userid, examid, finalscore, groupname):
         groupMemberObjectFromBet.save()
         print str(groupMemberObjectFromBet.user)
     print "rewarded winners with credits"
+'''
+    winner = ''
+    closest = 99
+    winBetID = ''
+    numOfBets = listOfBets.count()
+    if numOfBets == 1:
+        winner = Bet.objects.get(target=userObject, exam=examObject).user
+        winBetID = Bet.objects.get(target=userObject, exam=examObject).bet_id
+    elif numOfBets > 1:
+        for bet in listOfBets:
+            closeness = abs(100 - bet.guess_mark)
+            if closeness < closest:
+                winner = bet.user
+                winBetID = bet.bet_id
+                closest = closeness
+
+        Bet.objects.filter(pk=winBetID).update(win=True)
+        listOfBets.exclude(pk=winBetID).update(win=False)
+        currentCredits = GroupMember.objects.get(group=groupObject, user=winner).credits
+        newCredits = currentCredits + (numOfBets * 5)
+        GroupMember.objects.filter(group=groupObject, user=winner).update(credits=newCredits)
+'''
 
 def retrieveUsersGroups(request):
     usersGroups = GroupMember.objects.filter(user=request.user.id)
@@ -214,6 +236,13 @@ def processEnterBetForm(request, betForm, gamename):
         return 'You have aleady made a bet on that user for this exam.'
     newBet = Bet(exam=exam, user=request.user,
                  target=target, guess_mark=guessmark, guess_credits = guesscredits)
+    groupid = extractGroupId(gamename)
+    credits = GroupMember.objects.get(group_id = groupid, user_id= getUserID(user))
+    if int(credits.credits) < int(guesscredits):
+        return 'Not enough credits!'
+    elif int(guesscredits) <= 0:
+        return 'Minimum amount of credits to bet is 1!'
+
     newBet.save()
     credits.credits = int(credits.credits) - int(guesscredits)
     credits.save()
@@ -294,6 +323,11 @@ def getUserID(targetname):
     userObject = User.objects.get(username=targetname)
     userID = userObject.id
     return userID
+
+def getUserName(targetid):
+    userObject = User.objects.get(id = targetid)
+    userName = userObject.username
+    return userName
 
 
 def extractExamIDgivenGroup(examname, gamename):

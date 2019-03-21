@@ -7,6 +7,7 @@ from models import Result, Exam, GroupMember, Bet, Group
 from ExamStats import ExamStats
 import dbqueries as query
 import math
+from LeaderBoardClass import LeaderBoardClass
 from django.core.exceptions import ValidationError
 
 
@@ -44,6 +45,18 @@ def gamepage_view(request, gamename):
     betsOnYou = Bet.objects.filter(
         target=request.user.id, exam_id__in=relevantExams).order_by('exam')
     examStatsObject = query.createExamStats(betsOnYou)
+
+    # leaderboard code groupid, name, credits query.getUserID(request.user)
+    allUsersInGroup = GroupMember.objects.filter(group_id = groupid).order_by('-credits')
+    infoLeaderBoard = list()
+    counter = 1
+    for member in allUsersInGroup:
+        noOfWins = Bet.objects.filter(user_id = member.user_id, win = 1)
+        oneLeaderBoard = LeaderBoardClass(counter, query.getUserName(member.user_id), member.credits, len(noOfWins))
+        counter = counter + 1
+        infoLeaderBoard.append(oneLeaderBoard)
+
+
     # if it is POST, either EnterBetForm or UpdateBetForm has been sent
     if request.method == 'POST' and 'place' in request.POST:
         enterBetForm = EnterBetForm(
@@ -78,7 +91,7 @@ def gamepage_view(request, gamename):
         examStatsObject = query.createExamStats(betsOnYou)
         error = False
     credits = GroupMember.objects.get(group_id = groupid, user_id= query.getUserID(request.user))
-    return render(request, 'game.html', {'error': error, 'admin': query.userIsAdminOfGroup(request.user, groupid), 'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename, 'credits': credits.credits})
+    return render(request, 'game.html', {'error': error, 'admin': query.userIsAdminOfGroup(request.user, groupid), 'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename, 'credits': credits.credits, 'leaderBoard': infoLeaderBoard})
 
 
 @login_required(login_url="/login/")
