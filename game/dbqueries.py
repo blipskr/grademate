@@ -432,8 +432,13 @@ def averageBetOnUserExam(username, examname):
     for bet in betsObjects:
         sum += bet.credits
         number += 1
-    average = (float) sum / number
+    average = math.trunc(float(sum) / number)
     return average
+
+# function for calculating multiplier given guess mark and exam mark
+# this function is used when rewarding winners
+def calculateMultiplier(guessmark, actualmark):
+    return float(guessmark) / actualmark
 
 # function for calculating difference of given bet from real mark
 # given bet object and result object
