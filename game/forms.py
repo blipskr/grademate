@@ -31,7 +31,7 @@ class EnterBetForm(forms.ModelForm):
 
     class Meta:
         model = Bet
-        fields = ('exam', 'target', 'guess_mark', 'user')
+        fields = ('exam', 'target', 'guess_mark', 'guess_credits', 'user')
 
     def __init__(self, *args, **kwargs):
         self.group = kwargs.pop('group')
@@ -39,6 +39,8 @@ class EnterBetForm(forms.ModelForm):
         super(EnterBetForm, self).__init__(*args, **kwargs)
         self.fields['guess_mark'].widget = forms.TextInput(
             attrs={'class': 'mdl-textfield__input', 'id': 'guess_mark'})
+        self.fields['guess_credits'].widget = forms.TextInput(
+            attrs={'class': 'mdl-textfield__input', 'id': 'guess_credits'})
         groupusers = query.userIDsinGroup(self.group)
         groupexams = query.examIDsinGroup(self.group)
         user = self.user.id

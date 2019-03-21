@@ -35,6 +35,7 @@ class Bet(models.Model):
     user = models.ForeignKey(User, related_name='creator',)
     target = models.ForeignKey(User, related_name='target')
     guess_mark = models.PositiveIntegerField('Guessed Mark')
+    guess_credits = models.PositiveIntegerField('Guessed Credits')
     win = models.NullBooleanField('Winning Bet', default=None, blank=True)
 
     def __unicode__(self):
