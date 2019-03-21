@@ -16,13 +16,16 @@ def calculateWinner(userid, examid, finalscore, groupname):
     examObject = Exam.objects.get(exam_id=examid)
     userObject = User.objects.get(pk=userid)
     listOfBets = Bet.objects.filter(target=userObject, exam=examObject)
+    if listOfBets.count() == 0:
+        return
     closestguess = 100
+    finalscore = int(finalscore)
     # find closest guess
     for bet in listOfBets:
         if abs(finalscore - bet.guess_mark) < closestguess:
             closestguess = bet.guess_mark
     # find average bet ammount on user+exam
-    averageAmmount = averageBetOnUserExam(userObject.username, examObject.exam_name)
+    averageAmmount = averageBetOnUserExam(userObject.username, examObject.exam_id)
     # iterate through all users and make them winners/losers
     for bet in listOfBets:
         # if it is winner
@@ -37,7 +40,7 @@ def calculateWinner(userid, examid, finalscore, groupname):
     # calculate number of winners
     noOfWinners = listOfWinBets.count()
     # credits from pot of each winner
-    eachWinsCredits = math.trunc(float(sumBetOnUserExam(userObject.username, examObject.exam_name)) / noOfWinners)
+    eachWinsCredits = math.trunc(float(sumBetOnUserExam(userObject.username, examObject.exam_id)) / noOfWinners)
     # reward all winners
     for bet in listOfWinBets:
         # get the winner
@@ -52,29 +55,6 @@ def calculateWinner(userid, examid, finalscore, groupname):
         newCredits = oldCredits + addCredits
         groupMemberObjectFromBet.update(credits = newCredits)
 
-'''
-    winner = ''
-    closest = 99
-    winBetID = ''
-    numOfBets = listOfBets.count()
-    if numOfBets == 1:
-        winner = Bet.objects.get(target=userObject, exam=examObject).user
-        winBetID = Bet.objects.get(target=userObject, exam=examObject).bet_id
-    elif numOfBets > 1:
-        for bet in listOfBets:
-            closeness = abs(100 - bet.guess_mark)
-            if closeness < closest:
-                winner = bet.user
-                winBetID = bet.bet_id
-                closest = closeness
-
-
-        Bet.objects.filter(pk=winBetID).update(win=True)
-        listOfBets.exclude(pk=winBetID).update(win=False)
-        currentCredits = GroupMember.objects.get(group=groupObject, user=winner).credits
-        newCredits = currentCredits + (numOfBets * 5)
-        GroupMember.objects.filter(group=groupObject, user=winner).update(credits=newCredits)
-'''
 def retrieveUsersGroups(request):
     usersGroups = GroupMember.objects.filter(user=request.user.id)
     return usersGroups
@@ -462,11 +442,11 @@ def changeUserCredits(username, groupname, ammount):
     GroupMember.objects.get(group = groupObject, user = userObject).update(credits = newCredits)
 
 # function for calculating average bet on GroupMember + Exam
-def averageBetOnUserExam(username, examname):
+def averageBetOnUserExam(username, examid):
     sum = 0
     number = 0
     userObject = User.objects.get(username = username)
-    examObject = Exam.objects.get(exam = examname)
+    examObject = Exam.objects.get(exam_id = examid)
     betsObjects = Bet.objects.filter(user = userObject, exam = examObject)
     for bet in betsObjects:
         sum += bet.credits
@@ -475,10 +455,10 @@ def averageBetOnUserExam(username, examname):
     return average
 
 # function for calculating pot on the user+exam
-def sumBetOnUserExam(username, examname):
+def sumBetOnUserExam(username, examid):
     sum = 0
     userObject = User.objects.get(username = username)
-    examObject = Exam.objects.get(exam = examname)
+    examObject = Exam.objects.get(exam_id = examid)
     betsObjects = Bet.objects.filter(user = userObject, exam = examObject)
     for bet in betsObjects:
         sum += bet.credits
