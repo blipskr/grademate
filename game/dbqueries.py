@@ -10,50 +10,33 @@ import views as v
 # method takes as an input request
 # returns a list of current users groups
 
+
 def calculateWinner(userid, examid, finalscore, groupname):
     groupid = extractGroupId(groupname)
     groupObject = Group.objects.get(pk=groupid)
     examObject = Exam.objects.get(exam_id=examid)
     userObject = User.objects.get(pk=userid)
     listOfBets = Bet.objects.filter(target=userObject, exam=examObject)
-    if listOfBets.count() == 0:
-        return
-    closestguess = 100
-    finalscore = int(finalscore)
-    # find closest guess
-    for bet in listOfBets:
-        if abs(finalscore - bet.guess_mark) < closestguess:
-            closestguess = bet.guess_mark
-    # find average bet ammount on user+exam
-    averageAmmount = averageBetOnUserExam(userObject.username, examObject.exam_id)
-    # iterate through all users and make them winners/losers
-    for bet in listOfBets:
-        # if it is winner
-        if abs(finalscore - bet.guessmark) == closestguess:
-            # set the bet as win
-            bet.update(win=True)
-        # if it is loser
-        elif abs(finalscore - bet.guessmark) > closestguess:
-            bet.update(win=True)
-    # list of win bets
-    listOfWinBets = listOfBets.exclude(win=False)
-    # calculate number of winners
-    noOfWinners = listOfWinBets.count()
-    # credits from pot of each winner
-    eachWinsCredits = math.trunc(float(sumBetOnUserExam(userObject.username, examObject.exam_id)) / noOfWinners)
-    # reward all winners
-    for bet in listOfWinBets:
-        # get the winner
-        userObjectFromBet = bet.user
-        groupMemberObjectFromBet = GroupMember.objects.get(group = groupObject, user=userObjectFromBet)
-        # get winners current credits
-        oldCredits = groupMemberObjectFromBet.credits
-        # get credits to add
-        multiplier = calculateMultiplier(averageAmmount, bet.credits)
-        addCredits = multiplier * eachWinsCredits
-        # calculate new credits and update them
-        newCredits = oldCredits + addCredits
-        groupMemberObjectFromBet.update(credits = newCredits)
+    winner = ''
+    closest = 99
+    winBetID = ''
+    numOfBets = listOfBets.count()
+    if numOfBets == 1:
+        winner = Bet.objects.get(target=userObject, exam=examObject).user
+        winBetID = Bet.objects.get(target=userObject, exam=examObject).bet_id
+    elif numOfBets > 1:
+        for bet in listOfBets:
+            closeness = abs(100 - bet.guess_mark)
+            if closeness < closest:
+                winner = bet.user
+                winBetID = bet.bet_id
+                closest = closeness
+
+        Bet.objects.filter(pk=winBetID).update(win=True)
+        listOfBets.exclude(pk=winBetID).update(win=False)
+        currentCredits = GroupMember.objects.get(group=groupObject, user=winner).credits
+        newCredits = currentCredits + (numOfBets * 5)
+        GroupMember.objects.filter(group=groupObject, user=winner).update(credits=newCredits)
 
 def retrieveUsersGroups(request):
     usersGroups = GroupMember.objects.filter(user=request.user.id)
@@ -177,25 +160,32 @@ def processEnterBetForm(request, betForm, gamename):
     examname = betForm.data['exam']
     guessmark = betForm.data['guess_mark']
     guesscredits =  betForm.data['guess_credits']
+    try:
+        int(guessmark)
+    except:
+        return "Your prediction must be a whole number from 0 to 100."
+    try:
+        int(guesscredits)
+    except:
+        return "You cannot use decimal credits."
     if (str(targetname) == "" or str(examname) == "" or str(guessmark) == "" or str(guesscredits) == ""):
         return 'Make sure you have chosen an exam, a target,a mark and an amount of credits!'
     examid = extractExamIDgivenGroup(examname, gamename)
     targetid = getUserID(targetname)
     if not (int(guessmark) >= 0 and int(guessmark) <= 100):
         return 'Predicted mark invalid. Make sure it is between 0 and 100!'
+    groupid = extractGroupId(gamename)
+    credits = GroupMember.objects.get(group_id = groupid, user_id= getUserID(user))
+    if int(credits.credits) < int(guesscredits):
+        return 'You do not have enough credits.'
+    elif int(guesscredits) <= 0:
+        return 'You must use at least 1 credit.'
     exam = Exam.objects.get(pk=examid)
     target = User.objects.get(pk=targetid)
     if Bet.objects.filter(user=user, target=target, exam=exam).count() != 0:
         return 'You have aleady made a bet on that user for this exam.'
     newBet = Bet(exam=exam, user=request.user,
                  target=target, guess_mark=guessmark, guess_credits = guesscredits)
-    newBet.save()
-    groupid = extractGroupId(gamename)
-    credits = GroupMember.objects.get(group_id = groupid, user_id= getUserID(user))
-    if int(credits.credits) < int(guesscredits):
-        return 'Not enough credits!'
-    elif int(guesscredits) <= 0:
-        return 'Minimum amount of credits to bet is 1!'
     newBet.save()
     credits.credits = int(credits.credits) - int(guesscredits)
     credits.save()
@@ -206,10 +196,15 @@ def processEnterBetForm(request, betForm, gamename):
 def processUpdateBetForm(request, betForm):
     newmark = betForm.data['mark']
     betid = betForm.data['bet']
-    betObject = Bet.objects.get(pk=betid)
     if str(newmark) == "" or str(betid) == "":
         return 'The User and New Mark fields of Change Prediction Form cannot be left empty!'
-    elif not (int(newmark) >= 0 and int(newmark) <= 100):
+    betObject = Bet.objects.get(pk=betid)
+    try:
+        int(newmark)
+    except:
+        return "Your new prediction must be a whole number from 0 to 100."
+
+    if not (int(newmark) >= 0 and int(newmark) <= 100):
         return 'The New Mark entered is invalid!'
     Bet.objects.filter(pk=betid).update(guess_mark=newmark)
     return False
@@ -431,45 +426,3 @@ def fetchUserExamsInGroup(username, groupname):
     groupObject = Group.objects.get(group_name=groupname)
     exams = Exam.objects.filter(group=groupObject)
     return exams
-
-# function for changing ammount of users credits
-def changeUserCredits(username, groupname, ammount):
-    groupObject = Group.objects.get(group_name = groupname)
-    userObject = User.objects.get(username = username)
-    groupMemberObject = GroupMember.objects.get(group = groupObject, user = userObject)
-    currentCredits = groupMemberObject.credits
-    newCredits = currentCredits + ammount
-    GroupMember.objects.get(group = groupObject, user = userObject).update(credits = newCredits)
-
-# function for calculating average bet on GroupMember + Exam
-def averageBetOnUserExam(username, examid):
-    sum = 0
-    number = 0
-    userObject = User.objects.get(username = username)
-    examObject = Exam.objects.get(exam_id = examid)
-    betsObjects = Bet.objects.filter(user = userObject, exam = examObject)
-    for bet in betsObjects:
-        sum += bet.credits
-        number += 1
-    average = math.trunc(float(sum) / number)
-    return average
-
-# function for calculating pot on the user+exam
-def sumBetOnUserExam(username, examid):
-    sum = 0
-    userObject = User.objects.get(username = username)
-    examObject = Exam.objects.get(exam_id = examid)
-    betsObjects = Bet.objects.filter(user = userObject, exam = examObject)
-    for bet in betsObjects:
-        sum += bet.credits
-    return sum
-
-# function for calculating multiplier given guess mark and exam mark
-# this function is used when rewarding winners
-def calculateMultiplier(average, actual):
-    return float(actual) / average
-
-# function for calculating difference of given bet from real mark
-# given bet object and result object
-def calculateDifferenceFromMark(bet, result):
-    return abs(bet.guess_mark - result.mark)
