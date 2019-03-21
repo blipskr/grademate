@@ -1,6 +1,34 @@
 {% extends 'header.html' %}
 {% block stuffbelowheader %}
 {% load static %}
+<!-- #### VANTA JS PLUGIN ### -->
+<!-- A. vanta js assets -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/100/three.min.js"></script>
+<script src="https://www.vantajs.com/dist/vanta.waves.min.js"></script>
+<!-- B. Instilize vanta js by #id selector -->
+<body id="vantajs">
+  <script>
+  VANTA.WAVES({
+  el: "#vantajs",
+  shininess: 28.00,
+  waveHeight: 14.50,
+  waveSpeed: 0.95,
+  zoom: 0.94
+})
+  </script>
+<style>
+   .mdl-textfield__label{
+    color: #fff;
+}
+
+.mdl-textfield__input{
+    border-bottom: 1px solid #fff;
+}
+
+     .mdl-textfield--floating-label{
+      color: #fff;
+  }
+</style>
 <!-- ADD EXAM TO GROUP -->
 <div class="mdl-grid center-items">
   <div class="mdl-cell mdl-cell--1-col">
@@ -10,7 +38,7 @@
   </div>
   <div class="mdl-cell mdl-cell--10-col">
     <center>
-      <h3>Group Management</h3>
+      <h3 style="color: white;">Group Management</h3>
   </div>
   <div class="mdl-cell mdl-cell--1-col"></div>
 </div>
@@ -128,6 +156,33 @@ Delete User
 
 </div>
 </center>
+  <!-- <center>            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+          <th>
+            <center>Members</center>
+          </th>
+          {% for member in usernamelist %}
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric">
+              <center> {{ member }} </center>
+            </td>
+          </tr>
+          {% endfor %}
+        </table></center>
+  <center> <form action="/game/{{ groupName }}/managegroup/" method="post">
+    {% csrf_token %}
+    {% for field in adduser %}
+
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col">
+      {{ field }}
+      <label class="mdl-textfield__label" for="cretegroup">{{ field.label }}</label>
+
+    </div>
+    {% endfor %}
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" name="adduser">
+      Add user
+    </button>
+  </form></center>
+-->
 
 {% if error %}
 

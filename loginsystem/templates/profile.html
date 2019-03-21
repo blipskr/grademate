@@ -2,20 +2,58 @@
 {% block stuffbelowheader %}
 {% load static %}
 
-<body>
+<!-- #### VANTA JS PLUGIN ### -->
+<!-- A. vanta js assets -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/100/three.min.js"></script>
+<script src="https://www.vantajs.com/dist/vanta.waves.min.js"></script>
+<!-- B. Instilize vanta js by #id selector -->
+<body id="vantajs">
+  <script>
+  VANTA.WAVES({
+  el: "#vantajs",
+  shininess: 28.00,
+  waveHeight: 14.50,
+  waveSpeed: 0.95,
+  zoom: 0.94
+})
+  </script>
   <br>
   <br>
   <br>
-  <center>
-    <h3> Username: {{ user.username }} </h3>
+  <br>
+  <br>
+  <br>
+  <center style="position: relative;">
+    <h2 style="color: white;">Profile</h2>
   </center>
   <center>
-    <h3> First Name: {{ user.first_name }} </h3>
-  </center>
-  <center>
-    <h3> Last Name: {{ user.last_name }} </h3>
-  </center>
-  <center>
-    <h3> Email: {{ user.email }} </h3>
-  </center>
+    <!-- class="demo-card-square mdl-card mdl-shadow--2dp" -->
+    <div
+    style="
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width:400px;
+    height:400px;
+    ">
+    <div class="mdl-card__supporting-text" style="color: white;">
+      <center>
+        <h3> Username: {{ user.username }} </h3>
+      </center>
+      <center>
+        <h3> First Name: {{ user.first_name }} </h3>
+      </center>
+      <center>
+        <h3> Last Name: {{ user.last_name }} </h3>
+      </center>
+      <center>
+        <h3> Email: {{ user.email }} </h3>
+      </center>
+    </div>
+  </div>
+</center>
+
 {% endblock %}
