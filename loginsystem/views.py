@@ -87,7 +87,7 @@ def accountsettings_view(request):
                 form.save()
                 return redirect('/profile/')
             else:
-                returnsettingsautherror_view(request, form)
+                return settingsautherror_view(request, form)
         else:
             return settingsbadfielderror_view(request, form)
     else:
@@ -98,12 +98,12 @@ def accountsettings_view(request):
 
 @login_required(login_url="/login/")
 def settingsautherror_view(request, form):
-    render(request, 'accountsettingsautherror.html', {'form': form, })
+    return render(request, 'accountsettingsautherror.html', {'form': form, })
 
 
 @login_required(login_url="/login/")
 def settingsbadfielderror_view(request, form):
-    render(request, 'accountsettingswrongfielderror.html', {'form': form})
+    return render(request, 'accountsettingswrongfielderror.html', {'form': form})
 
 
 @login_required(login_url="/login/")
