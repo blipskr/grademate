@@ -95,13 +95,6 @@ def gamepage_view(request, gamename):
 
 
 @login_required(login_url="/login/")
-def getGroups(request):
-    userId = request.user.id
-    groups = extractGroupNames(retrieveUserGroupIds(userId))
-    return groups
-
-
-@login_required(login_url="/login/")
 def creategroup_view(request):
     # if sent a form of creating a group, process it
     if request.method == 'POST':

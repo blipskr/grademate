@@ -210,6 +210,8 @@ def processEnterBetForm(request, betForm, gamename):
     examname = betForm.data['exam']
     guessmark = betForm.data['guess_mark']
     guesscredits =  betForm.data['guess_credits']
+    if (str(targetname) == "" or str(examname) == "" or str(guessmark) == "" or str(guesscredits) == ""):
+        return 'Make sure you have chosen an exam, a target,a mark and an amount of credits!'
     try:
         int(guessmark)
     except:
@@ -218,8 +220,6 @@ def processEnterBetForm(request, betForm, gamename):
         int(guesscredits)
     except:
         return "You cannot use decimal credits."
-    if (str(targetname) == "" or str(examname) == "" or str(guessmark) == "" or str(guesscredits) == ""):
-        return 'Make sure you have chosen an exam, a target,a mark and an amount of credits!'
     examid = extractExamIDgivenGroup(examname, gamename)
     targetid = getUserID(targetname)
     if not (int(guessmark) >= 0 and int(guessmark) <= 100):
