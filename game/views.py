@@ -21,10 +21,13 @@ def entermarks_view(request, gamename):
     # if it is POST, EnterMarksForm has been sent
     if request.method == 'POST':
         enterMarksForm = EnterMarksForm(request.POST, group=groupId)
-        return query.processEnterMarksForm(request, enterMarksForm, gamename)
+        error = query.processEnterMarksForm(request, enterMarksForm, gamename)
+        enterMarksForm = EnterMarksForm(group=groupId)
     else:
         enterMarksForm = EnterMarksForm(group=groupId)
-        return render(request, 'entermarks.html', {'EnterMarksForm': enterMarksForm, 'group': gamename, 'userResultsList': userResults})
+        error = False
+
+    return render(request, 'entermarks.html', {'error' : error, 'EnterMarksForm': enterMarksForm, 'group': gamename, 'userResultsList': userResults})
 
 
 @login_required(login_url="/login/")

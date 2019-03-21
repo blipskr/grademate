@@ -148,23 +148,23 @@ def processEnterMarksForm(request, enterMarksForm, gamename):
     examname = enterMarksForm.data['exam']
     enteredMark = enterMarksForm.data['mark']
     if str(examname) == "":
-        return render(request, 'invalidexam.html', {'EnterMarksForm': EnterMarksForm(group=groupid), 'group': gamename, 'userResultsList': userResults})
+        return "The Exam field in Enter Marks Form cannot be left empty!"
     elif str(enteredMark) == "":
-        return render(request, 'invalidmark.html', {'EnterMarksForm': EnterMarksForm(group=groupid), 'group': gamename, 'userResultsList': userResults})
+        return "The Mark field in Enter Marks Form cannot be left empty!"
     examid = extractExamIDgivenGroup(examname, gamename)
     alreadyEnteredExams = []
     for result in userResults.values():
         alreadyEnteredExams.append(result['exam_id'])
     if examid in alreadyEnteredExams:
-        return render(request, 'duplicateresultentry.html', {'EnterMarksForm': EnterMarksForm(group=groupid), 'group': gamename, 'userResultsList': userResults})
+        return "You have already entered your mark for this exam!"
     exam = Exam.objects.get(pk=examid)
     if not (int(enteredMark) >= 0 and int(enteredMark) <= 100):
-        return render(request, 'invalidmark.html', {'EnterMarksForm': EnterMarksForm(group=groupid), 'group': gamename, 'userResultsList': userResults})
+        return "The entered mark is invalid! It must be a whole number between 0 and 100."
     else:
         newResult = Result(exam=exam, user=request.user, mark=enteredMark)
         newResult.save()
         calculateWinner(request.user.id, examid, enteredMark, gamename)
-        return redirect('/game/' + gamename + '/entermarks/')
+        return False
 
 
 def usernamesInGroup(groupName):
