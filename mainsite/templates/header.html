@@ -64,9 +64,10 @@
 	</div>
 	<!-- #### VANTA JS PLUGIN ### -->
 	<!-- A. vanta js assets -->
+
+	<!--
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/100/three.min.js"></script>
 	<script src="https://www.vantajs.com/dist/vanta.waves.min.js"></script>
-	<!-- B. Instilize vanta js by #id selector -->
 	<body id="vantajs">
 	  <script>
 	  VANTA.WAVES({
@@ -77,6 +78,22 @@
 	  zoom: 0.94
 	})
 	  </script>
+	-->
+		<!--net -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/100/three.min.js"></script>
+	<script src="https://www.vantajs.com/dist/vanta.net.min.js"></script>
+	<body id="vantajs">
+		<script>
+  VANTA.NET({
+  el: "#vantajs",
+  color: 0x673AB7,
+  backgroundColor: 0x03A9F4,
+  points: 9.00,
+  maxDistance: 27.00,
+  spacing: 20.00,
+  showDots: false
+})
+</script>
 
 		<style>
 		   .mdl-textfield__label{
