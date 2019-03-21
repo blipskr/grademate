@@ -6,7 +6,7 @@
 
     <div class=" mdl-cell mdl-cell--12-col">
       <center>
-        <h3 style="color: white;">My groups</h3>
+        <h3 style="color: white;">My Games</h3>
       </center>
       <center>
         <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; width: 300px; height: 200px; position: relative;">
@@ -14,11 +14,12 @@
 
             {% csrf_token %}
             {% for group in groups %}
+                <br>
+                <br>
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style=" display: inline-grid; color: white; align-items: center; padding: auto; width: auto;" onclick="location.href='/game/{{ group }}';">
                 {{ group }}
                 </button>
-                  <br>
-                  <br>
+
             {% endfor %}
           </ul>
 
