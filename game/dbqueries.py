@@ -10,13 +10,49 @@ import views as v
 # method takes as an input request
 # returns a list of current users groups
 
-
 def calculateWinner(userid, examid, finalscore, groupname):
     groupid = extractGroupId(groupname)
     groupObject = Group.objects.get(pk=groupid)
     examObject = Exam.objects.get(exam_id=examid)
     userObject = User.objects.get(pk=userid)
     listOfBets = Bet.objects.filter(target=userObject, exam=examObject)
+    closestguess = 100
+    # find closest guess
+    for bet in listOfBets:
+        if abs(finalscore - bet.guess_mark) < closestguess:
+            closestguess = bet.guess_mark
+    # find average bet ammount on user+exam
+    averageAmmount = averageBetOnUserExam(userObject.username, examObject.exam_name)
+    # iterate through all users and make them winners/losers
+    for bet in listOfBets:
+        # if it is winner
+        if abs(finalscore - bet.guessmark) == closestguess:
+            # set the bet as win
+            bet.update(win=True)
+        # if it is loser
+        elif abs(finalscore - bet.guessmark) > closestguess:
+            bet.update(win=True)
+    # list of win bets
+    listOfWinBets = listOfBets.exclude(win=False)
+    # calculate number of winners
+    noOfWinners = listOfWinBets.count()
+    # credits from pot of each winner
+    eachWinsCredits = math.trunc(float(sumBetOnUserExam(userObject.username, examObject.exam_name)) / noOfWinners)
+    # reward all winners
+    for bet in listOfWinBets:
+        # get the winner
+        userObjectFromBet = bet.user
+        groupMemberObjectFromBet = GroupMember.objects.get(group = groupObject, user=userObjectFromBet)
+        # get winners current credits
+        oldCredits = groupMemberObjectFromBet.credits
+        # get credits to add
+        multiplier = calculateMultiplier(averageAmmount, bet.credits)
+        addCredits = multiplier * eachWinsCredits
+        # calculate new credits and update them
+        newCredits = oldCredits + addCredits
+        groupMemberObjectFromBet.update(credits = newCredits)
+
+'''
     winner = ''
     closest = 99
     winBetID = ''
@@ -32,12 +68,13 @@ def calculateWinner(userid, examid, finalscore, groupname):
                 winBetID = bet.bet_id
                 closest = closeness
 
+
         Bet.objects.filter(pk=winBetID).update(win=True)
         listOfBets.exclude(pk=winBetID).update(win=False)
         currentCredits = GroupMember.objects.get(group=groupObject, user=winner).credits
         newCredits = currentCredits + (numOfBets * 5)
         GroupMember.objects.filter(group=groupObject, user=winner).update(credits=newCredits)
-
+'''
 def retrieveUsersGroups(request):
     usersGroups = GroupMember.objects.filter(user=request.user.id)
     return usersGroups
@@ -172,14 +209,14 @@ def processEnterBetForm(request, betForm, gamename):
         return 'You have aleady made a bet on that user for this exam.'
     newBet = Bet(exam=exam, user=request.user,
                  target=target, guess_mark=guessmark, guess_credits = guesscredits)
-
+    newBet.save()
     groupid = extractGroupId(gamename)
     credits = GroupMember.objects.get(group_id = groupid, user_id= getUserID(user))
-    if int(credits.credits) < int(guesscredits):
+    if credits.credits < guesscredits:
         return 'Not enough credits'
-    newBet.save()
-    credits.credits = credits.credits - int(guesscredits)
-    credits.save()
+    else:
+        credits.credits = credits.credits - int(guesscredits)
+        credits.save()
     return False
 # method takes request and betForm, processes UpdateBetForm
 
@@ -435,10 +472,20 @@ def averageBetOnUserExam(username, examname):
     average = math.trunc(float(sum) / number)
     return average
 
+# function for calculating pot on the user+exam
+def sumBetOnUserExam(username, examname):
+    sum = 0
+    userObject = User.objects.get(username = username)
+    examObject = Exam.objects.get(exam = examname)
+    betsObjects = Bet.objects.filter(user = userObject, exam = examObject)
+    for bet in betsObjects:
+        sum += bet.credits
+    return sum
+
 # function for calculating multiplier given guess mark and exam mark
 # this function is used when rewarding winners
-def calculateMultiplier(guessmark, actualmark):
-    return float(guessmark) / actualmark
+def calculateMultiplier(average, actual):
+    return float(actual) / average
 
 # function for calculating difference of given bet from real mark
 # given bet object and result object
