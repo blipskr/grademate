@@ -36,7 +36,7 @@
       </table>
 </div>
 <div class="mdl-cell mdl-cell--2-col">
-      <form action="/game/{{ groupName }}/managegroup/" method="post">
+      <form action="/game/{{ groupName }}/managegame/" method="post">
     {% csrf_token %}
     {% for field in addexam %}
 
@@ -51,7 +51,7 @@
     </button>
   </form>
 
-  <form action="/game/{{ groupName }}/managegroup/" method="post">
+  <form action="/game/{{ groupName }}/managegame/" method="post">
   {% csrf_token %}
 
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select mdl-cell mdl-cell--8-col">
@@ -92,7 +92,7 @@
          </table>
 </div>
 <div class="mdl-cell mdl-cell--2-col">
-  <form action="/game/{{ groupName }}/managegroup/" method="post">
+  <form action="/game/{{ groupName }}/managegame/" method="post">
     {% csrf_token %}
     {% for field in adduser %}
 
@@ -107,7 +107,7 @@
     </button>
   </form>
 
-<form action="/game/{{ groupName }}/managegroup/" method="post">
+<form action="/game/{{ groupName }}/managegame/" method="post">
 {% csrf_token %}
 
 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select mdl-cell mdl-cell--8-col">
@@ -142,7 +142,7 @@ Delete User
           </tr>
           {% endfor %}
         </table></center>
-  <center> <form action="/game/{{ groupName }}/managegroup/" method="post">
+  <center> <form action="/game/{{ groupName }}/managegame/" method="post">
     {% csrf_token %}
     {% for field in adduser %}
 

@@ -86,7 +86,7 @@ def examIDtoName(examid):
 
 def examNametoID(examname, groupname):
     groupObject = Group.objects.get(group_name=groupname)
-    examObject = Exam.objects.get(exam_name=examname)
+    examObject = Exam.objects.get(exam_name=examname, group = groupObject)
     return examObject.exam_id
 
 def createExamStats(betsObject):
