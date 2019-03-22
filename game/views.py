@@ -117,7 +117,7 @@ def creategroup_view(request):
                 username = User.objects.get(id=request.user.id)
                 query.addUserToGroup(username, groupName)
                 # redirect to managegroup.html
-                return redirect('/game/' + groupName + '/managegroup/')
+                return redirect('/game/' + groupName + '/managegame/')
                 # return managegroup_view(request, groupName)
             else:
                 createGroupForm = CreateGroupForm()
@@ -143,7 +143,7 @@ def managegroup_view(request, gamename):
         deleteExamForm = DeleteExamForm()
         deleteUserForm = DeleteUserForm()
         examlist = query.retrieveGroupExams(groupid)
-        return render(request, 'managegroup.html', {'error' : error,'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
+        return render(request, 'managegroup.html', {'groupId': groupid, 'error' : error,'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
     elif request.method == 'POST' and 'adduser' in request.POST:
         addUserForm = AddUserToGroupForm(request.POST)
         error = query.processAddUserForm(addUserForm, gamename)
@@ -152,7 +152,7 @@ def managegroup_view(request, gamename):
         deleteExamForm = DeleteExamForm()
         deleteUserForm = DeleteUserForm()
         usernamelist = query.usernamesInGroup(gamename)
-        return render(request, 'managegroup.html', {'error' : error,'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
+        return render(request, 'managegroup.html', {'groupId': groupid, 'error' : error,'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
     elif request.method == 'POST' and 'removeuser' in request.POST:
         deleteUserForm = DeleteUserForm(request.POST)
         username = deleteUserForm.data['user_name']
@@ -166,7 +166,7 @@ def managegroup_view(request, gamename):
         deleteExamForm = DeleteExamForm()
         deleteUserForm = DeleteUserForm()
         usernamelist = query.usernamesInGroup(gamename)
-        return render(request, 'managegroup.html', {'error' : error,'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
+        return render(request, 'managegroup.html', {'groupId': groupid, 'error' : error,'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
     elif request.method == 'POST' and 'removexam' in request.POST:
         deleteExamForm = DeleteExamForm(request.POST)
         examname = deleteExamForm.data['exam_name']
@@ -181,14 +181,14 @@ def managegroup_view(request, gamename):
         deleteExamForm = DeleteExamForm()
         deleteUserForm = DeleteUserForm()
         examlist = query.retrieveGroupExams(groupid)
-        return render(request, 'managegroup.html', {'error' : error,'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
+        return render(request, 'managegroup.html', {'groupId': groupid, 'error' : error,'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
     else:
         addExamForm = AddExamForm()
         addUserForm = AddUserToGroupForm()
         deleteExamForm = DeleteExamForm()
         deleteUserForm = DeleteUserForm()
         error = False
-        return render(request, 'managegroup.html', {'error' : error, 'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
+        return render(request, 'managegroup.html', {'groupId': groupid, 'error' : error, 'addexam': addExamForm, 'groupName': gamename, 'adduser': addUserForm, 'examlist': examlist, 'usernamelist': usernamelist, 'deleteexam': deleteExamForm, 'deleteuser': deleteUserForm})
 
 
 @login_required(login_url="/login/")
