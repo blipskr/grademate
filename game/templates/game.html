@@ -7,7 +7,7 @@
   <div class="mdl-grid center-items">
 
     <div class="mdl-cell mdl-cell--3-col">
-      <span class="mdl-chip mdl-chip--contact" style="padding-right: 50px; padding-top: 5px; ">
+      <span class="mdl-chip mdl-chip--contact" style="padding-top: 3px; padding-bottom: 3px; padding-right: 30px; padding-left: 5px;">
         <img class="mdl-chip__contact" src="/static/images/coins.png"></img>
         <span class="mdl-chip__text">{{ credits }}</span>
       </span>
@@ -28,14 +28,14 @@
             {% endif %}
           </div>
 
-          <div class="mdl-cell mdl-cell--3-col">
+          <div class="mdl-cell mdl-cell--3-col" style="">
             <center>
-              <h3 style="color: white;"> Make Prediction</h3>
+              <h3 > Make Prediction</h3>
               <form method="post" action="/game/{{ group }}/">
                 {% csrf_token %}
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                   {{ betForm.exam }}
-                  <input type="hidden" value="" name="chooseexam" style="background-color: white;">
+                  <input type="hidden" value="" name="chooseexam" >
                   <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
                   <label for="chooseexam" class="mdl-textfield__label">Exam</label>
                   <ul for="chooseexam" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" style="max-height: 200px; overflow-x: hidden; overflow-y: auto;">
@@ -78,7 +78,7 @@
 
           <div class="demo-charts mdl-cell mdl-cell--3-col" style="position: relative;">
             <center>
-              <h3 style="color: white;">Change Prediction</h3>
+              <h3 >Change Prediction</h3>
 
               <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
                 <thead>
@@ -106,7 +106,7 @@
                     {% endfor %}
 
                     {% else %}
-                    <tr><p style="color: white;">You have not made any predictions yet.<p></tr>
+                    <tr><p >You have not made any predictions yet.<p></tr>
                     {% endif %}
                   </tbody>
                 </table>
@@ -155,7 +155,7 @@
         <div class="mdl-cell mdl-cell--3-col"></div>
         <div class="mdl-cell mdl-cell--3-col" style="position: relative;">
           <center>
-            <h3 style="color: white;">Current Game Stats</h3>
+            <h3 >Current Game Stats</h3>
             <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
               <thead>
                 <tr>
@@ -175,7 +175,7 @@
                 </tr>
                 {% endfor %}
                 {% else %}
-                <tr><p style="color: white;">No one has made any predictions for you yet.<p></tr>
+                <tr><p >No one has made any predictions for you yet.<p></tr>
                 {% endif %}
 
               </tbody>
@@ -184,7 +184,7 @@
         </div>
         <div class="demo-charts mdl-cell mdl-cell--3-col" style="position: relative;">
           <center>
-            <h3 style="color: white;">Leaderboard</h3>
+            <h3 >Leaderboard</h3>
             <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
               <thead>
                 <tr>

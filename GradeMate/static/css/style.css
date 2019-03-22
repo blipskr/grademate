@@ -22,7 +22,20 @@ p {
 
 body {
   padding-top: "0px";
-  background-image: linear-gradient(120deg, #e2e2e2, #e2e2e2);
+/*  background-image: linear-gradient(120deg, #8c8c8c, #e2e2e2); */
+background-image: -webkit-gradient(
+	linear,
+	left top,
+	right top,
+	color-stop(0.03, #ADADAD),
+	color-stop(1, #E2E2E2)
+);
+background-image: -o-linear-gradient(right, #ADADAD 3%, #E2E2E2 100%);
+background-image: -moz-linear-gradient(right, #ADADAD 3%, #E2E2E2 100%);
+background-image: -webkit-linear-gradient(right, #ADADAD 3%, #E2E2E2 100%);
+background-image: -ms-linear-gradient(right, #ADADAD 3%, #E2E2E2 100%);
+background-image: linear-gradient(to right, #ADADAD 3%, #E2E2E2 100%);
+/*  background-image: url("/static/images/greybg.jpg"); */
   background-attachment: fixed;
   height: 100%;
 }
@@ -80,8 +93,8 @@ th {
 }
 
 li {
-  width: 100px;
-  text-align: center;
+  width: 100px !important;
+  text-align: center !important;
 }
 
 .errorlist {
