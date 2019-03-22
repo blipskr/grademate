@@ -25,8 +25,14 @@
 
 		<br>
 		{% endfor %}
-		<input type="checkbox" name="vehicle" value="Car" unchecked> I have read and agree to the user agreement <br>
-		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and the terms and conditions.<br>
+							 <br>
+		<center>
+		<label class = "mdl-checkbox mdl-js-checkbox" for = "checkbox1">
+		                  <input type = "checkbox" id = "checkbox1"
+		                     class = "mdl-checkbox__input" unchecked>
+		                  <span class = "mdl-checkbox__label">I agree to the <a href="/agreement/">terms and conditions</a>.</span>
+		               </label></center>
+
 		<br>
 		<center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
 				Submit
