@@ -56,11 +56,15 @@ def calculateWinner(userid, examid, finalscore, groupname):
         # get winners current credits
         oldCredits = groupMemberObjectFromBet.credits
         # get credits to add
-        multiplier = calculateMultiplier(averageAmmount, bet.guess_credits)
-        addCredits = multiplier * eachWinsCredits
+        print "had credits:" + str(oldCredits)
+        multiplier = calculateMultiplier(closestguess, bet.guess_credits)
+        addCredits = math.trunc(multiplier * bet.guess_credits)
+        print "multiplier: " + str(multiplier)
         # calculate new credits and update them
         newCredits = oldCredits + addCredits
         groupMemberObjectFromBet.credits = newCredits
+        print "won credits: " + str(addCredits)
+        print "has credits: " + str(newCredits)
         groupMemberObjectFromBet.save()
         print str(groupMemberObjectFromBet.user)
     print "rewarded winners with credits"
@@ -505,8 +509,11 @@ def sumBetOnUserExam(userObject, examObject):
 
 # function for calculating multiplier given guess mark and exam mark
 # this function is used when rewarding winners
-def calculateMultiplier(average, actual):
-    return float(actual) / average
+def calculateMultiplier(closeness, ammount):
+    multiplier1 = math.pow(10, -3) * math.pow(ammount, 2) + 1
+    multiplier2 = 5 / math.pow(closeness, 0.5)
+    return multiplier1 + multiplier2
+
 
 # function for calculating difference of given bet from real mark
 # given bet object and result object
