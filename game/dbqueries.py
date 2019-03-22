@@ -219,6 +219,9 @@ def processEnterBetForm(request, betForm, gamename):
     target = User.objects.get(pk=targetid)
     if Bet.objects.filter(user=user, target=target, exam=exam).count() != 0:
         return 'You have aleady made a bet on that user for this exam.'
+    resultEnteredCount = Result.objects.filter(exam_id = examid, user_id = targetid).count()
+    if resultEnteredCount > 0:
+        return str(target) + ' has already entered their mark for this exam. You cannot place any further bets!'
     newBet = Bet(exam=exam, user=request.user,
                  target=target, guess_mark=guessmark, guess_credits = guesscredits)
     groupid = extractGroupId(gamename)
@@ -228,9 +231,6 @@ def processEnterBetForm(request, betForm, gamename):
     elif int(guesscredits) <= 0:
         return 'Minimum amount of credits to bet is 1!'
 
-    isResultEnteredForTarget = Result.objects.filter(exam_id = examid, user_id = getUserID(user))
-    if isResultEnteredForTarget != None:
-        return str(target) + ' has already entered their mark for this exam. You cannot place any further bets!'
 
 
     newBet.save()
