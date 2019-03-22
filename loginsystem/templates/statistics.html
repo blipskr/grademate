@@ -33,6 +33,7 @@
         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
           <thead>
             <tr>
+              <th class="mdl-data-table__cell--non-numeric">Group</th>
               <th class="mdl-data-table__cell--non-numeric">Exam</th>
               <th class="mdl-data-table__cell--non-numeric">Person</th>
               <th class="mdl-data-table__cell--non-numeric">Predicted</th>
@@ -46,10 +47,11 @@
             {% csrf_token %}
             {% for oneBetColumn in betObjects %}
             <tr>
+              <td class="mdl-data-table__cell--non-numeric">{{ oneBetColumn.group }}</td>
               <td class="mdl-data-table__cell--non-numeric">{{ oneBetColumn.exam }}</td>
               <td class="mdl-data-table__cell--non-numeric">{{ oneBetColumn.target_user }}</td>
               <td>{{ oneBetColumn.guess_mark}}</td>
-              <td class="mdl-data-table__cell--non-numeric">{{ oneBetColumn.resultForTarget}}</td>
+              <td>{{ oneBetColumn.resultForTarget}}</td>
               <td class="mdl-data-table__cell--non-numeric">{{ oneBetColumn.win}}</td>
             </tr>
             {% endfor %}
@@ -72,8 +74,7 @@
           </p>
           <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1">
             <use xlink:href="#piechart" mask="url(#piemask)" />
-            <text x="0.5" y="0.5" font-family="Roboto" font-size="0.2" fill="#888" text-anchor="middle" dy="0.1">{{ accuracy }}
-              <tspan dy="-0.07" font-size="0.2">%</tspan>
+            <text x="0.5" y="0.5" font-family="Roboto" font-size="0.2" fill="#888" text-anchor="middle" dy="0.1">{{ accuracy }}%
             </text>
           </svg>
         </div>
