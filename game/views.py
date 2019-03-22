@@ -107,6 +107,7 @@ def getGroups(request):
 @login_required(login_url="/login/")
 def creategroup_view(request):
     # if sent a form of creating a group, process it
+    error = False
     if request.method == 'POST':
         createGroupForm = CreateGroupForm(request.POST)
         # create a new group with given name
@@ -121,10 +122,11 @@ def creategroup_view(request):
                 # return managegroup_view(request, groupName)
             else:
                 createGroupForm = CreateGroupForm()
+                error = 'Group with this name already exists.'
     #  if we just open the page, give this page
     else:
         createGroupForm = CreateGroupForm()
-    return render(request, 'creategroup.html', {'form': createGroupForm})
+    return render(request, 'creategroup.html', {'error' : error, 'form': createGroupForm})
 
 
 @login_required(login_url="/login/")
