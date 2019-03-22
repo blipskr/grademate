@@ -519,7 +519,10 @@ def sumBetOnUserExam(userObject, examObject):
 # this function is used when rewarding winners
 def calculateMultiplier(closeness, ammount):
     multiplier1 = math.pow(10, -3) * math.pow(ammount, 2) + 1
-    multiplier2 = 5 / math.pow(closeness, 0.5)
+    if closeness >= 1:
+        multiplier2 = 5 / math.pow(closeness, 0.5)
+    else:
+        multiplier2 = 10
     return multiplier1 + multiplier2
 
 
