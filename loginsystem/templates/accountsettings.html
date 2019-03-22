@@ -2,23 +2,10 @@
 {% block content %}
 {% load static %}
 
-  </style>
-  </div>
-  <div
-  style="
-  position: absolute;
-  margin: auto;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width:400px;
-  height:400px;
-  text-align: center;
-  ">
+
   <form method="post" action="/accountsettings/">
     <center>
-      <h2 style="color: white;">Edit Profile</h2>
+      <h2>Edit Profile</h2>
     </center>
     {% csrf_token %}
     {% for field in form %}
@@ -30,7 +17,7 @@
     <br>
     {% endfor %}
     <br>
-    <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" id="submit">
+    <center><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" id="submit">
         Submit
       </button></center>
   </form>

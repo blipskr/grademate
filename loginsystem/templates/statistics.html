@@ -11,14 +11,14 @@
       <br>
       <center>
         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
-          <th class="mdl-data-table__cell--non-numeric"><h6>Group</h6></th>
-          <th><h6>Credits</h6></th>
+          <th class="mdl-data-table__cell--non-numeric">Group</th>
+          <th>Credits</th>
       {% for group in groups %}
 
       <tr>
 
-        <td class="mdl-data-table__cell--non-numeric"><center><h6>{{ group }}</h6></center></td>
-        <td><center><h6>{{ group.credits }}</h6></center></td>
+        <td class="mdl-data-table__cell--non-numeric"><center>{{ group }}</center></td>
+        <td><center>{{ group.credits }}</center></td>
       </tr>
 
       {% endfor %}
