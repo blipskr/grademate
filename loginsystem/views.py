@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate
 from game.models import Bet, GroupMember, Group, Exam, Result
 from BetHistory import BetHistory
 import re
+from game import dbqueries as query
 
 minPasswordLength = 7
 # Create your views here.
@@ -181,13 +182,15 @@ def statistics_view(request):
 
     else:
         accuracy = 0
+    groups = query.retrieveUsersGroups(request)
+    print query.retrieveUsersGroups(request).count()
     student_lib = {
         "name": user,
-        "groups": groupName,
+        "groups": groups,
         "betObjects": listOfAllBetsForAUser,
         "noOfWins": noOfWins,
         "noOfLosses": noOfLosses,
         "noOfBets": noOfBets,
         "accuracy": accuracy
     }
-    return render(request, 'statistics.html', student_lib)
+    return render(request, 'statistics.html', student_lib,)

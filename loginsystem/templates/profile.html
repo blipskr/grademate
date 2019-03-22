@@ -2,42 +2,23 @@
 {% block stuffbelowheader %}
 {% load static %}
 
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <center style="position: relative;">
-    <h2 style="color: white;">Profile</h2>
+  <center>
+    <h3>Profile</h3>
   </center>
   <center>
-    <!-- class="demo-card-square mdl-card mdl-shadow--2dp" -->
-    <div
-    style="
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width:400px;
-    height:400px;
-    ">
-    <div class="mdl-card__supporting-text" style="color: white;">
+
       <center>
-        <h3> Username: {{ user.username }} </h3>
+        <h4> Username: {{ user.username }} </h4>
       </center>
       <center>
-        <h3> First Name: {{ user.first_name }} </h3>
+        <h4> First Name: {{ user.first_name }} </h4>
       </center>
       <center>
-        <h3> Last Name: {{ user.last_name }} </h3>
+        <h4> Last Name: {{ user.last_name }} </h4>
       </center>
       <center>
-        <h3> Email: {{ user.email }} </h3>
+        <h4> Email: {{ user.email }} </h4>
       </center>
-    </div>
   </div>
 </center>
 

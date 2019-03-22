@@ -6,31 +6,28 @@
 
     <div class=" mdl-cell mdl-cell--12-col">
       <center>
-        <h3 style="color: white;">My Games</h3>
+        <h3>My Games</h3>
       </center>
+      <br>
       <center>
-        <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="overflow: auto; width: 300px; height: 200px; position: relative;">
-          <ul class="demo-list-item mdl-list" style="display: inline-grid;">
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
+          <th class="mdl-data-table__cell--non-numeric"><h6>Group</h6></th>
+          <th><h6>Credits</h6></th>
+      {% for group in groups %}
 
-            {% csrf_token %}
-            {% for group in groups %}
-                <br>
-                <br>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style=" display: inline-grid; color: white; align-items: center; padding: auto; width: auto;" onclick="location.href='/game/{{ group }}';">
-                {{ group }}
-                </button>
+      <tr>
 
-            {% endfor %}
-          </ul>
+        <td class="mdl-data-table__cell--non-numeric"><center><h6>{{ group }}</h6></center></td>
+        <td><center><h6>{{ group.credits }}</h6></center></td>
+      </tr>
 
+      {% endfor %}
+    </table>
+  </center>
 
-        </div>
-      </center>
-      <div>
         <center>
-          <h3 style="color: white;">Bet History</h3>
+          <h3>Bet History</h3>
         </center>
-      </div>
 
       <center>
         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
@@ -66,7 +63,7 @@
     <div class="mdl-cell mdl-cell--3-col"></div>
     <div class="demo-charts mdl-cell mdl-cell--6-col mdl-grid" style="display: inline">
       <center>
-        <h3 style="color: white;">Charts</h3>
+        <h3>Charts</h3>
       </center>
       <div class="mdl-grid mdl-color--white mdl-shadow--2dp" id="stats">
         <div class="mdl-cell mdl-cell--3-col">
@@ -75,7 +72,7 @@
           </p>
           <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1">
             <use xlink:href="#piechart" mask="url(#piemask)" />
-            <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">{{ accuracy }}
+            <text x="0.5" y="0.5" font-family="Roboto" font-size="0.2" fill="#888" text-anchor="middle" dy="0.1">{{ accuracy }}
               <tspan dy="-0.07" font-size="0.2">%</tspan>
             </text>
           </svg>
@@ -86,7 +83,7 @@
           </p>
           <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1">
             <use xlink:href="#piechart" mask="url(#piemask)" />
-            <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">{{ noOfWins }}
+            <text x="0.5" y="0.5" font-family="Roboto" font-size="0.2" fill="#888" text-anchor="middle" dy="0.1">{{ noOfWins }}
               <tspan dy="-0.07" font-size="0.2"></tspan>
             </text>
           </svg>
@@ -97,7 +94,7 @@
           </p>
           <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1">
             <use xlink:href="#piechart" mask="url(#piemask)" />
-            <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">{{ noOfLosses }}
+            <text x="0.5" y="0.5" font-family="Roboto" font-size="0.2" fill="#888" text-anchor="middle" dy="0.1">{{ noOfLosses }}
               <tspan dy="-0.07" font-size="0.2"></tspan>
             </text>
           </svg>
@@ -108,7 +105,7 @@
           </p>
           <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1">
             <use xlink:href="#piechart" mask="url(#piemask)" />
-            <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">{{ noOfBets }}
+            <text x="0.5" y="0.5" font-family="Roboto" font-size="0.2" fill="#888" text-anchor="middle" dy="0.1">{{ noOfBets }}
               <tspan dy="-0.07" font-size="0.2"></tspan>
             </text>
           </svg>
