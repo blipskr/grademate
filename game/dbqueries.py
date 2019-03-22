@@ -224,6 +224,11 @@ def processEnterBetForm(request, betForm, gamename):
     elif int(guesscredits) <= 0:
         return 'Minimum amount of credits to bet is 1!'
 
+    isResultEnteredForTarget = Result.objects.filter(exam_id = examid, user_id = getUserID(user))
+    if isResultEnteredForTarget != None:
+        return str(target) + ' has already entered their mark for this exam. You cannot place any further bets!'
+
+
     newBet.save()
     credits.credits = int(credits.credits) - int(guesscredits)
     credits.save()
