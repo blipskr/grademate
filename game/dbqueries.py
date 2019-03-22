@@ -16,7 +16,6 @@ def calculateWinner(userid, examid, finalscore, groupname):
     examObject = Exam.objects.get(exam_id=examid)
     userObject = User.objects.get(pk=userid)
     listOfBets = Bet.objects.filter(target=userObject, exam=examObject)
-    print "number of bets is " + str(listOfBets.count())
     if listOfBets.count() == 0:
         return
     closestguess = 100
@@ -25,10 +24,8 @@ def calculateWinner(userid, examid, finalscore, groupname):
     for bet in listOfBets:
         if abs(finalscore - bet.guess_mark) < closestguess:
             closestguess = abs(finalscore - bet.guess_mark)
-    print "closest guess is " + str(closestguess)
     # find average bet ammount on user+exam
     averageAmmount = averageBetOnUserExam(userObject, examObject)
-    print "average ammount on user+Exam is " + str(averageAmmount)
     # iterate through all users and make them winners/losers
     for bet in listOfBets:
         # if it is winner
@@ -40,7 +37,6 @@ def calculateWinner(userid, examid, finalscore, groupname):
         elif abs(finalscore - bet.guess_mark) > closestguess:
             bet.win = False
             bet.save()
-    print "set winners and losers"
     # list of win bets
     listOfWinBets = listOfBets.exclude(win=False)
     # calculate number of winners
@@ -48,7 +44,6 @@ def calculateWinner(userid, examid, finalscore, groupname):
     # credits from pot of each winner
     eachWinsCredits = math.trunc(float(sumBetOnUserExam(userObject, examObject)) / noOfWinners)
     # reward all winners
-    print "starting to reward winners with credits"
     for bet in listOfWinBets:
         # get the winner
         userObjectFromBet = bet.user
@@ -56,18 +51,12 @@ def calculateWinner(userid, examid, finalscore, groupname):
         # get winners current credits
         oldCredits = groupMemberObjectFromBet.credits
         # get credits to add
-        print "had credits:" + str(oldCredits)
         multiplier = calculateMultiplier(closestguess, bet.guess_credits)
         addCredits = math.trunc(multiplier * bet.guess_credits)
-        print "multiplier: " + str(multiplier)
         # calculate new credits and update them
         newCredits = oldCredits + addCredits
         groupMemberObjectFromBet.credits = newCredits
-        print "won credits: " + str(addCredits)
-        print "has credits: " + str(newCredits)
         groupMemberObjectFromBet.save()
-        print str(groupMemberObjectFromBet.user)
-    print "rewarded winners with credits"
 
 def retrieveUsersGroups(request):
     usersGroups = GroupMember.objects.filter(user=request.user.id)
@@ -246,11 +235,12 @@ def processUpdateBetForm(request, betForm):
     if str(newmark) == "" or str(betid) == "":
         return 'The User and New Mark fields of Change Prediction Form cannot be left empty!'
     betObject = Bet.objects.get(pk=betid)
+    if Result.objects.filter(exam_id=betObject.exam, user_id=betObject.target).count() > 0:
+        return betObject.target.username + ' has already entered their mark for this exam. You cannot change your prediction anymore.'
     try:
         int(newmark)
     except:
         return "Your new prediction must be a whole number from 0 to 100."
-
     if not (int(newmark) >= 0 and int(newmark) <= 100):
         return 'The New Mark entered is invalid!'
     Bet.objects.filter(pk=betid).update(guess_mark=newmark)

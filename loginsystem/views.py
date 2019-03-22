@@ -35,7 +35,7 @@ def register_view(request):
                 return registererror_view(request, form)
             else:
                 form.save()
-                return redirect('/login/')
+                return redirect('/mygames/')
         else:
             return registererror_view(request, form)
     else:
@@ -49,7 +49,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('/')
+            return redirect('/mygames/')
         else:
             form = LoginForm()
             return loginerror_view(request, form)

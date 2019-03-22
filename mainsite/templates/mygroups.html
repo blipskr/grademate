@@ -8,6 +8,7 @@
         <h3>My Games</h3>
       </center>
       <br>
+      {% if groups %}
       <center>
         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: fill-parent;">
         <th class="mdl-data-table__cell--non-numeric"><h6>Group</h6></th>
@@ -27,6 +28,9 @@
       {% endfor %}
     </table>
   </center>
+  {% else %}
+  <center><p>You are not a member of any game yet.</p></center>
+  {% endif %}
     </div>
     <div class="mdl-cell mdl-cell--3-col"></div>
   </div>
