@@ -261,8 +261,11 @@ def processAddExamForm(addExamForm, gamename):
     if str(exam_name) == "":
         return 'The Exam Name field in the Add Exam Form must not be empty'
     else:
-        createNewExam(exam_name, gamename)
-        return False
+        boolean = createNewExam(exam_name, gamename)
+        if boolean == True:
+            return False
+        else:
+            return 'The Exam with given name already exists'
 
 def processAddUserForm(addUserForm, gamename):
     user_name = addUserForm.data['user_name']
@@ -393,8 +396,13 @@ def createNewGroup(username, groupName):
 
 def createNewExam(examName, groupName):
     groupObject = Group.objects.get(group_name=groupName)
-    examObject = Exam(group=groupObject, exam_name=examName)
-    examObject.save()
+    try:
+        examObject = Exam.objects.get(group=groupObject, exam_name = examName)
+        return False
+    except Exam.DoesNotExist:
+        examObject = Exam(group=groupObject, exam_name=examName)
+        examObject.save()
+        return True
 
 # adds given user to the given group by name
 
