@@ -150,7 +150,7 @@ def statistics_view(request):
             elif oneBetColumn.win == 0:
                 noOfLosses = noOfLosses + 1
                 oneBet = BetHistory(
-                    group, exam_name_one, target_user, oneBetColumn.guess_mark, resultForTarget1, 'Lose')
+                    group, exam_name_one, target_user, oneBetColumn.guess_mark, resultForTarget1, 'Lost')
 
             listOfAllBetsForAUser.append(oneBet)
         except:
@@ -165,7 +165,7 @@ def statistics_view(request):
                 target_user = User.objects.get(id=int(oneBetColumn.target_id))
                 target_user = target_user.username
                 oneBet = BetHistory(
-                    group, exam_name_one, target_user, oneBetColumn.guess_mark, resultForTarget1, 'Ongoing')
+                    group, exam_name_one, target_user, oneBetColumn.guess_mark, resultForTarget1, 'Pending')
                 listOfAllBetsForAUser.append(oneBet)
             except:
                 exam_name_one = Exam.objects.get(
@@ -175,7 +175,7 @@ def statistics_view(request):
                 target_user = User.objects.get(id=int(oneBetColumn.target_id))
                 target_user = target_user.username
                 oneBet = BetHistory(group, exam_name_one, target_user,
-                                    oneBetColumn.guess_mark, 'Ongoing', 'Ongoing')
+                                    oneBetColumn.guess_mark, 'Pending', 'Pending')
                 listOfAllBetsForAUser.append(oneBet)
 
     noOfBets = noOfWins + noOfLosses
