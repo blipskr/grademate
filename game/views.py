@@ -130,6 +130,35 @@ def creategroup_view(request):
 @login_required(login_url="/login/")
 def managegroup_view(request, gamename):
     groupid = query.extractGroupId(gamename)
+    if not query.userIsAdminOfGroup(request.user, query.extractGroupId(gamename)):
+        enterBetForm = EnterBetForm(group=gamename, user=request.user)
+        relevantExams = []
+        unprocessedExams = Exam.objects.filter(
+            group_id=groupid).values('exam_id')
+        examCount = 0
+        for exam in unprocessedExams:
+            currentexam = unprocessedExams[examCount]['exam_id']
+            relevantExams.append(currentexam)
+            examCount = examCount + 1
+        yourBets = Bet.objects.filter(
+            user=request.user.id, exam_id__in=relevantExams).order_by('exam')
+        updatebetform = UpdateBetForm(bets=yourBets)
+        betsOnYou = Bet.objects.filter(
+            target=request.user.id, exam_id__in=relevantExams).order_by('exam')
+        examStatsObject = query.createExamStats(betsOnYou)
+
+        # leaderboard code groupid, name, credits query.getUserID(request.user)
+        allUsersInGroup = GroupMember.objects.filter(group_id = groupid).order_by('-credits')
+        infoLeaderBoard = list()
+        counter = 1
+        for member in allUsersInGroup:
+            noOfWins = Bet.objects.filter(user_id = member.user_id, win = 1)
+            oneLeaderBoard = LeaderBoardClass(counter, query.getUserName(member.user_id), member.credits, len(noOfWins))
+            counter = counter + 1
+            infoLeaderBoard.append(oneLeaderBoard)
+        error = 'You are not the admin of this group!'
+        credits = GroupMember.objects.get(group_id = groupid, user_id= query.getUserID(request.user))
+        return render(request, 'game.html', {'error': error, 'admin': query.userIsAdminOfGroup(request.user, groupid), 'yourBetsList': yourBets, 'updatebetform': updatebetform, 'betForm': enterBetForm, 'betsListOnYou': examStatsObject, 'group': gamename, 'credits': credits.credits, 'leaderBoard': infoLeaderBoard})
     examlist = query.retrieveGroupExams(groupid)
     usernamelist = query.usernamesInGroup(gamename)
 
